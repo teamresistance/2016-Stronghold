@@ -1,5 +1,6 @@
 package org.teamresistance.teleop;
 
+import org.teamresistance.IO;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
 import org.teamresistance.util.state.State;
@@ -29,6 +30,13 @@ public class Teleop extends State {
 	@Override
 	public void update() {
 		driveModes.update();
+		System.out.println("Hello World!");
+		if(Math.abs(IO.codriverStick.getY()) > .1) {
+			System.out.println("Is this thing working?");
+			IO.armMotor.set(IO.codriverStick.getY());
+		}else {
+			IO.armMotor.set(0);
+		}
 	}
 
 	@Override
