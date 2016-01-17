@@ -29,21 +29,21 @@ public class Robot extends IterativeRobot {
     
     @Override
 	public void autonomousInit() {
-    	
+    	robotModes.setState("auto");
 	}
 
     @Override
     public void autonomousPeriodic() {
-    	
+    	robotModes.update();
     }
 
     @Override
 	public void teleopInit() {
-    	
+    	robotModes.setState("teleop");
     }
     
     @Override
     public void teleopPeriodic() {
-        
+        robotModes.update();
     }
 }
