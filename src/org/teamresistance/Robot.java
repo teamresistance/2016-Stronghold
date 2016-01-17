@@ -1,6 +1,10 @@
 
 package org.teamresistance;
 
+import org.teamresistance.auto.Autonomous;
+import org.teamresistance.teleop.Teleop;
+import org.teamresistance.util.state.StateMachine;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -11,33 +15,35 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-
+	
+	private StateMachine robotModes;
+	
+	@Override
+	public void robotInit() {
+		IO.init();
+		
+    	robotModes = new StateMachine();
+    	robotModes.addState(Teleop.class, "teleop");
+    	robotModes.addState(Autonomous.class, "auto");
     }
+    
+    @Override
+	public void autonomousInit() {
+    	
+	}
 
-    /**
-     * This function is called periodically during autonomous
-     */
+    @Override
     public void autonomousPeriodic() {
-
+    	
     }
 
-    /**
-     * This function is called periodically during operator control
-     */
+    @Override
+	public void teleopInit() {
+    	
+    }
+    
+    @Override
     public void teleopPeriodic() {
         
     }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-    
-    }
-    
 }
