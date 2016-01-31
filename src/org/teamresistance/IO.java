@@ -2,7 +2,10 @@ package org.teamresistance;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
+
+import com.kauailabs.navx.frc.AHRS;
 
 public class IO {
 	
@@ -16,6 +19,8 @@ public class IO {
 	
 	public static VictorSP armMotor;
 	
+	public static AHRS imu;
+	
 	public static void init() {
 		leftJoystick = new Joystick(0);
 		rightJoystick = new Joystick(1);
@@ -26,6 +31,8 @@ public class IO {
 		robotDrive = new RobotDrive(leftDrive, rightDrive);
 		
 		armMotor = new VictorSP(4);
+		
+		imu = new AHRS(SPI.Port.kMXP);
 	}
 	
 }
