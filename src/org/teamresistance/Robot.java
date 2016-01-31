@@ -3,6 +3,7 @@ package org.teamresistance;
 
 import org.teamresistance.auto.Autonomous;
 import org.teamresistance.teleop.Teleop;
+import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousPeriodic() {
+    	Time.update();
     	robotModes.update();
     }
 
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void teleopPeriodic() {
+    	Time.update();
         robotModes.update();
     }
 }

@@ -63,7 +63,7 @@ public class StateMachine {
 		if (containsState(stateName)) {
 			return false;
 		}
-		State instance = newInstance(stateType);
+		State instance = newInstance(stateType, stateName);
 		
 		if (instance == null) {
 			return false;
@@ -106,23 +106,24 @@ public class StateMachine {
 		if (currentState != null) {
 			currentState.onExit(transition);
 		}
+		currentState = newState;
+		
 		newState.onEntry(transition);
 		
-		currentState = newState;
 		return true;
 	}
 	
 	/**
-	 * Returns a new instance of the specified State subclass,
+	 * Returns a new, named instance of the specified State subclass,
 	 * or null if a new instance cannot be created.
 	 * @param stateType the type
 	 * @return the instance
 	 */
-	private State newInstance(Class<? extends State> stateType) {
+	private State newInstance(Class<? extends State> stateType, String stateName) {
 		try {
-			Constructor<? extends State> ctor = stateType.getDeclaredConstructor(StateMachine.class);
+			Constructor<? extends State> ctor = stateType.getDeclaredConstructor(StateMachine.class, String.class);
 			ctor.setAccessible(true);
-			return ctor.newInstance(this);
+			return ctor.newInstance(this, stateName);
 		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {

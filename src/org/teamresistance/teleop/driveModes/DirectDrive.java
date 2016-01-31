@@ -1,14 +1,13 @@
 package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
-import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
-public class DirectDrive extends State {
+public class DirectDrive extends DriveTrain {
 
-	protected DirectDrive(StateMachine stateMachine) {
-		super(stateMachine);
+	protected DirectDrive(StateMachine stateMachine, String name) {
+		super(stateMachine, name);
 	}
 
 	@Override
@@ -23,7 +22,8 @@ public class DirectDrive extends State {
 
 	@Override
 	public void update() {
-		IO.robotDrive.tankDrive(IO.leftJoystick.getY(), IO.rightJoystick.getY());
+		super.update();
+		IO.robotDrive.tankDrive(getLeftY(), getRightY());
 		if(IO.leftJoystick.getRawButton(3)) {
 			gotoState("ScaledDrive");
 		}

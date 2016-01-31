@@ -3,6 +3,7 @@ package org.teamresistance.teleop;
 import org.teamresistance.IO;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
+import org.teamresistance.teleop.driveModes.Target;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
@@ -13,8 +14,8 @@ public class Teleop extends State {
 	
 	private StateMachine driveModes;
 	
-	protected Teleop(StateMachine stateMachine) {
-		super(stateMachine);
+	protected Teleop(StateMachine stateMachine, String name) {
+		super(stateMachine, name);
 	}
 
 	@Override
@@ -22,6 +23,7 @@ public class Teleop extends State {
 		driveModes = new StateMachine();
 		driveModes.addState(ScaledDrive.class, "ScaledDrive");
 		driveModes.addState(DirectDrive.class, "DirectDrive");
+		driveModes.addState(Target.class, "Target");
 	}
 
 	@Override
