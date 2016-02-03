@@ -21,4 +21,14 @@ public class Util {
 	        	return input >= -0.8 && input <= -0.05 ? ((input * 0.55) - 0.0725) : ((input * 2.4375) + 1.4375);
 	        }  
 	}
+	
+	public static double clip(double input, double min, double max) {
+		if(input <= min) {
+			return min;
+		} else if(input >= max) {
+			return max;
+		} else {
+			return input;
+		}
+	}
 }

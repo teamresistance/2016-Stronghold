@@ -11,9 +11,11 @@ package org.teamresistance.util.state;
 public abstract class State {
 	
 	private StateMachine stateMachine;
-
-	protected State(StateMachine stateMachine) {
+	private String name;
+	
+	protected State(StateMachine stateMachine, String name) {
 		this.stateMachine = stateMachine;
+		this.name = name;
 	}
 	
 	/**
@@ -25,9 +27,13 @@ public abstract class State {
 		return stateMachine.setState(stateName);
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public String toString() {
-		return getClass().getSimpleName();
+		return name;
 	}
 	
 	/**
