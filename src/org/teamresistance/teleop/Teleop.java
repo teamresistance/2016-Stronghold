@@ -34,11 +34,6 @@ public class Teleop extends State {
 	@Override
 	public void update() {
 		driveModes.update();
-		if(Math.abs(IO.codriverStick.getY()) > .1) {
-			IO.armMotor.set(IO.codriverStick.getY());
-		}else {
-			IO.armMotor.set(0);
-		}
 		SmartDashboard.putNumber("Roll", IO.imu.getRoll());
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());

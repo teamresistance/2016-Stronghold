@@ -17,8 +17,6 @@ public class IO {
 	public static VictorSP rightDrive;
 	public static RobotDrive robotDrive;
 	
-	public static VictorSP armMotor;
-	
 	public static AHRS imu;
 	
 	public static void init() {
@@ -29,8 +27,6 @@ public class IO {
 		leftDrive = new VictorSP(0);
 		rightDrive = new VictorSP(1);
 		robotDrive = new RobotDrive(leftDrive, rightDrive);
-		
-		armMotor = new VictorSP(4);
 		
 		imu = new AHRS(SPI.Port.kMXP);
 	}
