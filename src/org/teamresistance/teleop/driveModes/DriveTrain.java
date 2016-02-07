@@ -1,6 +1,7 @@
 package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
@@ -11,7 +12,6 @@ public class DriveTrain extends State {
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
-	private boolean reverseLatch = false;
 	
 	protected DriveTrain(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
@@ -29,14 +29,11 @@ public class DriveTrain extends State {
 
 	@Override
 	public void update() {
-		if(IO.rightJoystick.getRawButton(1) && !reverseLatch) {
-			reverseLatch = true;
+		if(JoystickIO.btnDriveReverse.onButtonPressed()) {
 			reverse = !reverse;
-		} else if(!IO.rightJoystick.getRawButton(1) && reverseLatch) {
-			reverseLatch = false;
 		}
 		
-		if(IO.leftJoystick.getRawButton(4)) {
+		if(JoystickIO.btnScore.onButtonPressed()) {
 			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
 				Target.setTargetAngle(30+angleOffset);
 				gotoState("Target");
@@ -57,17 +54,17 @@ public class DriveTrain extends State {
 	
 	protected float getLeftY() {
 		if(reverse) {
-			return (float) -IO.rightJoystick.getY();
+			return (float) -JoystickIO.rightJoystick.getY();
 		} else {
-			return (float) IO.leftJoystick.getY();
+			return (float) JoystickIO.leftJoystick.getY();
 		}
 	}
 	
 	protected float getRightY() {
 		if(reverse) {
-			return (float) -IO.leftJoystick.getY();
+			return (float) -JoystickIO.leftJoystick.getY();
 		} else {
-			return (float) IO.rightJoystick.getY();
+			return (float) JoystickIO.rightJoystick.getY();
 		}
 	}
 

@@ -1,6 +1,7 @@
 package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
@@ -24,7 +25,7 @@ public class DirectDrive extends DriveTrain {
 	public void update() {
 		super.update();
 		IO.robotDrive.tankDrive(getLeftY(), getRightY());
-		if(IO.leftJoystick.getRawButton(3)) {
+		if(JoystickIO.btnDriveMode.isDown()) {
 			gotoState("ScaledDrive");
 		}
 	}
