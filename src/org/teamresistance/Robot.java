@@ -1,12 +1,15 @@
 
 package org.teamresistance;
 
+import java.io.IOException;
+
 import org.teamresistance.auto.Autonomous;
 import org.teamresistance.teleop.Teleop;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.networktables.*;
 
 public class Robot extends IterativeRobot {
 	
@@ -14,6 +17,12 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
+	  try {
+            new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
 		IO.init();
 		
     	robotModes = new StateMachine();
