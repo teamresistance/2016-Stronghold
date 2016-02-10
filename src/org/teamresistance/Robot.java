@@ -9,7 +9,6 @@ import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.networktables.*;
 
 public class Robot extends IterativeRobot {
 	
@@ -38,6 +37,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
     	Time.update();
+    	JoystickIO.update();
     	robotModes.update();
     }
 
