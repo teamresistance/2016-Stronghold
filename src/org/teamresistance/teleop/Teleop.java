@@ -36,7 +36,7 @@ public class Teleop extends State {
 		driveModes.addState(DirectDrive.class, "DirectDrive");
 		driveModes.addState(Target.class, "Target");
 		
-		gripTable = NetworkTable.getTable("GRIP");
+		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 
 	@Override
@@ -99,6 +99,11 @@ public class Teleop extends State {
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
 		
 		SmartDashboard.putNumber("Frame Rate", gripTable.getNumber("frameRate", -1));
+		
+		double[] areas = gripTable.getNumberArray("area", new double[0]);
+		for(int i = 0; i < areas.length; i++) {
+			SmartDashboard.putNumber("Area " + i, areas[i]);
+		}
 	}
 
 	@Override
