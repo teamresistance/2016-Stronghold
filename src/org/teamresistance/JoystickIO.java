@@ -21,7 +21,7 @@ public class JoystickIO {
 	public static Button btnScore;
 	public static Button btnAntler;
 	public static Button btnSnorfler;
-	public static Button btnCancelSnorfle;
+	public static Button btnCancel;
 	
 	public static void init() {
 		leftJoystick = new Joystick(0);
@@ -34,7 +34,7 @@ public class JoystickIO {
 		btnScore = newButton(codriverStick, 1);
 		btnAntler = newButton(codriverStick, 4);
 		btnSnorfler = newButton(codriverStick, 3);
-		btnCancelSnorfle = newButton(codriverStick, 2);
+		btnCancel = newButton(codriverStick, 2);
 		
 	}
 	

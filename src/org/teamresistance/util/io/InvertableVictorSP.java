@@ -1,17 +1,17 @@
 package org.teamresistance.util.io;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 
-public class InvertableVictor extends Victor {
-	
+public class InvertableVictorSP extends VictorSP {
+
 	private boolean inverted = false;
 	
-	public InvertableVictor(int channel, boolean inverted) {
+	public InvertableVictorSP(int channel, boolean inverted) {
 		super(channel);
 		this.inverted = inverted;
 	}
 	
-	public InvertableVictor(int channel) {
+	public InvertableVictorSP(int channel) {
 		this(channel, false);
 	}
 
