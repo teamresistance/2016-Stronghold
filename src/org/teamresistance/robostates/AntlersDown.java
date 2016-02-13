@@ -26,7 +26,7 @@ public class AntlersDown extends State {
 
 	@Override
 	public void update() {
-		if(JoystickIO.btnAntler.onButtonReleased()) {
+		if(!JoystickIO.btnAntler.isDown()) {
 			gotoState("AntlerSnorflerUp");
 		}
 		
