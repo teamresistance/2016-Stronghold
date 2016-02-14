@@ -9,34 +9,24 @@ import java.lang.Math;
 
 import org.teamresistance.IO;
 
-public class NavXGyro {
-	AHRS ahrs;	
-
-	public NavXGyro() { //setup
-	
-		try {
-			ahrs = new AHRS(SPI.Port.kMXP); 
-		} catch (RuntimeException ex ) {
-			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-		}
-	}
+public class NavXGyro {	
 	
 	public double getRollAngle() {
-		return ahrs.getRoll();
+		return IO.imu.getRoll();
 	}
 	
 	public double getPitchAngle() {
-		return ahrs.getPitch();
+		return IO.imu.getPitch();
 	}
 	
 	public double getYawAngle() {
-		return ahrs.getYaw();
+		return IO.imu.getYaw();
 	}
 	
 	public Boolean isStraight(int thresholdAngle, int startAngle) {
 		Boolean isStraight = false;
 		
-		double angle = ahrs.getYaw();
+		double angle = IO.imu.getYaw();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) isStraight = true;
 		
@@ -46,7 +36,7 @@ public class NavXGyro {
 	public Boolean pitchLevel(int thresholdAngle, int startAngle) {
 		Boolean pitchLevel = false;
 		
-		double angle = ahrs.getPitch();
+		double angle = IO.imu.getPitch();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) pitchLevel = true;
 		
@@ -57,7 +47,7 @@ public class NavXGyro {
 	public Boolean rollLevel(int thresholdAngle, int startAngle) {
 		Boolean rollLevel = false;
 		
-		double angle = ahrs.getRoll();
+		double angle = IO.imu.getRoll();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) rollLevel = true;
 		
@@ -77,7 +67,7 @@ public class NavXGyro {
 	
 	public Boolean isLeft(int targetAngle) {
 		Boolean isLeft = false;
-		double angle = ahrs.getYaw();
+		double angle = IO.imu.getYaw();
 		
 		if(targetAngle<angle) isLeft = true; //need to check this to make sure it's going the right way
 		

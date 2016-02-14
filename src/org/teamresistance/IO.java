@@ -4,6 +4,7 @@ import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.InvertableVictorSP;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -26,6 +27,8 @@ public class IO {
 	
 	public static InvertableSolenoid flipperSolenoid;
 	
+	public static InvertableSolenoid shooterSolenoid;
+	
 	public static AHRS imu;
 	
 	public static void init() {
@@ -43,8 +46,13 @@ public class IO {
 		gateLifterMotor = new InvertableVictorSP(4);
 		
 		flipperSolenoid = new InvertableSolenoid(3);
+		shooterSolenoid = new InvertableSolenoid(5);
 		
-		imu = new AHRS(SPI.Port.kMXP);
+		try {
+			imu = new AHRS(SPI.Port.kMXP); 
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		}
 	}
 	
 }
