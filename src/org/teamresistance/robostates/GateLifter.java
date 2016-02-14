@@ -1,5 +1,5 @@
 package org.teamresistance.robostates;
 
-public class LinearActuatorTilt {
+public class GateLifter {
 
 }
