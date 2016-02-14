@@ -4,23 +4,22 @@ import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Target extends State {
 
-	private static float targetAngle = 0.0f;
-	private static float angleDeadband = 5.0f;
-	private static float angleGain = 0.5f;
+	private float targetAngle = 0.0f;
+	private float angleDeadband = 5.0f;
+	private float angleGain = 0.5f;
 
 	private String previousStateName = null;
 	
-	protected Target(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
+	public Target() {
+		
 	}
-
+	
 	@Override
 	public void init() {
 		/*
@@ -75,15 +74,15 @@ public class Target extends State {
 		return (float)Math.toRadians(IO.imu.getYaw());
 	}
 
-	public static void setTargetAngle(float angle) {
-		Target.targetAngle = (float)Math.toRadians(angle);
+	public void setTargetAngle(float angle) {
+		targetAngle = (float)Math.toRadians(angle);
 	}
 	
-	public static void setAngleDeadband(float angleDeadband) {
-		Target.angleDeadband = (float)Math.toRadians(angleDeadband);
+	public void setAngleDeadband(float angleDeadband) {
+		angleDeadband = (float)Math.toRadians(angleDeadband);
 	}
 
-	public static void setAngleGain(float angleGain) {
-		Target.angleGain = angleGain;
+	public void setAngleGain(float angleGain) {
+		angleGain = angleGain;
 	}	
 }

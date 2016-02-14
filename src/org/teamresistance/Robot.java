@@ -25,8 +25,8 @@ public class Robot extends IterativeRobot {
 		JoystickIO.init();
 
 		robotModes = new StateMachine();
-		robotModes.addState(Teleop.class, "teleop");
-		robotModes.addState(Autonomous.class, "auto");
+		robotModes.addState(new Teleop(), "teleop");
+		robotModes.addState(new Autonomous(), "auto");
 	}
 
 	@Override

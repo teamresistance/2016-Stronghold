@@ -7,8 +7,8 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DirectDrive extends DriveTrain {
 
-	protected DirectDrive(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
+	public DirectDrive(Target target) {
+		super(target);
 	}
 
 	@Override
