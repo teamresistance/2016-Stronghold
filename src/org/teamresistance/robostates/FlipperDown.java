@@ -6,30 +6,33 @@ import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
+public class FlipperDown extends State {
 
-public class Shooter extends StateMachine {
-	
-	protected Shooter(StateMachine stateMachine, String name) {
+	protected FlipperDown(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
 	}
-	
+
+	@Override
+	public void init() {
+
+	}
+
+	@Override
 	public void onEntry(StateTransition e) {
-		IO.shooterSolenoid.set(false);
+		IO.flipperSolenoid.set(false);
 	}
 
 	@Override
 	public void update() {
-		if(!JoystickIO.btnShooter.isDown()) {
-			gotoState("DontShoot");
+		if(!JoystickIO.btnFlipper.isDown()) {
+			gotoState("AntlerSnorflerUp");
 		}
 		
-		if(JoystickIO.btnShooter.onButtonPressed()) {
-			gotoState("ShootReady");
-		}
 	}
 
+	@Override
 	public void onExit(StateTransition e) {
 
 	}
-	
+
 }

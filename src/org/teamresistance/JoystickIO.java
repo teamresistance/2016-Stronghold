@@ -26,6 +26,8 @@ public class JoystickIO {
 	public static Button btnGateGrab;
 	public static Button btnShooter;
 	
+	public static Button btnFlipper;
+	
 	public static void init() {
 		leftJoystick = new Joystick(0);
 		rightJoystick = new Joystick(1);
