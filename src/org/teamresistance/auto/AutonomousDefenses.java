@@ -1,8 +1,7 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
-import org.teamresistance.util.io.NavXGyro;
-import com.kauailabs.navx.frc.AHRS;
+import org.teamresistance.teleop.driveModes.NavXGyro;
 
 public class AutonomousDefenses {
 	NavXGyro imu = new NavXGyro();

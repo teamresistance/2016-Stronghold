@@ -12,7 +12,7 @@ public class Autonomous extends State {
 
 	@Override
 	public void init() {
-		
+		//needs to pull from DefenseTypePositionSelector.java in order to determine what defense it's going for, then pull from AutonomousDefenses.java to actually execute the motion
 	}
 
 	@Override
