@@ -1,6 +1,5 @@
 package org.teamresistance.robostates;
 
 public class Flipper {
-	//Launch
-	//Reload
+	//the thingy that goes under the portcullis to lift it
 }

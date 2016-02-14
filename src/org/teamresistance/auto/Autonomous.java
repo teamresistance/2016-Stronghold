@@ -6,6 +6,15 @@ import org.teamresistance.util.state.StateTransition;
 
 public class Autonomous extends State {
 
+	/* Need to do: 
+	 * Take in info about which defense/which position it's crossing
+	 * Cross that defense type
+	 * Choose which goal to shoot at
+	 * Go to that goal
+	 * Line up
+	 * Shoot
+	 */
+	
 	protected Autonomous(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
 	}
