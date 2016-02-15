@@ -18,7 +18,7 @@ public class DefenseTypePositionSelector{
 		setDefensePos();
 	}
 	
-	void crossDefense() {
+	/*void crossDefense() {
 		AutonomousDefenses crosser = new AutonomousDefenses();
 		
 		switch(defenseType) {
@@ -41,7 +41,7 @@ public class DefenseTypePositionSelector{
 
 		}
 		
-	}
+	}*/
 	
 	void setDefenseType() {
 		defenseType = (int) SmartDashboard.getNumber("defense type");

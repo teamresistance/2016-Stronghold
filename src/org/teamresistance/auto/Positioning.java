@@ -8,7 +8,7 @@ public class Positioning {
 		threshold = newThreshold;
 	}
 	
-	public Boolean correctPos() {
+	public Boolean posCorrect() {
 		return correctPos;
 	}
 	

@@ -1,6 +1,7 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.util.state.State;
+import org.teamresistance.auto.AutoMaster;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
@@ -31,7 +32,7 @@ public class Autonomous extends State {
 
 	@Override
 	public void update() {
-		if(posCorrect()) {
+		if(AutoMaster.position.posCorrect()) {
 			gotoState("CrossDefense");
 		}
 		

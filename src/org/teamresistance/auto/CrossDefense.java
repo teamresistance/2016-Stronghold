@@ -8,7 +8,7 @@ import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.auto.DefenseStates;
 
 public class CrossDefense extends State {
-
+	
 	protected CrossDefense(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
 	}
