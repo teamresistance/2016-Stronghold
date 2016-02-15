@@ -1,4 +1,4 @@
-package org.teamresistance.teleop.driveModes;
+package org.teamresistance.util.io;
 
 import com.kauailabs.navx.frc.AHRS;
 

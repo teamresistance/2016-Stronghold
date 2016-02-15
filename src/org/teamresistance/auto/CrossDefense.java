@@ -1,14 +1,15 @@
-package org.teamresistance.robostates;
+package org.teamresistance.auto;
 
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+import org.teamresistance.auto.DefenseStates;
 
-public class DontShoot extends State {
+public class CrossDefense extends State {
 
-	protected DontShoot(StateMachine stateMachine, String name) {
+	protected CrossDefense(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
 	}
 
@@ -19,20 +20,17 @@ public class DontShoot extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		IO.shooterSolenoid.set(false);
+		DefenseStates();
 	}
 
 	@Override
 	public void update() {
 		
-		if(JoystickIO.btnSnorfler.onButtonPressed()) {
-			gotoState("ShootReady");
-		}
 	}
 
 	@Override
 	public void onExit(StateTransition e) {
-
+		gotoState("DriveToTower");
 	}
 
 }

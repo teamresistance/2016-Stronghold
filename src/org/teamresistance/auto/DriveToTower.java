@@ -1,4 +1,4 @@
-package org.teamresistance.robostates;
+package org.teamresistance.auto;
 
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
@@ -6,9 +6,9 @@ import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
-public class FlipperDown extends State {
+public class DriveToTower extends State {
 
-	protected FlipperDown(StateMachine stateMachine, String name) {
+	protected DriveToTower(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
 	}
 
@@ -19,20 +19,19 @@ public class FlipperDown extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		IO.flipperSolenoid.set(false);
+
 	}
 
 	@Override
 	public void update() {
-		if(!JoystickIO.btnFlipper.isDown()) {
-			gotoState("AntlerSnorflerUp");
+		if(posCorrect()) {
+			gotoState("Targeting");
 		}
-		
 	}
 
 	@Override
 	public void onExit(StateTransition e) {
-
+			gotoState("Targeting");
 	}
 
 }
