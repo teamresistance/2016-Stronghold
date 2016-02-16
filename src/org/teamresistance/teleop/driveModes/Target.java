@@ -83,6 +83,6 @@ public class Target extends State {
 	}
 
 	public void setAngleGain(float angleGain) {
-		angleGain = angleGain;
+		this.angleGain = angleGain;
 	}	
 }

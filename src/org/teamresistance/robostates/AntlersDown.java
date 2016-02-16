@@ -3,7 +3,6 @@ package org.teamresistance.robostates;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 public class AntlersDown extends State {

@@ -1,7 +1,6 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 public class Autonomous extends State {
