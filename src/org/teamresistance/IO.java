@@ -25,7 +25,10 @@ public class IO {
 	public static InvertableSolenoid gateGrabberSolenoid;
 	public static InvertableVictorSP gateLifterMotor;
 	
-	public static InvertableSolenoid flipperSolenoid;
+	public static InvertableSolenoid footSolenoid;
+	public static DigitalInput footSwitch;
+	
+	public static DigitalInput screwSwitch;
 	
 	public static InvertableSolenoid shooterSolenoid;
 	
@@ -45,8 +48,10 @@ public class IO {
 		gateGrabberSolenoid = new InvertableSolenoid(2);
 		gateLifterMotor = new InvertableVictorSP(4);
 		
-		flipperSolenoid = new InvertableSolenoid(3);
+		footSolenoid = new InvertableSolenoid(3);
 		shooterSolenoid = new InvertableSolenoid(5);
+		
+		footSwitch = new DigitalInput(1);
 		
 		try {
 			imu = new AHRS(SPI.Port.kMXP); 

@@ -29,7 +29,7 @@ public class Ramparts {
 		*/
 		
 		//use gyro to continue checking alignment
-		while(!DefenseMaster.gyro.isLevel(10, 0, 0) && elapsed<=1) {
+		while(!DefenseMaster.imu.isLevel(10, 0, 0) && elapsed<=1) {
 			//drive forward
 			IO.robotDrive.arcadeDrive(0.5, 0);
 			

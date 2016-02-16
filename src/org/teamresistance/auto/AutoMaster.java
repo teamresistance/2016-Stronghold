@@ -1,10 +1,12 @@
 package org.teamresistance.auto;
 
+import org.teamresistance.util.io.NavXGyro;
+
 public class AutoMaster {
 	
-	public static Positioning position;
+	public static NavXGyro imu;
 	
 	public static void init() {
-		position = new Positioning(1,2,3,4);
+		imu = new NavXGyro();
 	}
 }

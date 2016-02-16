@@ -1,6 +1,7 @@
 package org.teamresistance.defenses;
 
 import org.teamresistance.util.io.NavXGyro;
+import org.teamresistance.auto.AutoMaster;
 
 public class DefenseMaster {
 	public static ChevalDeFrise teeter;
@@ -11,10 +12,10 @@ public class DefenseMaster {
 	public static RockWall rockWall;
 	public static RoughTerrain roughTerrain;
 	public static SallyPort sallyPort;
-	public static NavXGyro gyro;
+	public static NavXGyro imu;
 	
 	public static void init() {
-		gyro = new NavXGyro();
+		imu = AutoMaster.imu;
 		teeter = new ChevalDeFrise();
 		drawbridge = new Drawbridge();
 		moat = new Moat();
