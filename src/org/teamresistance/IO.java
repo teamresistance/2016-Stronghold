@@ -1,13 +1,11 @@
 package org.teamresistance;
 
+import org.teamresistance.util.io.InvertableDigitalInput;
 import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.InvertableVictorSP;
+import org.teamresistance.util.io.NavXIMU;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
-
-import com.kauailabs.navx.frc.AHRS;
 
 public class IO {
 	
@@ -17,7 +15,7 @@ public class IO {
 	
 	public static InvertableSolenoid snorflerSolenoid;
 	public static InvertableVictorSP snorflerMotor;
-	public static DigitalInput ballSensor;
+	public static InvertableDigitalInput ballSensor;
 	
 	public static InvertableSolenoid antlerSolenoid;
 	
@@ -26,7 +24,7 @@ public class IO {
 	
 	public static InvertableSolenoid flipperSolenoid;
 	
-	public static AHRS imu;
+	public static NavXIMU imu;
 	
 	public static void init() {
 		leftDrive = new InvertableVictorSP(0);
@@ -35,7 +33,7 @@ public class IO {
 		
 		snorflerSolenoid = new InvertableSolenoid(0);
 		snorflerMotor = new InvertableVictorSP(3);
-		ballSensor = new DigitalInput(0);
+		ballSensor = new InvertableDigitalInput(0);
 		
 		antlerSolenoid = new InvertableSolenoid(1);
 		
@@ -44,7 +42,7 @@ public class IO {
 		
 		flipperSolenoid = new InvertableSolenoid(3);
 		
-		imu = new AHRS(SPI.Port.kMXP);
+		imu = new NavXIMU();
 	}
 	
 }

@@ -9,11 +9,10 @@ import java.lang.Math;
 
 import org.teamresistance.IO;
 
-public class NavXGyro {
+public class NavXIMU {
 	AHRS ahrs;	
 
-	public NavXGyro() { //setup
-	
+	public NavXIMU() { //setup
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP); 
 		} catch (RuntimeException ex ) {
@@ -21,20 +20,20 @@ public class NavXGyro {
 		}
 	}
 	
-	public double getRollAngle() {
+	public double getRoll() {
 		return ahrs.getRoll();
 	}
 	
-	public double getPitchAngle() {
+	public double getPitch() {
 		return ahrs.getPitch();
 	}
 	
-	public double getYawAngle() {
+	public double getYaw() {
 		return ahrs.getYaw();
 	}
 	
-	public Boolean isStraight(int thresholdAngle, int startAngle) {
-		Boolean isStraight = false;
+	public boolean isStraight(int thresholdAngle, int startAngle) {
+		boolean isStraight = false;
 		
 		double angle = ahrs.getYaw();
 		
@@ -43,8 +42,8 @@ public class NavXGyro {
 		return isStraight;
 	}
 	
-	public Boolean pitchLevel(int thresholdAngle, int startAngle) {
-		Boolean pitchLevel = false;
+	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
+		boolean pitchLevel = false;
 		
 		double angle = ahrs.getPitch();
 		
@@ -54,8 +53,8 @@ public class NavXGyro {
 		
 	}
 
-	public Boolean rollLevel(int thresholdAngle, int startAngle) {
-		Boolean rollLevel = false;
+	public boolean isRollLevel(int thresholdAngle, int startAngle) {
+		boolean rollLevel = false;
 		
 		double angle = ahrs.getRoll();
 		
@@ -65,18 +64,18 @@ public class NavXGyro {
 		
 	}
 	
-	public Boolean isLevel(int thresholdAngle, int startRoll, int startPitch) {
-		Boolean isLevel = false;
-		Boolean pitchLevel = pitchLevel(thresholdAngle, startPitch);
-		Boolean rollLevel = rollLevel(thresholdAngle, startRoll);
+	public boolean isLevel(int thresholdAngle, int startRoll, int startPitch) {
+		boolean isLevel = false;
+		boolean pitchLevel = isPitchLevel(thresholdAngle, startPitch);
+		boolean rollLevel = isRollLevel(thresholdAngle, startRoll);
 		
 		if(pitchLevel&&rollLevel) isLevel = true;
 		
 		return isLevel;
 	}
 	
-	public Boolean isLeft(int targetAngle) {
-		Boolean isLeft = false;
+	public boolean isLeft(int targetAngle) {
+		boolean isLeft = false;
 		double angle = ahrs.getYaw();
 		
 		if(targetAngle<angle) isLeft = true; //need to check this to make sure it's going the right way
