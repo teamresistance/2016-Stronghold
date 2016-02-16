@@ -21,24 +21,24 @@ public class Teleop extends State {
 	private StateMachine antlerSnorflerMachine;
 	
 	private NetworkTable gripTable;
-	
-	protected Teleop(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
 
+	public Teleop() {
+		driveModes = new StateMachine();
+		antlerSnorflerMachine = new StateMachine();
+
+		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
+	}
+	
 	@Override
 	public void init() {
-		driveModes = new StateMachine();
-		driveModes.addState(ScaledDrive.class, "ScaledDrive");
-		driveModes.addState(DirectDrive.class, "DirectDrive");
-		driveModes.addState(Target.class, "Target");
+		Target target = new Target();
+		driveModes.addState(new ScaledDrive(target), "ScaledDrive");
+		driveModes.addState(new DirectDrive(target), "DirectDrive");
+		driveModes.addState(target, "Target");
 		
-		antlerSnorflerMachine = new StateMachine();
-		antlerSnorflerMachine.addState(AntlerSnorflerUp.class);
-		antlerSnorflerMachine.addState(AntlersDown.class);
-		antlerSnorflerMachine.addState(SnorflerDown.class);
-		
-		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
+		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
+		antlerSnorflerMachine.addState(new AntlersDown());
+		antlerSnorflerMachine.addState(new SnorflerDown());
 	}
 
 	@Override

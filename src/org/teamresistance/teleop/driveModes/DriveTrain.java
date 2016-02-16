@@ -3,20 +3,21 @@ package org.teamresistance.teleop.driveModes;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 public class DriveTrain extends State {
 
+	private Target target;
+	
 	private float angleOffset = 90;
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
 	
-	protected DriveTrain(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
+	public DriveTrain(Target target) {
+		this.target = target;
 	}
-
+	
 	@Override
 	public void init() {
 
@@ -35,13 +36,13 @@ public class DriveTrain extends State {
 		
 		if(JoystickIO.btnScore.onButtonPressed()) {
 			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(30+angleOffset);
+				target.setTargetAngle(30+angleOffset);
 				gotoState("Target");
 			} else if(Math.abs((-30-angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(-30-angleOffset);
+				target.setTargetAngle(-30-angleOffset);
 				gotoState("Target");
 			} else if(Math.abs((0+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(0+angleOffset);
+				target.setTargetAngle(0+angleOffset);
 				gotoState("Target");
 			}
 		}

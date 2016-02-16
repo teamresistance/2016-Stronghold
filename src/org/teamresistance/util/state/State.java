@@ -13,8 +13,10 @@ public abstract class State {
 	private StateMachine stateMachine;
 	private String name;
 	
-	protected State(StateMachine stateMachine, String name) {
+	void setStateMachine(StateMachine stateMachine) {
 		this.stateMachine = stateMachine;
+	}
+	void setName(String name) {
 		this.name = name;
 	}
 	

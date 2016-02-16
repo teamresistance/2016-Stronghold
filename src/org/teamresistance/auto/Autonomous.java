@@ -6,10 +6,6 @@ import org.teamresistance.util.state.StateTransition;
 
 public class Autonomous extends State {
 
-	protected Autonomous(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 		
