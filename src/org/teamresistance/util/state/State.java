@@ -10,7 +10,7 @@ package org.teamresistance.util.state;
  */
 public abstract class State {
 	
-	private StateMachine stateMachine;
+	protected StateMachine stateMachine;
 	private String name;
 	
 	void setStateMachine(StateMachine stateMachine) {

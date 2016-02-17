@@ -20,9 +20,15 @@ public class IO {
 	public static InvertableSolenoid antlerSolenoid;
 	
 	public static InvertableSolenoid gateGrabberSolenoid;
-	public static InvertableVictorSP gateLifterMotor;
+	public static InvertableSolenoid lifterTiltSolenoid;
+	public static InvertableVictorSP lifterMotor;
+	public static InvertableDigitalInput lifterLowerLimit;
+	public static InvertableDigitalInput lifterUpperLimit;
 	
 	public static InvertableSolenoid flipperSolenoid;
+	
+	public static InvertableDigitalInput bottomFlipperSwitch;
+	public static InvertableDigitalInput topFlipperSwitch;
 	
 	public static NavXIMU imu;
 	
@@ -38,9 +44,16 @@ public class IO {
 		antlerSolenoid = new InvertableSolenoid(1);
 		
 		gateGrabberSolenoid = new InvertableSolenoid(2);
-		gateLifterMotor = new InvertableVictorSP(4);
+		lifterTiltSolenoid = new InvertableSolenoid(4);
+		lifterMotor = new InvertableVictorSP(4);
+		
+		lifterLowerLimit = new InvertableDigitalInput(3);
+		lifterUpperLimit = new InvertableDigitalInput(4);
 		
 		flipperSolenoid = new InvertableSolenoid(3);
+		
+		bottomFlipperSwitch = new InvertableDigitalInput(1);
+		topFlipperSwitch = new InvertableDigitalInput(2);
 		
 		imu = new NavXIMU();
 	}

@@ -25,10 +25,14 @@ public class InvertableSolenoid extends Solenoid {
 		super(channel);
 		this.inverted = inverted;
 	}
-
+	
 	@Override
 	public void set(boolean on) {
 		super.set(on ^ inverted);
+	}
+	
+	public void toggle() {
+		set(!get()); //Sets the new state to the opposite of the current state
 	}
 	
 	public void setInverted(boolean inverted) {

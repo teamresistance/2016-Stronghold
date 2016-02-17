@@ -23,6 +23,11 @@ public class JoystickIO {
 	public static Button btnSnorfler;
 	public static Button btnCancel;
 	
+	public static Button btnToggleFoot;
+	public static Button btnToggleLifter;
+	public static Button btnPortcullis;
+	public static Button btnDrawbridge;
+	
 	public static void init() {
 		leftJoystick = new Joystick(0);
 		rightJoystick = new Joystick(1);
@@ -36,6 +41,10 @@ public class JoystickIO {
 		btnSnorfler = newButton(codriverStick, 3);
 		btnCancel = newButton(codriverStick, 2);
 		
+		btnToggleFoot = newButton(codriverStick, 5);
+		btnToggleLifter = newButton(codriverStick, 6);
+		btnPortcullis = newButton(codriverStick, 7);
+		btnDrawbridge = newButton(codriverStick, 8);
 	}
 	
 	public static void update() {

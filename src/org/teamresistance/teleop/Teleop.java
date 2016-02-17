@@ -6,6 +6,7 @@ import org.teamresistance.robostates.AntlerSnorflerUp;
 import org.teamresistance.robostates.AntlersDown;
 import org.teamresistance.robostates.SnorflerDown;
 import org.teamresistance.teleop.driveModes.DirectDrive;
+import org.teamresistance.teleop.driveModes.Idle;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
 import org.teamresistance.teleop.driveModes.Target;
 import org.teamresistance.util.state.State;
@@ -18,6 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Teleop extends State {
 	
 	private StateMachine driveModes;
+	private String returnDriveMode; //Drive mode to goto after idle is exited
+	
 	private StateMachine antlerSnorflerMachine;
 	
 	private NetworkTable gripTable;
@@ -35,6 +38,7 @@ public class Teleop extends State {
 		driveModes.addState(new ScaledDrive(target), "ScaledDrive");
 		driveModes.addState(new DirectDrive(target), "DirectDrive");
 		driveModes.addState(target, "Target");
+		driveModes.addState(new Idle(), "Idle");
 		
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
@@ -69,5 +73,35 @@ public class Teleop extends State {
 	public void onExit(StateTransition e) {
 		
 	}
+	
+	public void setDriveIdle() {
+		returnDriveMode = driveModes.getCurrentState();
+		driveModes.setState("Idle");
+	}
+	
+	public void exitIdleDrive() {
+		if(returnDriveMode != null) {
+			driveModes.setState(returnDriveMode);
+			returnDriveMode = null;
+		}
+	}
+	
+	/*
+	 * Put down foot
+	 * 
+	 * Drive till hit portcullis
+	 * lift foot
+	 * Once rear limit switch is hit
+	 */
+	
+	/*
+	 * if buttonPressed move lifter to opposite position
+	 * if buttonPressed move flipper to opposite position
+	 * if buttonPressed && flipper is down begin portcullis routine
+	 * 		if lifter not in lower position move to lower position
+	 * 		raise flipper
+	 * 		when bottom limit switch pressed start raising lifter
+	 * 		when top limit switch pressed return controls to driver
+	 */
 	
 }

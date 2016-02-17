@@ -83,6 +83,16 @@ public class StateMachine {
 		return transition(states.get(stateName));
 	}
 	
+	public State getState(String stateName) {
+		if(stateName == null) {
+			return null;
+		}
+		if(!containsState(stateName)) {
+			return null;
+		}
+		return states.get(stateName);
+	}
+	
 	public int getNumStates() {
 		return states.size();
 	}
@@ -108,6 +118,10 @@ public class StateMachine {
 		newState.onEntry(transition);
 		
 		return true;
+	}
+	
+	public String getCurrentState() {
+		return currentState.getName();
 	}
 	
 }

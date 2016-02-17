@@ -21,6 +21,11 @@ public class InvertableVictor extends Victor {
 	}
 
 	@Override
+	public double get() {
+		return super.get() * (inverted ? -1.0 : 1.0);
+	}
+	
+	@Override
 	public void pidWrite(double output) {
 		super.pidWrite(output * (inverted ? -1.0 : 1.0));
 	}

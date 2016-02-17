@@ -8,6 +8,10 @@ public class Time {
 	
 	private static double previousTime = getTime();
 	
+	private Time() {
+		//Empty
+	}
+	
 	public static void update() {
 		double currentTime = getTime();
 		delta = currentTime - previousTime;

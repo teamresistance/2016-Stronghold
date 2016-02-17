@@ -5,4 +5,7 @@ public class Constants {
 	public static final double SNORFLE_SPEED = .75;
 	public static final double BOULDER_LOAD_SPEED = -0.5;
 
+	public static final double LIFTER_UP_SPEED = 0.75;
+	public static final double LIFTER_DOWN_SPEED = -0.75;
+	
 }

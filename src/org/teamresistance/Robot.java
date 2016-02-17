@@ -12,7 +12,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot {
 
 	private StateMachine robotModes;
-
+	public static Teleop teleop;
+	public static Autonomous auto;
+	public static String robotState;
+	
 	@Override
 	public void robotInit() {
 		try {
@@ -25,12 +28,19 @@ public class Robot extends IterativeRobot {
 		JoystickIO.init();
 
 		robotModes = new StateMachine();
-		robotModes.addState(new Teleop(), "teleop");
-		robotModes.addState(new Autonomous(), "auto");
+		if(teleop == null) {
+			teleop = new Teleop();
+		}
+		robotModes.addState(teleop, "teleop");
+		if(auto == null) {
+			auto = new Autonomous();
+		}
+		robotModes.addState(auto, "auto");
 	}
 
 	@Override
 	public void autonomousInit() {
+		robotState = "auto";
 		robotModes.setState("auto");
 	}
 
@@ -43,6 +53,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		robotState = "teleop";
 		robotModes.setState("teleop");
 	}
 

@@ -19,6 +19,11 @@ public class InvertableVictorSP extends VictorSP {
 	public void set(double speed) {
 		super.set(speed * (inverted ? -1.0 : 1.0));
 	}
+	
+	@Override
+	public double get() {
+		return super.get() * (inverted ? -1.0 : 1.0);
+	}
 
 	@Override
 	public void pidWrite(double output) {
