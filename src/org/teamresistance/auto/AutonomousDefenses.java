@@ -9,7 +9,7 @@ public class AutonomousDefenses {
 	//NavXGyro gyro = new NavXGyro();
 	int defensePos;
 	int defenseType; 
-	Boolean isDone;
+	boolean isDone;
 
 	public void AutonomousDefenses() {
 		SmartDashboard.putNumber("position", 3);
@@ -18,7 +18,7 @@ public class AutonomousDefenses {
 		setDefensePos();
 	}
 	
-	public Boolean isDone() {
+	public boolean isDone() {
 		return isDone;
 	}
 		

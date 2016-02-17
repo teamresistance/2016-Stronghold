@@ -7,7 +7,7 @@ import org.teamresistance.IO;
 public class Moat {
 	Time timer;
 	static double elapsed;
-	Boolean isDone;
+	boolean isDone;
 	
 	public void cross() {
 		

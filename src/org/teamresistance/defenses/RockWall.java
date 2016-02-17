@@ -7,7 +7,7 @@ import org.teamresistance.defenses.DefenseMaster;
 	public class RockWall {
 		Time timer;
 		static double elapsed;
-		Boolean isDone;
+		boolean isDone;
 		
 		public void cross() {
 			

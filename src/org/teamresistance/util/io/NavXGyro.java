@@ -86,6 +86,18 @@ public class NavXGyro {
 		}
 	}
 	
+/*public void turnAngle(double angle) {
+	initAngle = DefenseMaster.imu.getYawAngle();
+	difference = 0;
+	IO.robotDrive.arcadeDrive(0,0.5);
+	while(difference<angle&&elapsed>0.25&&elapsed<0.5) {
+		difference = (initAngle-DefenseMaster.imu.getYawAngle());
+		timer.update();
+		elapsed = timer.getDelta();
+	}
+	IO.robotDrive.arcadeDrive(0,0);
+}*/
+	
 }
 	
 

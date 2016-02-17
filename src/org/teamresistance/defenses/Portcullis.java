@@ -7,7 +7,7 @@ import org.teamresistance.util.Time;
 public class Portcullis {
 	Time timer;
 	static double elapsed;
-	Boolean isDone;
+	boolean isDone;
 	
 	/*drive forward
 	 * raise foot till limit switch hit

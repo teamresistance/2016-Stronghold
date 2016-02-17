@@ -7,7 +7,7 @@ import org.teamresistance.util.Time;
 public class Ramparts {
 	Time timer;
 	static double elapsed;
-	Boolean isDone;
+	boolean isDone;
 	
 	public void cross() {
 		

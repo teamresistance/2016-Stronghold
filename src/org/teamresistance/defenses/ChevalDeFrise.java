@@ -6,7 +6,7 @@ import org.teamresistance.util.Time;
 public class ChevalDeFrise {
 	Time timer;
 	static double elapsed;
-	Boolean isDone;
+	boolean isDone;
 	
 	/*
 	 * Put antlers down
