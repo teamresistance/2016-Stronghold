@@ -2,13 +2,14 @@ package org.teamresistance;
 
 import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.InvertableVictorSP;
+import org.teamresistance.util.io.NavXGyro;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-
-import com.kauailabs.navx.frc.AHRS;
 
 public class IO {
 	
@@ -33,6 +34,7 @@ public class IO {
 	public static InvertableSolenoid shooterSolenoid;
 	
 	public static AHRS imu;
+	public static NavXGyro navX;
 	
 	public static void init() {
 		leftDrive = new InvertableVictorSP(0);
@@ -52,6 +54,8 @@ public class IO {
 		shooterSolenoid = new InvertableSolenoid(5);
 		
 		footSwitch = new DigitalInput(1);
+		
+		navX = new NavXGyro();
 		
 		try {
 			imu = new AHRS(SPI.Port.kMXP); 

@@ -39,12 +39,6 @@ public abstract class State {
 	}
 	
 	/**
-	 * Called by the state machine when this state is first created.
-	 * Contains state object initialization code.
-	 */
-	public abstract void init();
-	
-	/**
 	 * Called by the state machine whenever this state is entered.
 	 * Contains state reset code.
 	 * @param e State Transition event object

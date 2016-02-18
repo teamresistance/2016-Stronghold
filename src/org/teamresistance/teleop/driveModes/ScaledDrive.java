@@ -8,11 +8,6 @@ import org.teamresistance.util.state.StateTransition;
 public class ScaledDrive extends DriveTrain {
 
 	@Override
-	public void init() {
-		//Empty
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		//Empty
 	}

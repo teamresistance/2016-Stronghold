@@ -17,37 +17,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Teleop extends State {
 	
-	private StateMachine driveModes;
-	private StateMachine antlerSnorflerMachine;
+	private StateMachine driveMachine;
 	
 	private NetworkTable gripTable;
 
-	@Override
-	public void init() {
-		driveModes = new StateMachine();
-		driveModes.addState(new ScaledDrive(), "ScaledDrive");
-		driveModes.addState(new DirectDrive(), "DirectDrive");
-		driveModes.addState(new Target(), "Target");
-		
-		antlerSnorflerMachine = new StateMachine();
-		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
-		antlerSnorflerMachine.addState(new AntlersDown());
-		antlerSnorflerMachine.addState(new SnorflerDown());
+	public Teleop() {
+		driveMachine = new StateMachine();
+		driveMachine.addState(new ScaledDrive(), "ScaledDrive");
+		driveMachine.addState(new DirectDrive(), "DirectDrive");
+		driveMachine.addState(new Target(), "Target");
 		
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		driveModes.setState("ScaledDrive");
-		antlerSnorflerMachine.setState("AntlerSnorflerUp");
+		driveMachine.setState("ScaledDrive");
 	}
 
 	@Override
 	public void update() {
 		JoystickIO.update();
-		driveModes.update();
-		antlerSnorflerMachine.update();
+		driveMachine.update();
 		
 		SmartDashboard.putNumber("Roll", IO.imu.getRoll());
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());

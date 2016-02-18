@@ -1,55 +1,45 @@
+
 package org.teamresistance.auto;
 
 import org.teamresistance.util.state.State;
-import org.teamresistance.auto.AutoMaster;
-import org.teamresistance.autostates.CrossDefense;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
-import org.teamresistance.IO;
-import org.teamresistance.JoystickIO;
 
-public class DriveToTower {
+public class DriveToTower extends State {
 
-	public void drive(boolean front) {
-
-		if (front) {
-			frontOffset();
-		}
-
-		switch (Autonomous.goalNum) {
-		case 0:
-			driveLeft();
-			break;
-		case 2:
-			driveRight();
-			break;
-		default:
-			driveMiddle();
-			break;
-		}
-
-	}
-
-	public void frontOffset() {
-		// add 180 and wrap to -180
-	}
-
-	public void driveLeft() {
-		//turn
-		//drive
-		//turn
-	}
+	final private static double[][] DISTANCES = {
+		{},
+		{},
+		{},
+		{}
+	};
+	final private static double[][] ANGLES = {
+		{},
+		{},
+		{},
+		{}
+	};
 	
-	public void driveRight() {
-		//turn
-		//drive
-		//turn
+	private double distance;
+	private double angle;
+	
+	public DriveToTower(int defense, int goal) {
+		distance = DISTANCES[defense - 2][goal];
+		angle = ANGLES[defense - 2][goal];
 	}
 
-	public void driveMiddle() {
-		//turn
-		//drive
-		//turn
+	@Override
+	public void onEntry(StateTransition e) {
+
 	}
+
+	@Override
+	public void update() {
+		
+	}
+
+	@Override
+	public void onExit(StateTransition e) {
+		
+	}
+
 }

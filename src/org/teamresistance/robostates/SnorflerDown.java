@@ -11,11 +11,6 @@ public class SnorflerDown extends State {
 	private static boolean paused = false;
 	
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		IO.snorflerMotor.set(Constants.SNORFLE_SPEED);
 		IO.snorflerSolenoid.set(true);

@@ -16,8 +16,7 @@ public class Target extends State {
 
 	private String previousStateName = null;
 
-	@Override
-	public void init() {
+	public Target() {
 		/*
 		SmartDashboard.putNumber("TargetAngle", targetAngle);
 		SmartDashboard.putNumber("AngleDeadband", angleDeadband);

@@ -64,7 +64,6 @@ public class StateMachine {
 		
 		state.setStateMachine(this);
 		state.setName(stateName);
-		state.init();
 		
 		states.put(stateName, state);
 		return true;

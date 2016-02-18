@@ -1,44 +1,27 @@
-package org.teamresistance.autostates;
+package org.teamresistance.auto.defense;
 
 import org.teamresistance.IO;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.State;
 import org.teamresistance.auto.AutoConstants;
-import org.teamresistance.auto.AutoMaster;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateMachine;
-import org.teamresistance.util.state.StateTransition;
-import org.teamresistance.IO;
-import org.teamresistance.JoystickIO;
 import org.teamresistance.auto.Autonomous;
+import org.teamresistance.auto.Defense;
+import org.teamresistance.util.Time;
+import org.teamresistance.util.state.StateTransition;
 
 	 /*
 	 * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
 	 */
 
-public class CrossCheval extends State {
-	
-	
+public class DefenseCheval extends Defense {
 	
 	private double time = 0.0;
 
 	@Override
-	public void init() {
-			
-	}
-
-	@Override
-	public void onEntry(StateTransition e) {
-		//may need to drive forward before lowering antlers?
-		Autonomous.AntlerMachine.getState("AntlersDown");
-		//drive forward for est half second
-		//raise antlers
-		//drive forward until level
+	public void beginCrossing() {
 		
 	}
 
 	@Override
-	public void update() {	
+	public void whileCrossing() {	
 		time += Time.getDelta();
 		
 		if(Time.getDelta()>0.5) {
@@ -59,11 +42,6 @@ public class CrossCheval extends State {
 			
 		}
 		
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		gotoState("Targeting");
 	}
 
 

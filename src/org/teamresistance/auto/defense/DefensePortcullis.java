@@ -1,21 +1,18 @@
-package org.teamresistance.autostates;
+package org.teamresistance.auto.defense;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.auto.Defense;
 import org.teamresistance.util.Time;
 
-public class CrossPortcullis {
+public class DefensePortcullis extends Defense {
 	Time timer;
 	static double elapsed;
 	boolean isDone;
 	
-	/*drive forward
-	 * raise foot till limit switch hit
-	 * spin screw motor until limit switch hit
-	 * drive forward until level
-	 */
 	
-	public void cross() {
+	@Override
+	public void beginCrossing() {
 		isDone = false;
 		
 		timer = new Time();
@@ -61,5 +58,11 @@ public class CrossPortcullis {
 		//keep track of position to determine when off defense
 		
 		isDone = true;
+	}
+
+	@Override
+	public void whileCrossing() {
+		// TODO Auto-generated method stub
+		
 	}
 }

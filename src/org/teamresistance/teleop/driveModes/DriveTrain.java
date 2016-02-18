@@ -14,11 +14,6 @@ public class DriveTrain extends State {
 	private boolean reverse = false;
 
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 
 	}
