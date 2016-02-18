@@ -1,12 +1,10 @@
-package org.teamresistance.auto;
+package org.teamresistance.autostates;
 
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
-import org.teamresistance.auto.DefenseStates;
-import org.teamresistance.defenses.DefenseMaster;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,10 +16,6 @@ public class CrossDefense extends State {
 
 	@Override
 	public void init() {
-		//SmartDashboard.putNumber("position", 3);
-		SmartDashboard.putNumber("defense type", 5);
-		//setDefenseType();
-		//setDefensePos();
 	}
 
 	@Override
@@ -29,21 +23,19 @@ public class CrossDefense extends State {
 		//DefenseStates();
 		int type = (int) SmartDashboard.getNumber("Defense type");
 		switch(type) { //switch order to actually match the order by category
-		case 1: DefenseMaster.teeter.cross();
+		case 0: gotoState("CrossCheval");
 			break;
-		case 2: DefenseMaster.drawbridge.cross();
+		case 1: gotoState("CrossDrawbridge");
 			break;
-		case 3: DefenseMaster.moat.cross();
+		case 2: gotoState("CrossMoat");
 			break;
-		case 4: DefenseMaster.portcullis.cross();
+		case 3: gotoState("CrossPortcullis");
 			break;
-		case 5: DefenseMaster.ramparts.cross();
+		case 4: gotoState("CrossRamparts");
 			break;
-		case 6: DefenseMaster.rockWall.cross();
+		case 5: gotoState("CrossRockWall");
 			break;
-		case 7: DefenseMaster.roughTerrain.cross();
-			break;
-		default: DefenseMaster.sallyPort.cross();
+		default: gotoState("CrossRoughTerrain");
 			break;
 		}
 	}

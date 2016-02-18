@@ -2,82 +2,34 @@ package org.teamresistance.auto;
 
 public class AutoConstants {
 
-	/*
-	 * Unimplemented combinations (priority): 
-	 * position 5/right goal
-	 * 
-	 * lower priority: 
-	 * position 5/middle goal
-	 */
+	public static final int CHEVAL_DE_FRISE = 0;
+	public static final int DRAWBRIDGE = 1;
+	public static final int MOAT = 2;
+	public static final int PORTCULLIS = 3;
+	public static final int RAMPARTS = 4;
+	public static final int ROCKWALL = 5;
+	public static final int ROUGH_TERRAIN = 6;
+	
+	public static final double PORTCULLIS_LIFTER_UP_SPEED = 0.5;
+	public static final double PORTCULLIS_LIFTER_DOWN_SPEED = 0.5;
+	public static final double CHEVAL_CROSS_SPEED = 0.5;
+	public static final double MOAT_CROSS_SPEED = 0.5;
+	public static final double RAMPARTS_CROSS_SPEED = 0.5;
+	public static final double ROCK_WALL_CROSS_SPEED = 0.5;
+	public static final double ROUGH_TERRAIN_CROSS_SPEED = 0.5;
 	
 	public static final int ANGLE_ERROR_THRESHOLD=10;
 	
-	public static final int POS_2_LEFT_START_ANGLE = 30;
-	public static final int POS_2_LEFT_START_ANGLE_PORTCULLIS = -150;
-	public static final int POS_2_MIDDLE_START_ANGLE = -10;
-	public static final int POS_2_MIDDLE_START_ANGLE_PORTCULLIS = -160;
+	public static final int[] LEFT_GOAL_START_ANGLE = {0, 0, 0, 0}; // 2, 3, 4, 5
+	public static final int[] LEFT_GOAL_DRIVE_TIME = {0, 0, 0, 0};
+	public static final int[] LEFT_GOAL_END_ANGLE = {0, 0, 0, 0};
 	
-	public static final int POS_3_LEFT_START_ANGLE = 0;
-	public static final int POS_3_LEFT_START_ANGLE_PORTCULLIS = 0;
-	public static final int POS_3_MIDDLE_START_ANGLE = 0;
-	public static final int POS_3_MIDDLE_START_ANGLE_PORTCULLIS = 0;
-	public static final int POS_3_RIGHT_START_ANGLE = 0;
-	public static final int POS_3_RIGHT_START_ANGLE_PORTCULLIS = 0;
+	public static final int[] MIDDLE_GOAL_START_ANGLE = {0, 0, 0, 0}; 
+	public static final int[] MIDDLE_GOAL_DRIVE_TIME = {0, 0, 0, 0};
+	public static final int[] MIDDLE_GOAL_END_ANGLE = {0, 0, 0, 0};
 	
-	public static final int POS_4_MIDDLE_START_ANGLE = 0;
-	public static final int POS_4_MIDDLE_START_ANGLE_PORTCULLIS = 0;
-	public static final int POS_4_RIGHT_START_ANGLE = 0;
-	public static final int POS_4_RIGHT_START_ANGLE_PORTCULLIS = 0;
-	
-	public static final int POS_5_MIDDLE_START_ANGLE = 0;
-	public static final int POS_5_MIDDLE_START_ANGLE_PORTCULLIS = 0;
-	public static final int POS_5_RIGHT_START_ANGLE = 0;
-	public static final int POS_5_RIGHT_START_ANGLE_PORTCULLIS = 0;
-	
-	
-	public static final double POS_2_LEFT_DISTANCE_TIME = 30;
-	public static final double POS_2_LEFT_DISTANCE_TIME_PORTCULLIS = -150;
-	public static final double POS_2_MIDDLE_DISTANCE_TIME = -10;
-	public static final double POS_2_MIDDLE_DISTANCE_TIME_PORTCULLIS = -160;
-	
-	public static final double POS_3_LEFT_DISTANCE_TIME = 0;
-	public static final double POS_3_LEFT_DISTANCE_TIME_PORTCULLIS = 0;
-	public static final double POS_3_MIDDLE_DISTANCE_TIME = 0;
-	public static final double POS_3_MIDDLE_DISTANCE_TIME_PORTCULLIS = 0;
-	public static final double POS_3_RIGHT_DISTANCE_TIME = 0;
-	public static final double POS_3_RIGHT_DISTANCE_TIME_PORTCULLIS = 0;
-	
-	public static final double POS_4_MIDDLE_DISTANCE_TIME = 0;
-	public static final double POS_4_MIDDLE_DISTANCE_TIME_PORTCULLIS = 0;
-	public static final double POS_4_RIGHT_DISTANCE_TIME = 0;
-	public static final double POS_4_RIGHT_DISTANCE_TIME_PORTCULLIS = 0;
-	
-	public static final double POS_5_MIDDLE_DISTANCE_TIME = 0;
-	public static final double POS_5_MIDDLE_DISTANCE_TIME_PORTCULLIS = 0;
-	public static final double POS_5_RIGHT_DISTANCE_TIME = 0;
-	public static final double POS_5_RIGHT_DISTANCE_TIME_PORTCULLIS = 0;
-	
-	
-	public static final int POS_2_LEFT_END_ANGLE = 30;
-	public static final int POS_2_LEFT_END_ANGLE_PORTCULLIS = -150;
-	public static final int POS_2_MIDDLE_END_ANGLE = -10;
-	public static final int POS_2_MIDDLE_END_ANGLE_PORTCULLIS = -160;
-	
-	public static final int POS_3_LEFT_END_ANGLE = 0;
-	public static final int POS_3_LEFT_END_ANGLE_PORTCULLIS = 0;
-	public static final int POS_3_MIDDLE_END_ANGLE = 0;
-	public static final int POS_3_MIDDLE_END_ANGLE_PORTCULLIS = 0;
-	public static final int POS_3_RIGHT_END_ANGLE = 0;
-	public static final int POS_3_RIGHT_END_ANGLE_PORTCULLIS = 0;
-	
-	public static final int POS_4_MIDDLE_END_ANGLE = 0;
-	public static final int POS_4_MIDDLE_END_ANGLE_PORTCULLIS = 0;
-	public static final int POS_4_RIGHT_END_ANGLE = 0;
-	public static final int POS_4_RIGHT_END_ANGLE_PORTCULLIS = 0;
-	
-	public static final int POS_5_MIDDLE_END_ANGLE = 0;
-	public static final int POS_5_MIDDLE_END_ANGLE_PORTCULLIS = 0;
-	public static final int POS_5_RIGHT_END_ANGLE = 0;
-	public static final int POS_5_RIGHT_END_ANGLE_PORTCULLIS = 0;
+	public static final int[] RIGHT_GOAL_START_ANGLE = {0, 0, 0, 0}; 
+	public static final int[] RIGHT_GOAL_DRIVE_TIME = {0, 0, 0, 0};
+	public static final int[] RIGHT_GOAL_END_ANGLE = {0, 0, 0, 0};
 	
 }

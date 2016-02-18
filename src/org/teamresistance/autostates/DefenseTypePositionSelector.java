@@ -1,4 +1,4 @@
-package org.teamresistance.auto;
+package org.teamresistance.autostates;
 
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;

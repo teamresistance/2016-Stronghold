@@ -1,4 +1,4 @@
-package org.teamresistance.defenses;
+package org.teamresistance.autostates;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
@@ -35,7 +35,7 @@ public class Portcullis {
 		
 		//raise foot
 		while(IO.footSwitch.get()) {
-		IO.footSolenoid.set(false);
+			IO.footSolenoid.set(false);
 		}
 		
 		//in case there's a need to roll back a bit

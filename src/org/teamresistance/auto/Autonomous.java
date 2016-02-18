@@ -7,6 +7,11 @@ import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
+import org.teamresistance.autostates.TowerDrive;
+import org.teamresistance.autostates.AutoAntlersDown;
+import org.teamresistance.autostates.AutoAntlersUp;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
  /*
  * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
@@ -14,7 +19,11 @@ import org.teamresistance.JoystickIO;
 
 public class Autonomous extends State {
 	StateMachine autoStates;
-	Time clock;
+	StateMachine driveStates;
+	StateMachine antlerMachine;
+	public static int defensePosition = 0;
+	public static int defenseType = 0;
+	public static int goalNum = 0;
 
 	protected Autonomous(StateMachine stateMachine, String name) {
 		super(stateMachine, name);
@@ -22,27 +31,29 @@ public class Autonomous extends State {
 
 	@Override
 	public void init() {
-		clock = new Time();
 		autoStates = new StateMachine();
 		autoStates.addState(CrossDefense.class,"CrossDefense");
-		autoStates.addState(DriveToTower.class, "DriveToTower");
 		autoStates.addState(AutoTargeting.class, "Targeting");
+		antlerMachine.addState(AutoAntlersDown.class, "AntlersDown");
+		antlerMachine.addState(AutoAntlersUp.class, "AntlersUp");
 		
+		//This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
+		defensePosition = (int) SmartDashboard.getNumber("position");
+		defenseType = (int) SmartDashboard.getNumber("defense type");
+		goalNum = (int) SmartDashboard.getNumber("goal");
 		
+
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		//autoStates.setState("startPos"); //if there's any reorientation happening, which is unlikely
 		autoStates.setState("CrossDefense");
 	}
 
 	@Override
 	public void update() {
-		//if(AutoMaster.position.posCorrect()) {
-		//	gotoState("CrossDefense");
-		//}
 		autoStates.update();
+		driveStates.update();
 		
 	}
 
