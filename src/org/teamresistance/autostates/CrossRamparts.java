@@ -20,10 +20,6 @@ public class CrossRamparts extends State {
 	
 	private double time = 0.0;
 	
-	protected CrossRamparts(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 			

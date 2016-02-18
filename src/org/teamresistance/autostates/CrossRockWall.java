@@ -20,10 +20,6 @@ public class CrossRockWall extends State {
 	
 	private double time = 0.0;
 	
-	protected CrossRockWall(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 			

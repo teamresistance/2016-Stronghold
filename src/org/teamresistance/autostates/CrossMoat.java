@@ -20,10 +20,6 @@ public class CrossMoat extends State {
 	
 	private double time = 0.0;
 	
-	protected CrossMoat(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 			

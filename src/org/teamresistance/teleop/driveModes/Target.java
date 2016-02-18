@@ -4,7 +4,6 @@ import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,10 +15,6 @@ public class Target extends State {
 	private static float angleGain = 0.5f;
 
 	private String previousStateName = null;
-	
-	protected Target(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
 
 	@Override
 	public void init() {

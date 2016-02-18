@@ -21,10 +21,6 @@ public class CrossCheval extends State {
 	
 	
 	private double time = 0.0;
-	
-	protected CrossCheval(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
 
 	@Override
 	public void init() {

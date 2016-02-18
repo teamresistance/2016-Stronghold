@@ -1,6 +1,6 @@
 package org.teamresistance.autostates;
 
-public class Drawbridge {
+public class CrossDrawbridge {
 	public void cross() {
 		
 	}

@@ -12,10 +12,6 @@ public class DriveTrain extends State {
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
-	
-	protected DriveTrain(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
 
 	@Override
 	public void init() {

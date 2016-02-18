@@ -4,7 +4,7 @@ import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.util.Time;
 
-public class Portcullis {
+public class CrossPortcullis {
 	Time timer;
 	static double elapsed;
 	boolean isDone;

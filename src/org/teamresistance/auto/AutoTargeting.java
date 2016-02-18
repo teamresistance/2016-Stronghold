@@ -17,10 +17,6 @@ public class AutoTargeting extends State{
 	private static float angleDeadband = 5.0f;
 	private static float angleGain = 0.5f;
 
-	protected AutoTargeting(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 		/*

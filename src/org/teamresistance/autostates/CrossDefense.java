@@ -1,8 +1,5 @@
 package org.teamresistance.autostates;
 
-import org.teamresistance.IO;
-import org.teamresistance.JoystickIO;
-import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
@@ -20,20 +17,16 @@ public class CrossDefense extends State {
 	private final int ROCKWALL = 5;
 	private final int ROUGH_TERRAIN = 6;
 	
-	protected CrossDefense(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 		defenseMachine = new StateMachine();
-		defenseMachine.addState(CrossCheval.class, "Cheval");
-		defenseMachine.addState(CrossDrawbridge.class, "Drawbridge");
-		defenseMachine.addState(CrossMoat.class, "Moat");
-		defenseMachine.addState(CrossPortcullis.class, "Portcullis");
-		defenseMachine.addState(CrossRamparts.class, "Ramparts");
-		defenseMachine.addState(CrossRockWall.class, "RockWall");
-		defenseMachine.addState(CrossRoughTerrain.class, "Terrain");
+		defenseMachine.addState(new CrossCheval(), "Cheval");
+		defenseMachine.addState(new CrossDrawbridge(), "Drawbridge");
+		defenseMachine.addState(new CrossMoat(), "Moat");
+		defenseMachine.addState(new CrossPortcullis(), "Portcullis");
+		defenseMachine.addState(new CrossRamparts(), "Ramparts");
+		defenseMachine.addState(new CrossRockWall(), "RockWall");
+		defenseMachine.addState(new CrossRoughTerrain(), "Terrain");
 		
 	}
 

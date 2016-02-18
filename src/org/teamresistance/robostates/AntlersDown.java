@@ -8,10 +8,6 @@ import org.teamresistance.util.state.StateTransition;
 
 public class AntlersDown extends State {
 
-	protected AntlersDown(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
 	@Override
 	public void init() {
 
