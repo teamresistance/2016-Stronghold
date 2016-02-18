@@ -10,13 +10,15 @@ import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
-import org.teamresistance.robostates.AntlersDown;
+import org.teamresistance.auto.Autonomous;
 
 	 /*
 	 * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
 	 */
 
 public class CrossCheval extends State {
+	
+	
 	
 	private double time = 0.0;
 	
@@ -32,13 +34,10 @@ public class CrossCheval extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		//may need to drive forward before lowering antlers?
-		gotoState("AntlersDown");
+		Autonomous.AntlerMachine.getState("AntlersDown");
 		//drive forward for est half second
 		//raise antlers
 		//drive forward until level
-		
-		
-		//switch to driving state
 		
 	}
 
@@ -47,7 +46,7 @@ public class CrossCheval extends State {
 		time += Time.getDelta();
 		
 		if(Time.getDelta()>0.5) {
-			gotoState("AntlersUp");
+			Autonomous.AntlerMachine.getState("AntlersUp");
 		}
 		
 		if(!DefenseMaster.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time<2.0) {

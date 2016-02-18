@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous extends State {
 	StateMachine autoStates;
-	StateMachine driveStates;
 	StateMachine antlerMachine;
 	public static int defensePosition = 0;
 	public static int defenseType = 0;
@@ -34,6 +33,7 @@ public class Autonomous extends State {
 		autoStates = new StateMachine();
 		autoStates.addState(CrossDefense.class,"CrossDefense");
 		autoStates.addState(AutoTargeting.class, "Targeting");
+		antlerMachine = new StateMachine();
 		antlerMachine.addState(AutoAntlersDown.class, "AntlersDown");
 		antlerMachine.addState(AutoAntlersUp.class, "AntlersUp");
 		

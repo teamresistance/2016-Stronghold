@@ -5,11 +5,12 @@ import org.teamresistance.util.io.NavXGyro;
 
 public class AutoMaster {
 	
-	public static NavXGyro imu;
-	public static DriveToTower driver;
+	public NavXGyro imu;
+	public DriveToTower driver;
 	
-	public static void init() {
+	public void init() {
 		imu = new NavXGyro();
 		driver = new DriveToTower();
+		
 	}
 }
