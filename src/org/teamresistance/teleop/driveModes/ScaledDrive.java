@@ -7,7 +7,7 @@ import org.teamresistance.util.state.StateTransition;
 
 public class ScaledDrive extends DriveTrain {
 
-	public ScaledDrive(Target target) {
+	public ScaledDrive(AngleMatch target) {
 		super(target);
 	}
 

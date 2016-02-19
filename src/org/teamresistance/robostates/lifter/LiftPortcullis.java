@@ -14,12 +14,12 @@ public class LiftPortcullis extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		IO.lifterTiltSolenoid.set(false);
-		if(!IO.lifterLowerLimit.get()) {
+		if(!IO.bottomLifterSwitch.get()) {
 			((MoveLifterDown)stateMachine.getState("MoveLifterDown")).setReturnState(getName());
 			gotoState("MoveLifterDown");
 		} else {
 			gotoState("RaiseFoot");
-		}		
+		}
 	}
 
 	@Override

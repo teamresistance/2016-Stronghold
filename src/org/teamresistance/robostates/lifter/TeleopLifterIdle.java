@@ -24,6 +24,7 @@ public class TeleopLifterIdle extends State {
 		if(JoystickIO.btnToggleFoot.onButtonPressed()) {
 			IO.flipperSolenoid.toggle();
 		} else if(JoystickIO.btnToggleLifter.onButtonPressed()) {
+			((MoveLifter)stateMachine.getState("MoveLifter")).setReturnState(getName());
 			gotoState("MoveLifter");
 		} else if(JoystickIO.btnPortcullis.onButtonPressed()) {
 			Robot.teleop.setDriveIdle();

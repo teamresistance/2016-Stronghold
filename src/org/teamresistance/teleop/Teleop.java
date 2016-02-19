@@ -1,18 +1,30 @@
 package org.teamresistance.teleop;
 
+import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.robostates.AntlerSnorflerUp;
 import org.teamresistance.robostates.AntlersDown;
+import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.SnorflerDown;
+import org.teamresistance.robostates.lifter.LiftPortcullis;
+import org.teamresistance.robostates.lifter.MoveLifter;
+import org.teamresistance.robostates.lifter.MoveLifterDown;
+import org.teamresistance.robostates.lifter.MoveLifterUp;
+import org.teamresistance.robostates.lifter.RaiseFlipper;
+import org.teamresistance.robostates.lifter.TeleopLifterIdle;
+import org.teamresistance.robostates.lifter.TopOutLifter;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.Idle;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
+import org.teamresistance.teleop.driveModes.AngleMatch;
+import org.teamresistance.teleop.driveModes.Shoot;
 import org.teamresistance.teleop.driveModes.Target;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,51 +34,75 @@ public class Teleop extends State {
 	private String returnDriveMode; //Drive mode to goto after idle is exited
 	
 	private StateMachine antlerSnorflerMachine;
+	private StateMachine lifterMachine;
 	
 	private NetworkTable gripTable;
 
 	public Teleop() {
 		driveModes = new StateMachine();
 		antlerSnorflerMachine = new StateMachine();
+		lifterMachine = new StateMachine();
 
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 	
 	@Override
 	public void init() {
-		Target target = new Target();
+		AngleMatch target = new AngleMatch();
 		driveModes.addState(new ScaledDrive(target), "ScaledDrive");
 		driveModes.addState(new DirectDrive(target), "DirectDrive");
-		driveModes.addState(target, "Target");
+		driveModes.addState(target);
 		driveModes.addState(new Idle(), "Idle");
+		driveModes.addState(new Shoot());
+		driveModes.addState(new Target());
 		
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
 		antlerSnorflerMachine.addState(new SnorflerDown());
+		
+		lifterMachine.addState(new LiftPortcullis());
+		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
+		lifterMachine.addState(new MoveLifterDown());
+		lifterMachine.addState(new MoveLifterUp());
+		lifterMachine.addState(new RaiseFlipper());
+		lifterMachine.addState(new TeleopLifterIdle());
+		DelayState delayState = new DelayState();
+		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
+		lifterMachine.addState(delayState);
+		lifterMachine.addState(new TopOutLifter());
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
 		driveModes.setState("ScaledDrive");
 		antlerSnorflerMachine.setState("AntlerSnorflerUp");
+		lifterMachine.setState("TeleopLifterIdle");
 	}
 
 	@Override
 	public void update() {
+		
+		SmartDashboard.putBoolean("Upper", IO.topLifterSwitch.get());
+		SmartDashboard.putBoolean("Middle", IO.middleLifterSwitch.get());
+		SmartDashboard.putBoolean("Bottom", IO.bottomLifterSwitch.get());
+		
+		SmartDashboard.putBoolean("BallSensor", IO.ballSensor.get());
+		SmartDashboard.putBoolean("TopFlipperSwitch", IO.topFlipperSwitch.get());
+		SmartDashboard.putBoolean("BottomFlipperSwitch", IO.topFlipperSwitch.get());
+		
+		SmartDashboard.putBoolean("Compressor", IO.compressor.enabled());
+		
+		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		
 		JoystickIO.update();
 		driveModes.update();
 		antlerSnorflerMachine.update();
+		lifterMachine.update();
+//		IO.lifterMotor.set(JoystickIO.codriverStick.getY());
 		
 		SmartDashboard.putNumber("Roll", IO.imu.getRoll());
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
-		
-		SmartDashboard.putNumber("Frame Rate", gripTable.getNumber("frameRate", -1));
-		
-		double[] areas = gripTable.getNumberArray("area", new double[0]);
-		for(int i = 0; i < areas.length; i++) {
-			SmartDashboard.putNumber("Area " + i, areas[i]);
-		}
 	}
 
 	@Override

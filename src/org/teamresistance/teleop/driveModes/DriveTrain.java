@@ -7,14 +7,14 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DriveTrain extends State {
 
-	private Target target;
+	private AngleMatch target;
 	
 	private float angleOffset = 90;
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
 	
-	public DriveTrain(Target target) {
+	public DriveTrain(AngleMatch target) {
 		this.target = target;
 	}
 	
@@ -35,15 +35,16 @@ public class DriveTrain extends State {
 		}
 		
 		if(JoystickIO.btnScore.onButtonPressed()) {
+			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
 			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
 				target.setTargetAngle(30+angleOffset);
-				gotoState("Target");
+				gotoState("LoadToddsBall");
 			} else if(Math.abs((-30-angleOffset) - IO.imu.getYaw()) < angleDeadband) {
 				target.setTargetAngle(-30-angleOffset);
-				gotoState("Target");
+				gotoState("LoadToddsBall");
 			} else if(Math.abs((0+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
 				target.setTargetAngle(0+angleOffset);
-				gotoState("Target");
+				gotoState("LoadToddsBall");
 			}
 		}
 	}

@@ -2,17 +2,12 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-public class MoveLifterDown extends State {
+public class MoveLifterDown extends ReturnState {
 
-	private String returnState;
-	
-	public MoveLifterDown(String returnState) {
-		this.returnState = returnState;
-	}
-	
 	@Override
 	public void init() {
 		
@@ -26,26 +21,18 @@ public class MoveLifterDown extends State {
 
 	@Override
 	public void update() {
-		if(IO.lifterLowerLimit.get()) {
+		if(IO.bottomLifterSwitch.get()) {
 			stop();
 		}
 	}
 	
 	private void stop() {
 		IO.lifterMotor.set(0.0);
-		gotoState(returnState);
+		gotoReturnState();
 	}
 
 	@Override
 	public void onExit(StateTransition e) {
 
-	}
-	
-	public String getReturnState() {
-		return returnState;
-	}
-
-	public void setReturnState(String returnState) {
-		this.returnState = returnState;
 	}
 }

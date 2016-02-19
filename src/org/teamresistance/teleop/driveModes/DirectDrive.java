@@ -6,7 +6,7 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DirectDrive extends DriveTrain {
 
-	public DirectDrive(Target target) {
+	public DirectDrive(AngleMatch target) {
 		super(target);
 	}
 

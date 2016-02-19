@@ -2,15 +2,18 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
-import org.teamresistance.util.state.State;
+import org.teamresistance.robostates.DelayState;
+import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
 
-public class MoveLifter extends State {
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-	private String returnState;
+public class MoveLifter extends ReturnState {
+
+	private boolean up = false;
 	
 	public MoveLifter(String returnState) {
-		this.returnState = returnState;
+		super(returnState);
 	}
 	
 	@Override
@@ -20,43 +23,43 @@ public class MoveLifter extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		if(IO.lifterLowerLimit.get()) {
+		if(IO.bottomLifterSwitch.get()) {
+			up = true;
 			IO.lifterMotor.set(Constants.LIFTER_UP_SPEED);
-		} else if(IO.lifterUpperLimit.get()) {
+		} else if(IO.topLifterSwitch.get()) {
+			up = false;
 			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		} else {
-			if(IO.lifterMotor.get() < 0.0) {
-				IO.lifterMotor.set(Constants.LIFTER_UP_SPEED);
-			} else {
-				IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
-			}
+			up = false;
+			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		}
 	}
 
 	@Override
 	public void update() {
-		if(IO.lifterUpperLimit.get() && IO.lifterMotor.get() > 0.0) {
+		SmartDashboard.putBoolean("Up", up);
+		SmartDashboard.putNumber("Lifter Motor Speed", IO.lifterMotor.get());
+		if(IO.topLifterSwitch.get() && up) {
 			stop();
-		} else if(IO.lifterLowerLimit.get() && IO.lifterMotor.get() < 0.0) {
+		} else if(IO.bottomLifterSwitch.get() && !up) {
 			stop();
 		}
 	}
 	
 	private void stop() {
 		IO.lifterMotor.set(0.0);
-		gotoState(returnState);
+		if(up) {
+			((TopOutLifter)stateMachine.getState("TopOutLifter")).setReturnState(getReturnState());
+			((DelayState)stateMachine.getState("DelayState")).setReturnState("TopOutLifter");
+//			gotoState("TopOutLifter");
+			gotoState("DelayState");
+		} else {
+			gotoReturnState();
+		}
 	}
 	
 	@Override
 	public void onExit(StateTransition e) {
 
-	}
-
-	public String getReturnState() {
-		return returnState;
-	}
-
-	public void setReturnState(String returnState) {
-		this.returnState = returnState;
 	}
 }

@@ -5,6 +5,8 @@ import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class AntlerSnorflerUp extends State {
 
 	@Override
@@ -21,11 +23,14 @@ public class AntlerSnorflerUp extends State {
 
 	@Override
 	public void update() {
-		if(JoystickIO.btnSnorfler.onButtonPressed()) {
-			gotoState("SnorlferDown");
+		SmartDashboard.putBoolean("Updating", true);
+		if(JoystickIO.btnSnorfler.isDown() && !IO.ballSensor.get()) {
+			SmartDashboard.putBoolean("Snorfler", true);
+			gotoState("SnorflerDown");
 		}
 		
 		if(JoystickIO.btnAntler.onButtonPressed()) {
+			SmartDashboard.putBoolean("Antler", true);
 			gotoState("AntlersDown");
 		}
 	}

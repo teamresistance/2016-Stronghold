@@ -2,58 +2,73 @@ package org.teamresistance;
 
 import org.teamresistance.util.io.InvertableDigitalInput;
 import org.teamresistance.util.io.InvertableSolenoid;
-import org.teamresistance.util.io.InvertableVictorSP;
 import org.teamresistance.util.io.NavXIMU;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.VictorSP;
 
 public class IO {
 	
-	public static InvertableVictorSP leftDrive;
-	public static InvertableVictorSP rightDrive;
+	public static VictorSP leftDrive;
+	public static VictorSP rightDrive;
 	public static RobotDrive robotDrive;
 	
 	public static InvertableSolenoid snorflerSolenoid;
-	public static InvertableVictorSP snorflerMotor;
+	public static VictorSP snorflerMotor;
 	public static InvertableDigitalInput ballSensor;
+	public static InvertableSolenoid shooterSolenoid;
 	
 	public static InvertableSolenoid antlerSolenoid;
 	
-	public static InvertableSolenoid gateGrabberSolenoid;
 	public static InvertableSolenoid lifterTiltSolenoid;
-	public static InvertableVictorSP lifterMotor;
-	public static InvertableDigitalInput lifterLowerLimit;
-	public static InvertableDigitalInput lifterUpperLimit;
+	public static VictorSP lifterMotor;
+	public static InvertableDigitalInput bottomLifterSwitch;
+	public static InvertableDigitalInput topLifterSwitch;
 	
 	public static InvertableSolenoid flipperSolenoid;
 	
 	public static InvertableDigitalInput bottomFlipperSwitch;
+	public static InvertableDigitalInput middleLifterSwitch;
 	public static InvertableDigitalInput topFlipperSwitch;
+	
+	public static Compressor compressor;
+	public static Relay compressorRelay;
 	
 	public static NavXIMU imu;
 	
 	public static void init() {
-		leftDrive = new InvertableVictorSP(0);
-		rightDrive = new InvertableVictorSP(1);
+		leftDrive = new VictorSP(0);
+		leftDrive.setInverted(true);
+		rightDrive = new VictorSP(1);
+		rightDrive.setInverted(true);
 		robotDrive = new RobotDrive(leftDrive, rightDrive);
 		
-		snorflerSolenoid = new InvertableSolenoid(0);
-		snorflerMotor = new InvertableVictorSP(3);
-		ballSensor = new InvertableDigitalInput(0);
+		snorflerSolenoid = new InvertableSolenoid(3);
+		snorflerMotor = new VictorSP(3);
+		ballSensor = new InvertableDigitalInput(0, true);
+		
+		shooterSolenoid = new InvertableSolenoid(5);
 		
 		antlerSolenoid = new InvertableSolenoid(1);
+	
+		lifterTiltSolenoid = new InvertableSolenoid(2);
+		lifterMotor = new VictorSP(2);
+		lifterMotor.setInverted(true);
 		
-		gateGrabberSolenoid = new InvertableSolenoid(2);
-		lifterTiltSolenoid = new InvertableSolenoid(4);
-		lifterMotor = new InvertableVictorSP(4);
+		bottomLifterSwitch = new InvertableDigitalInput(5, true);
+		middleLifterSwitch = new InvertableDigitalInput(4);
+		topLifterSwitch = new InvertableDigitalInput(3);
 		
-		lifterLowerLimit = new InvertableDigitalInput(3);
-		lifterUpperLimit = new InvertableDigitalInput(4);
+		flipperSolenoid = new InvertableSolenoid(4);
 		
-		flipperSolenoid = new InvertableSolenoid(3);
+		bottomFlipperSwitch = new InvertableDigitalInput(2);
+		topFlipperSwitch = new InvertableDigitalInput(1);
 		
-		bottomFlipperSwitch = new InvertableDigitalInput(1);
-		topFlipperSwitch = new InvertableDigitalInput(2);
+		compressor = new Compressor();
+		compressorRelay = new Relay(0);
 		
 		imu = new NavXIMU();
 	}

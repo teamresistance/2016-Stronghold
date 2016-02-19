@@ -6,10 +6,12 @@ import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class SnorflerDown extends State {
-	
+
 	private static boolean paused = false;
-	
+
 	@Override
 	public void init() {
 
@@ -24,12 +26,12 @@ public class SnorflerDown extends State {
 
 	@Override
 	public void update() {
-		if(JoystickIO.btnCancel.onButtonPressed() || IO.ballSensor.get()) {
+		if (JoystickIO.btnCancel.onButtonPressed() || IO.ballSensor.get()) {
 			gotoState("AntlerSnorflerUp");
 		}
-		
-		if(JoystickIO.btnSnorfler.onButtonPressed()) {
-			if(paused) {
+
+		if (JoystickIO.btnSnorfler.onButtonPressed()) {
+			if (paused) {
 				paused = false;
 				IO.snorflerMotor.set(Constants.SNORFLE_SPEED);
 			} else {
@@ -37,8 +39,8 @@ public class SnorflerDown extends State {
 				IO.snorflerMotor.set(0.0);
 			}
 		}
-		
-		if(JoystickIO.btnAntler.onButtonPressed()) {
+
+		if (JoystickIO.btnAntler.onButtonPressed()) {
 			gotoState("AntlersDown");
 		}
 	}
