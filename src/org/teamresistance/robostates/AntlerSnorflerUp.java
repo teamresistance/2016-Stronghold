@@ -8,14 +8,6 @@ import org.teamresistance.util.state.StateTransition;
 
 public class AntlerSnorflerUp extends State {
 
-	protected AntlerSnorflerUp(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
-
-	@Override
-	public void init() {
-		
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {

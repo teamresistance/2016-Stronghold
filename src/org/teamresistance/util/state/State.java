@@ -10,11 +10,13 @@ package org.teamresistance.util.state;
  */
 public abstract class State {
 	
-	private StateMachine stateMachine;
+	protected StateMachine stateMachine;
 	private String name;
 	
-	protected State(StateMachine stateMachine, String name) {
+	void setStateMachine(StateMachine stateMachine) {
 		this.stateMachine = stateMachine;
+	}
+	void setName(String name) {
 		this.name = name;
 	}
 	
@@ -35,12 +37,6 @@ public abstract class State {
 	public String toString() {
 		return name;
 	}
-	
-	/**
-	 * Called by the state machine when this state is first created.
-	 * Contains state object initialization code.
-	 */
-	public abstract void init();
 	
 	/**
 	 * Called by the state machine whenever this state is entered.

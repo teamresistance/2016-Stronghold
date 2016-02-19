@@ -2,15 +2,17 @@ package org.teamresistance.auto;
 
 import org.teamresistance.IO;
 
-class CollisionDetection {
+public class CollisionDetection {
 	public static final double kCollisionThreshold_DeltaG = 0.5f;
+	private boolean collisionDetected;
 	
+	public boolean detected() { return collisionDetected; }
 
 	public void collisonDetection() {
-		double last_world_linear_accel_x = 0;//set these some to some reasonably typical value in order to avoid never-initialized errors
-		double last_world_linear_accel_y = 0;
+		double last_world_linear_accel_x = 0.5;//set these some to some reasonably typical value in order to avoid never-initialized errors
+		double last_world_linear_accel_y = 0.5;
 
-		boolean collisionDetected = false;
+		collisionDetected = false;
     
 		double curr_world_linear_accel_x = IO.imu.getWorldLinearAccelX();
 		double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
