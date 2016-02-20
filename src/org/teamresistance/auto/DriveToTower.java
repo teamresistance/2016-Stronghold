@@ -79,15 +79,15 @@ public class DriveToTower extends State {
 		elapsed += Time.getDelta();
 		System.out.println("StartAngle = "+startAngle);
 		SmartDashboard.putNumber("startAngle = ",startAngle);
-		if(firstTurn==false) {
-			if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
-				IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			} else {
-				firstTurn = true;
-				time = elapsed;
-			}
-		} else {
-			if(driven==false) {
+		//if(firstTurn==false) {
+			//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
+				//IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+			//} else {
+				//firstTurn = true;
+				//time = elapsed;
+			//}
+		//} else {
+			//if(driven==false) {
 				if((elapsed-time)<distance) {
 					IO.robotDrive.arcadeDrive(speed,0.0);
 					//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
@@ -106,12 +106,12 @@ public class DriveToTower extends State {
 						//lastTurn = true; //change state here. 
 					//}
 				
-			}
+			//}
 			
 		//}
 		
 			
-	}
+	//}
 		//else {
 			//IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
 			//need to figure out some way of making it go to a targeting state rather than looping
