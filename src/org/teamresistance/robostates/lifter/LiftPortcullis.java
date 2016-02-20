@@ -18,11 +18,6 @@ public class LiftPortcullis extends State {
 	}
 
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		// Retract the solenoid
 		lifterTiltSolenoid.set(false);
@@ -36,16 +31,6 @@ public class LiftPortcullis extends State {
 			// Otherwise, raise the flipper
 			gotoState("RaiseFlipper");
 		}
-	}
-
-	@Override
-	public void update() {
-
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-
 	}
 
 }
