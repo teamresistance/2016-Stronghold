@@ -17,22 +17,22 @@ import org.teamresistance.util.Time;
 public class DriveToTower extends State {
 
 	final private static int[][] START_ANGLES = {
-		{0, 30, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
+		{60, 60, 60},
+		{60, 60, 60},
+		{60, 60, 60},
+		{60, 60, 60}
 	};
 	final private static double[][] DISTANCES = {
-		{1.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0}
+		{0, 0.0, 0.0},
+		{0.0, 0.0, 0.0},
+		{0.0, 0.0, 0.0},
+		{0.0, 0.0, 0.0}
 	};
 	final private static int[][] END_ANGLES = {
-		{0, -60, 0, 0}, 
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
+		{0, 0, 0}, 
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0}
 	};
 	
 	//	Cheval, Drawbridge, Moat, Portcullis, Ramparts, RockWall, Rough terrain
@@ -50,7 +50,7 @@ public class DriveToTower extends State {
 	
 	public DriveToTower(int position, int goal, int defense) {
 		distance = DISTANCES[position-2][goal];
-		startAngle = START_ANGLES[position=2][goal];
+		startAngle = START_ANGLES[position-2][goal];
 		endAngle = END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
 		orient = ORIENTATION[defense];
@@ -82,23 +82,57 @@ public class DriveToTower extends State {
 
 	}
 
+	private boolean firstTurn = false;
+	private boolean driven = false;
+	private boolean lastTurn = false;
+	
 	@Override
 	public void update() {
 		elapsed += Time.getDelta();
-		if(elapsed<distance) {
-			IO.robotDrive.arcadeDrive(speed,0.0);
-		} else {
-			IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			//need to figure out some way of making it go to a targeting state rather than looping
-			while(IO.snorflerSolenoid.get()) {
-				IO.snorflerSolenoid.set(false);
+		if(firstTurn==false) {
+			if(!IO.imu.isStraight(5, 60)) {
+				IO.imu.turnTo(60, 5);
+			} //else {
+				//firstTurn = true;
 			}
-			while(IO.ballSensor.get()) {
-				IO.snorflerMotor.set(Constants.SNORFLE_DUMP_SPEED);
-			}
+		//} //else {
+			//if(!driven) {
+				//if(elapsed<distance) {
+					//IO.robotDrive.arcadeDrive(speed,0.0);
+					//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
+					//	IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+					//}
+					
+				//} 
+					//else {
+				//	driven = true;
+				//}
+			//}else {
+			//	if(!lastTurn){
+				//	if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
+					//	IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+					//} else {
+						//lastTurn = true; //change state here. 
+					//}
+				
+			//}
 			
-		}
+		//}
+		
+			
 	}
+		//else {
+			//IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+			//need to figure out some way of making it go to a targeting state rather than looping
+			//while(IO.snorflerSolenoid.get()) {
+			//	IO.snorflerSolenoid.set(false);
+			//}
+			//while(IO.ballSensor.get()) {
+			//	IO.snorflerMotor.set(Constants.SNORFLE_DUMP_SPEED);
+			//}
+			
+	//	}
+//	}
 
 	@Override
 	public void onExit(StateTransition e) {

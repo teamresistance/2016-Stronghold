@@ -23,7 +23,7 @@ public class Autonomous extends State {
 		int goalPosition = 1;//(int) SmartDashboard.getNumber("goal");
 		
 		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
-		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
+		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
 		
 		
 	}
@@ -39,9 +39,11 @@ public class Autonomous extends State {
 	public void update() {
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		
-		IO.imu.turnTo(90, 5);
+		//if(!IO.imu.isStraight(10, 90)) {
+		//	IO.imu.turnTo(90, 10);
+		//}
 		
-		autoMachine.update();
+		//autoMachine.update();
 	}
 
 	@Override

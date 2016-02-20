@@ -12,7 +12,7 @@ public class AutoConstants {
 	
 	public static final double COURTYARD_SPEED = 0.5;
 	
-	public static final int ANGLE_ERROR_THRESHOLD=10;
+	public static final int ANGLE_ERROR_THRESHOLD=5;
 	
 	public static final int[] LEFT_GOAL_START_ANGLE = {0, 0, 0, 0}; // 2, 3, 4, 5
 	public static final int[] LEFT_GOAL_DRIVE_TIME = {0, 0, 0, 0};
