@@ -13,27 +13,11 @@ import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.util.Time;
+import org.teamresistance.auto.AutoConstants;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToTower extends State {
-
-	final private static int[][] START_ANGLES = {
-		{60, 60, 60},
-		{60, 60, 60},
-		{60, 60, 60},
-		{60, 60, 60}
-	};
-	final private static double[][] DISTANCES = {
-		{0, 0.0, 0.0},
-		{0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0}
-	};
-	final private static int[][] END_ANGLES = {
-		{0, 0, 0}, 
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0}
-	};
 	
 	//	Cheval, Drawbridge, Moat, Portcullis, Ramparts, RockWall, Rough terrain
 	final private static boolean[] ORIENTATION = 
@@ -41,7 +25,7 @@ public class DriveToTower extends State {
 	
 	
 	private double distance;
-	private int startAngle;
+	private int startAngle = 90;
 	private int endAngle;
 	private double elapsed = 0;
 	private double speed;
@@ -49,13 +33,16 @@ public class DriveToTower extends State {
 	private boolean orient;
 	
 	public DriveToTower(int position, int goal, int defense) {
-		distance = DISTANCES[position-2][goal];
-		startAngle = START_ANGLES[position-2][goal];
-		endAngle = END_ANGLES[position-2][goal];
+		distance = AutoConstants.DISTANCES[position-2][goal];
+		SmartDashboard.putNumber("Travel time", distance);
+		startAngle = AutoConstants.START_ANGLES[position-2][goal];
+		//SmartDashboard.putNumber("angle", startAngle);
+		endAngle = AutoConstants.END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
+		SmartDashboard.putNumber("Speed: ", speed);
 		orient = ORIENTATION[defense];
 		
-		if(orient) {
+		/*if(orient) {
 			
 			//add 180 and wrap to -180
 			startAngle += 180;
@@ -63,10 +50,10 @@ public class DriveToTower extends State {
 			endAngle += 180;
 			wrap(endAngle);
 			
-		}
+		}*/
 		
-		IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-		
+		//IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+		SmartDashboard.putNumber("Angle", startAngle);
 	}
 	
 	public void wrap(double angle) {
@@ -85,28 +72,32 @@ public class DriveToTower extends State {
 	private boolean firstTurn = false;
 	private boolean driven = false;
 	private boolean lastTurn = false;
+	private double time = 0;
 	
 	@Override
 	public void update() {
 		elapsed += Time.getDelta();
+		System.out.println("StartAngle = "+startAngle);
+		SmartDashboard.putNumber("startAngle = ",startAngle);
 		if(firstTurn==false) {
-			if(!IO.imu.isStraight(5, 60)) {
-				IO.imu.turnTo(60, 5);
-			} //else {
-				//firstTurn = true;
+			if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
+				IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+			} else {
+				firstTurn = true;
+				time = elapsed;
 			}
-		//} //else {
-			//if(!driven) {
-				//if(elapsed<distance) {
-					//IO.robotDrive.arcadeDrive(speed,0.0);
+		} else {
+			if(driven==false) {
+				if((elapsed-time)<distance) {
+					IO.robotDrive.arcadeDrive(speed,0.0);
 					//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
 					//	IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
 					//}
 					
-				//} 
+				} 
 					//else {
 				//	driven = true;
-				//}
+				}
 			//}else {
 			//	if(!lastTurn){
 				//	if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
@@ -115,7 +106,7 @@ public class DriveToTower extends State {
 						//lastTurn = true; //change state here. 
 					//}
 				
-			//}
+			}
 			
 		//}
 		

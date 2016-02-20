@@ -10,20 +10,27 @@ public class AutoConstants {
 	public static final double ROCK_WALL_CROSS_SPEED = 0.5;
 	public static final double ROUGH_TERRAIN_CROSS_SPEED = 0.5;
 	
-	public static final double COURTYARD_SPEED = 0.5;
+	public static final double COURTYARD_SPEED = 0.75;
 	
-	public static final int ANGLE_ERROR_THRESHOLD=5;
+	public static final int ANGLE_ERROR_THRESHOLD=10;
 	
-	public static final int[] LEFT_GOAL_START_ANGLE = {0, 0, 0, 0}; // 2, 3, 4, 5
-	public static final int[] LEFT_GOAL_DRIVE_TIME = {0, 0, 0, 0};
-	public static final int[] LEFT_GOAL_END_ANGLE = {0, 0, 0, 0};
-	
-	public static final int[] MIDDLE_GOAL_START_ANGLE = {0, 0, 0, 0}; 
-	public static final int[] MIDDLE_GOAL_DRIVE_TIME = {0, 0, 0, 0};
-	public static final int[] MIDDLE_GOAL_END_ANGLE = {0, 0, 0, 0};
-	
-	public static final int[] RIGHT_GOAL_START_ANGLE = {0, 0, 0, 0}; 
-	public static final int[] RIGHT_GOAL_DRIVE_TIME = {0, 0, 0, 0};
-	public static final int[] RIGHT_GOAL_END_ANGLE = {0, 0, 0, 0};
+	final public static int[][] START_ANGLES = {
+		{160, 160, 160},
+		{160, 160, 160},
+		{160, 160, 160},
+		{160, 160, 160}
+	};
+	final public static double[][] DISTANCES = {
+		{2, 2.0, 2.0},
+		{2.0, 2.0, 2.0},
+		{2.0, 2.0, 2.0},
+		{2.0, 2.0, 2.0}
+	};
+	final public static int[][] END_ANGLES = {
+		{0, 0, 0}, 
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0}
+	};
 	
 }

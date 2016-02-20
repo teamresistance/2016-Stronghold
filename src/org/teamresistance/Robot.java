@@ -70,8 +70,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		//Time.update();
-		//robotModes.update();
+		Time.update();
+		robotModes.update();
 				//JoystickIO.update();
 				//robotMachine.update();
 				//antlerMachine.update();
