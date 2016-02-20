@@ -46,10 +46,10 @@ public class Teleop extends State {
 		
 		SmartDashboard.putNumber("Frame Rate", gripTable.getNumber("frameRate", -1));
 		
-		double[] areas = gripTable.getNumberArray("area", new double[0]);
-		for(int i = 0; i < areas.length; i++) {
-			SmartDashboard.putNumber("Area " + i, areas[i]);
-		}
+	//	double[] areas = gripTable.getNumberArray("area", new double[0]);
+	//	for(int i = 0; i < areas.length; i++) {
+	//		SmartDashboard.putNumber("Area " + i, areas[i]);
+	//	}
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class DefenseMoat extends Defense {
 	public void whileCrossing() {	
 		time += Time.getDelta();
 		
-		if(!IO.navX.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time<2.0) {
+		if(!IO.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time<2.0) {
 			//don't know if I can do it like this - check to make sure it doesn't freeze up
 			
 			IO.robotDrive.arcadeDrive(AutoConstants.MOAT_CROSS_SPEED, 0.0);

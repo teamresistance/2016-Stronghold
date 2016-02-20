@@ -1,35 +1,51 @@
 package org.teamresistance.util.io;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
+
+import java.lang.Math;
+
 import org.teamresistance.IO;
 
-public class NavXIMU {	
-	
-	public double getRollAngle() {
-		return IO.imu.getRoll();
+public class NavXIMU {
+	AHRS ahrs;	
+
+	public NavXIMU() { //setup
+		try {
+			ahrs = new AHRS(SPI.Port.kMXP); 
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		}
 	}
 	
-	public double getPitchAngle() {
-		return IO.imu.getPitch();
+	public double getRoll() {
+		return ahrs.getRoll();
 	}
 	
-	public double getYawAngle() {
-		return IO.imu.getYaw();
+	public double getPitch() {
+		return ahrs.getPitch();
 	}
 	
-	public Boolean isStraight(int thresholdAngle, int startAngle) {
-		Boolean isStraight = false;
+	public double getYaw() {
+		return ahrs.getYaw();
+	}
+	
+	public boolean isStraight(int thresholdAngle, int startAngle) {
+		boolean isStraight = false;
 		
-		double angle = IO.imu.getYaw();
+		double angle = ahrs.getYaw();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) isStraight = true;
 		
 		return isStraight;
 	}
 	
-	public Boolean pitchLevel(int thresholdAngle, int startAngle) {
-		Boolean pitchLevel = false;
+	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
+		boolean pitchLevel = false;
 		
-		double angle = IO.imu.getPitch();
+		double angle = ahrs.getPitch();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) pitchLevel = true;
 		
@@ -37,10 +53,10 @@ public class NavXIMU {
 		
 	}
 
-	public Boolean rollLevel(int thresholdAngle, int startAngle) {
-		Boolean rollLevel = false;
+	public boolean isRollLevel(int thresholdAngle, int startAngle) {
+		boolean rollLevel = false;
 		
-		double angle = IO.imu.getRoll();
+		double angle = ahrs.getRoll();
 		
 		if(Math.abs(angle-startAngle)<=thresholdAngle) rollLevel = true;
 		
@@ -48,19 +64,19 @@ public class NavXIMU {
 		
 	}
 	
-	public Boolean isLevel(int thresholdAngle, int startRoll, int startPitch) {
-		Boolean isLevel = false;
-		Boolean pitchLevel = pitchLevel(thresholdAngle, startPitch);
-		Boolean rollLevel = rollLevel(thresholdAngle, startRoll);
+	public boolean isLevel(int thresholdAngle, int startRoll, int startPitch) {
+		boolean isLevel = false;
+		boolean pitchLevel = isPitchLevel(thresholdAngle, startPitch);
+		boolean rollLevel = isRollLevel(thresholdAngle, startRoll);
 		
 		if(pitchLevel&&rollLevel) isLevel = true;
 		
 		return isLevel;
 	}
 	
-	public Boolean isLeft(int targetAngle) {
-		Boolean isLeft = false;
-		double angle = IO.imu.getYaw();
+	public boolean isLeft(int targetAngle) {
+		boolean isLeft = false;
+		double angle = ahrs.getYaw();
 		
 		if(targetAngle<angle) isLeft = true; //need to check this to make sure it's going the right way
 		
@@ -78,20 +94,8 @@ public class NavXIMU {
 			}
 		}
 	}
+	
 }
-	
-/*public void turnAngle(double angle) {
-	initAngle = DefenseMaster.imu.getYawAngle();
-	difference = 0;
-	IO.robotDrive.arcadeDrive(0,0.5);
-	while(difference<angle&&elapsed>0.25&&elapsed<0.5) {
-		difference = (initAngle-DefenseMaster.imu.getYawAngle());
-		timer.update();
-		elapsed = timer.getDelta();
-	}
-	IO.robotDrive.arcadeDrive(0,0);
-}*/
-	
 	
 
 	/*public void rotateToAngle(AHRS ahrs) {
@@ -113,7 +117,11 @@ public class NavXIMU {
         
 		
 	}*/
-
+	
+	
+	
+	
+	
 	
 	
 	
