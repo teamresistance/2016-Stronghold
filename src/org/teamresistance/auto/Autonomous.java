@@ -22,20 +22,24 @@ public class Autonomous extends State {
 		int defenseType = 5;//(int) SmartDashboard.getNumber("defense type");
 		int goalPosition = 1;//(int) SmartDashboard.getNumber("goal");
 		
-		autoMachine.addState(new CrossDefense(defenseType));
-		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType));
+		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
+		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
 		
 		
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		autoMachine.setState("CrossDefense");
+		//autoMachine.setState("CrossDefense");
+		//autoMachine.setState("DriveToTower");
+	
 	}
 
 	@Override
 	public void update() {
-		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		
+		IO.imu.turnTo(90, 5);
 		
 		autoMachine.update();
 	}
