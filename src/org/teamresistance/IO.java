@@ -39,6 +39,9 @@ public class IO {
 	
 	public static NavXIMU imu;
 	
+	public static InvertableSolenoid lifterLight;
+	public static InvertableSolenoid snorflerLight;
+	
 	public static void init() {
 		leftDrive = new VictorSP(0);
 		leftDrive.setInverted(true);
@@ -64,13 +67,16 @@ public class IO {
 		
 		flipperSolenoid = new InvertableSolenoid(4);
 		
-		bottomFlipperSwitch = new InvertableDigitalInput(2);
-		topFlipperSwitch = new InvertableDigitalInput(1);
+		bottomFlipperSwitch = new InvertableDigitalInput(2, true);
+		topFlipperSwitch = new InvertableDigitalInput(1, true);
 		
 		compressor = new Compressor();
 		compressorRelay = new Relay(0);
 		
 		imu = new NavXIMU();
+	
+		lifterLight = new InvertableSolenoid(6);
+		snorflerLight = new InvertableSolenoid(7);
 	}
 	
 }

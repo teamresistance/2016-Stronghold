@@ -23,10 +23,14 @@ public class TeleopLifterIdle extends State {
 	public void update() {
 		if(JoystickIO.btnToggleFoot.onButtonPressed()) {
 			IO.flipperSolenoid.toggle();
+			if(!IO.bottomLifterSwitch.get()) {
+				((MoveLifter)stateMachine.getState("MoveLifter")).setReturnState(getName());
+				gotoState("MoveLifter");
+			}
 		} else if(JoystickIO.btnToggleLifter.onButtonPressed()) {
 			((MoveLifter)stateMachine.getState("MoveLifter")).setReturnState(getName());
 			gotoState("MoveLifter");
-		} else if(JoystickIO.btnPortcullis.onButtonPressed()) {
+		} else if(JoystickIO.btnPortcullis.isDown()) {
 			Robot.teleop.setDriveIdle();
 			gotoState("LiftPortcullis");
 		}

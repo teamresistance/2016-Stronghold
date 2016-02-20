@@ -17,6 +17,7 @@ public class JoystickIO {
 	
 	public static Button btnDriveMode;
 	public static Button btnDriveReverse;
+	public static Button btnAngleHold;
 	
 	public static Button btnScore;
 	public static Button btnAntler;
@@ -35,6 +36,7 @@ public class JoystickIO {
 		
 		btnDriveMode = newButton(leftJoystick, 3);
 		btnDriveReverse = newButton(leftJoystick, 1);
+		btnAngleHold = newButton(rightJoystick, 1);
 		
 		btnScore = newButton(codriverStick, 1);
 		btnAntler = newButton(codriverStick, 4);

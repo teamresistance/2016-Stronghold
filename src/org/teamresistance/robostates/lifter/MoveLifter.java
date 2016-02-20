@@ -37,8 +37,6 @@ public class MoveLifter extends ReturnState {
 
 	@Override
 	public void update() {
-		SmartDashboard.putBoolean("Up", up);
-		SmartDashboard.putNumber("Lifter Motor Speed", IO.lifterMotor.get());
 		if(IO.topLifterSwitch.get() && up) {
 			stop();
 		} else if(IO.bottomLifterSwitch.get() && !up) {

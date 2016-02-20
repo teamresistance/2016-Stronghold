@@ -14,6 +14,7 @@ import org.teamresistance.robostates.lifter.MoveLifterUp;
 import org.teamresistance.robostates.lifter.RaiseFlipper;
 import org.teamresistance.robostates.lifter.TeleopLifterIdle;
 import org.teamresistance.robostates.lifter.TopOutLifter;
+import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.Idle;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
@@ -55,6 +56,7 @@ public class Teleop extends State {
 		driveModes.addState(new Idle(), "Idle");
 		driveModes.addState(new Shoot());
 		driveModes.addState(new Target());
+		driveModes.addState(new AngleHold());
 		
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
@@ -70,6 +72,8 @@ public class Teleop extends State {
 		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
 		lifterMachine.addState(delayState);
 		lifterMachine.addState(new TopOutLifter());
+	
+		SmartDashboard.putNumber("Speed", 0.0);
 	}
 
 	@Override
@@ -81,14 +85,8 @@ public class Teleop extends State {
 
 	@Override
 	public void update() {
-		
-		SmartDashboard.putBoolean("Upper", IO.topLifterSwitch.get());
-		SmartDashboard.putBoolean("Middle", IO.middleLifterSwitch.get());
-		SmartDashboard.putBoolean("Bottom", IO.bottomLifterSwitch.get());
-		
-		SmartDashboard.putBoolean("BallSensor", IO.ballSensor.get());
 		SmartDashboard.putBoolean("TopFlipperSwitch", IO.topFlipperSwitch.get());
-		SmartDashboard.putBoolean("BottomFlipperSwitch", IO.topFlipperSwitch.get());
+		SmartDashboard.putBoolean("BottomFlipperSwitch", IO.bottomFlipperSwitch.get());
 		
 		SmartDashboard.putBoolean("Compressor", IO.compressor.enabled());
 		
@@ -100,9 +98,13 @@ public class Teleop extends State {
 		lifterMachine.update();
 //		IO.lifterMotor.set(JoystickIO.codriverStick.getY());
 		
+//		IO.robotDrive.drive(SmartDashboard.getNumber("Speed"), SmartDashboard.getNumber("Speed"));
+		
 		SmartDashboard.putNumber("Roll", IO.imu.getRoll());
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
+		
+//		IO.shooterSolenoid.set(JoystickIO.btnScore.isDown() && !IO.ballSensor.get());
 	}
 
 	@Override
