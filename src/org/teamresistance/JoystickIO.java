@@ -28,6 +28,7 @@ public class JoystickIO {
 	public static Button btnToggleLifter;
 	public static Button btnPortcullis;
 	public static Button btnDrawbridge;
+	public static Button btnToggleLifterPosition;
 	
 	public static void init() {
 		leftJoystick = new Joystick(0);
@@ -47,6 +48,8 @@ public class JoystickIO {
 		btnToggleLifter = newButton(codriverStick, 6);
 		btnPortcullis = newButton(codriverStick, 7);
 		btnDrawbridge = newButton(codriverStick, 8);
+		
+		btnToggleLifterPosition = newButton(codriverStick, 9);
 	}
 	
 	public static void update() {

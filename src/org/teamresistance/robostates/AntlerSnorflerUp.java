@@ -24,7 +24,6 @@ public class AntlerSnorflerUp extends State {
 
 	@Override
 	public void update() {
-		SmartDashboard.putBoolean("Updating", true);
 		if(JoystickIO.btnSnorfler.isDown() && !IO.ballSensor.get()) {
 			SmartDashboard.putBoolean("Snorfler", true);
 			gotoState("SnorflerDown");

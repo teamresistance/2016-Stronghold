@@ -20,7 +20,8 @@ public class DriveTrain extends State {
 	
 	@Override
 	public void init() {
-
+		IO.lifterLight.set(reverse);
+		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override

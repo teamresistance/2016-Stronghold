@@ -26,7 +26,6 @@ public class SnorflerDown extends State {
 
 	@Override
 	public void update() {
-		IO.snorflerMotor.set(Constants.SNORFLE_SPEED);
 		if (JoystickIO.btnCancel.onButtonPressed() || IO.ballSensor.get()) {
 			gotoState("AntlerSnorflerUp");
 		}

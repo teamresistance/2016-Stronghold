@@ -7,7 +7,11 @@ import org.teamresistance.robostates.AntlerSnorflerUp;
 import org.teamresistance.robostates.AntlersDown;
 import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.SnorflerDown;
+import org.teamresistance.robostates.lifter.DriveThroughDrawbridge;
+import org.teamresistance.robostates.lifter.LeavePortcullis;
 import org.teamresistance.robostates.lifter.LiftPortcullis;
+import org.teamresistance.robostates.lifter.LowerDrawbridge;
+import org.teamresistance.robostates.lifter.LowerFlipper;
 import org.teamresistance.robostates.lifter.MoveLifter;
 import org.teamresistance.robostates.lifter.MoveLifterDown;
 import org.teamresistance.robostates.lifter.MoveLifterUp;
@@ -72,7 +76,12 @@ public class Teleop extends State {
 		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
 		lifterMachine.addState(delayState);
 		lifterMachine.addState(new TopOutLifter());
-	
+		lifterMachine.addState(new LeavePortcullis());
+		lifterMachine.addState(new LowerFlipper());
+		lifterMachine.addState(new LowerDrawbridge());
+		lifterMachine.addState(new DriveThroughDrawbridge());
+		
+		
 		SmartDashboard.putNumber("Speed", 0.0);
 	}
 

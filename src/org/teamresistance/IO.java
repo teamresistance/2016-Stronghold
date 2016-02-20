@@ -62,7 +62,7 @@ public class IO {
 		lifterMotor.setInverted(true);
 		
 		bottomLifterSwitch = new InvertableDigitalInput(5, true);
-		middleLifterSwitch = new InvertableDigitalInput(4);
+		middleLifterSwitch = new InvertableDigitalInput(4, true);
 		topLifterSwitch = new InvertableDigitalInput(3);
 		
 		flipperSolenoid = new InvertableSolenoid(4);
