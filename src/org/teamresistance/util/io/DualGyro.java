@@ -1,4 +1,4 @@
-package org.teamresistance.util.io;
+/*package org.teamresistance.util.io;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,4 +52,4 @@ public class DualGyro {
 		SmartDashboard.putNumber("Average Angle", getAngle());
 	}
 	
-}
+}*/

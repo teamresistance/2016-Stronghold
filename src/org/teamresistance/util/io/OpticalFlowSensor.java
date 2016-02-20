@@ -5,7 +5,7 @@ import org.teamresistance.mathd.Vector2d;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class OpticalFlowSensor {
+/*public class OpticalFlowSensor {
 	
 	private DualGyro gyro;
 	private SPI spi;
@@ -69,3 +69,4 @@ public class OpticalFlowSensor {
 	}
 }
 
+*/
