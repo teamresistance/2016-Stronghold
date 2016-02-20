@@ -5,16 +5,16 @@ import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
  /*
  * Four states: initial positioning?, defense crossing, tower positioning, targeting/shooting
  */
 public class Autonomous extends State {
+	//follows the same indexing as the array found in CrossDefense's constructor
+	final private static boolean[] ORIENTATION = {false, true, false, true, false, true, false};
+	
 	private StateMachine autoMachine;
 	
-	public Autonomous() {
+	public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
 		autoMachine = new StateMachine();
 		
 		//This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
@@ -22,10 +22,8 @@ public class Autonomous extends State {
 		int defenseType = 5;//(int) SmartDashboard.getNumber("defense type");
 		int goalPosition = 1;//(int) SmartDashboard.getNumber("goal");
 		
-		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
-		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
-		
-		
+		//autoMachine.addState(new CrossDefense(defenseType, antlerMachine, lifterMachine), "CrossDefense");
+		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, ORIENTATION[defenseType]), "DriveToTower");
 	}
 
 	@Override

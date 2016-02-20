@@ -3,16 +3,9 @@ package org.teamresistance.auto;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
-import org.teamresistance.auto.defense.DefenseCheval;
-import org.teamresistance.auto.defense.DefenseDrawbridge;
-import org.teamresistance.auto.defense.DefenseMoat;
-import org.teamresistance.auto.defense.DefensePortcullis;
-import org.teamresistance.auto.defense.DefenseRamparts;
-import org.teamresistance.auto.defense.DefenseRockWall;
-import org.teamresistance.auto.defense.DefenseRoughTerrain;
+import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
-import org.teamresistance.util.Time;
 
 public class DriveToTower extends State {
 
@@ -35,25 +28,16 @@ public class DriveToTower extends State {
 		{0, 0, 0, 0}
 	};
 	
-	//	Cheval, Drawbridge, Moat, Portcullis, Ramparts, RockWall, Rough terrain
-	final private static boolean[] ORIENTATION = 
-		{false, true, false, true, false, true, false};
-	
-	
 	private double distance;
-	private int startAngle;
 	private int endAngle;
 	private double elapsed = 0;
 	private double speed;
-	private boolean turned = false;
-	private boolean orient;
 	
-	public DriveToTower(int position, int goal, int defense) {
+	public DriveToTower(int position, int goal, boolean orient) {
 		distance = DISTANCES[position-2][goal];
-		startAngle = START_ANGLES[position=2][goal];
+		int startAngle = START_ANGLES[position-2][goal];
 		endAngle = END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
-		orient = ORIENTATION[defense];
 		
 		if(orient) {
 			
@@ -69,7 +53,7 @@ public class DriveToTower extends State {
 		
 	}
 	
-	public void wrap(double angle) {
+	private void wrap(double angle) {
 		speed*= -1;
 		if(angle>180) {
 			double difference = angle-180;

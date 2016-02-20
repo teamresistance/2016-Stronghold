@@ -8,24 +8,23 @@ import org.teamresistance.auto.defense.DefenseRamparts;
 import org.teamresistance.auto.defense.DefenseRockWall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import org.teamresistance.util.state.State;
+import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 public class CrossDefense extends State {
 
-	final private static Defense[] DEFENSES = new Defense[]{
-		new DefenseCheval(),
-		new DefenseDrawbridge(),
-		new DefenseMoat(),
-		new DefensePortcullis(),
-		new DefenseRamparts(),
-		new DefenseRockWall(),
-		new DefenseRoughTerrain()
-	};
-	
 	private Defense defense;
 	
-	public CrossDefense(int type) {
-		defense = DEFENSES[type]; 
+	public CrossDefense(int type, StateMachine antlerMachine, StateMachine lifterMachine) {
+		defense = new Defense[]{
+			new DefenseCheval(),
+			new DefenseDrawbridge(),
+			new DefenseMoat(),
+			new DefensePortcullis(lifterMachine),
+			new DefenseRamparts(),
+			new DefenseRockWall(),
+			new DefenseRoughTerrain()
+		}[type]; //sneaky syntax: indexing into an anonymous array.
 	}
 
 	@Override

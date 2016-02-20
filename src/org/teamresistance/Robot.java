@@ -16,6 +16,7 @@ public class Robot extends IterativeRobot {
 
 	private StateMachine robotMachine;
 	private StateMachine antlerMachine;
+	private StateMachine lifterMachine;
 	
 	@Override
 	public void robotInit() {
@@ -30,9 +31,10 @@ public class Robot extends IterativeRobot {
 
 		robotMachine = new StateMachine();
 		antlerMachine = new StateMachine();
+		lifterMachine = new StateMachine();
 		
 		robotMachine.addState(new Teleop(), "teleop");
-		robotMachine.addState(new Autonomous(), "auto");
+		robotMachine.addState(new Autonomous(antlerMachine, lifterMachine), "auto");
 		
 		antlerMachine.addState(new AntlerSnorflerUp());
 		antlerMachine.addState(new AntlersDown());
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		robotMachine.setState("auto");
 		antlerMachine.setState("AntlerSnorflerUp");
+		//lifterMachine.setState();
 	}
 
 	@Override
@@ -50,6 +53,7 @@ public class Robot extends IterativeRobot {
 		Time.update();
 		robotMachine.update();
 		antlerMachine.update();
+		lifterMachine.update();
 	}
 
 	@Override
@@ -63,5 +67,6 @@ public class Robot extends IterativeRobot {
 		JoystickIO.update();
 		robotMachine.update();
 		antlerMachine.update();
+		lifterMachine.update();
 	}
 }

@@ -3,9 +3,8 @@ package org.teamresistance.auto.defense;
 import org.teamresistance.IO;
 import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.auto.Defense;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.auto.SwingDetection;
+import org.teamresistance.util.Time;
 
 	 /*
 	 * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
@@ -13,10 +12,14 @@ import org.teamresistance.auto.SwingDetection;
 
 public class DefenseRockWall extends Defense {
 	
+	private static final double CROSS_SPEED = .5;
+	
 	private double time = 0.0;
 	private double swingNaught = 0;
-	SwingDetection swing;
-	private double delta=0;
+	private double delta =0;
+	
+	private SwingDetection swing;
+	
 	@Override
 	public void beginCrossing() {
 		swing = new SwingDetection();
@@ -29,7 +32,7 @@ public class DefenseRockWall extends Defense {
 		
 		if(!swing.detected() && time<1.0) {
 			//don't know if I can do it like this - check to make sure it doesn't freeze up	
-			IO.robotDrive.arcadeDrive(AutoConstants.ROCK_WALL_CROSS_SPEED, 0.0);
+			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 		}
 		else {
 			
@@ -38,7 +41,7 @@ public class DefenseRockWall extends Defense {
 				swingNaught+=delta;
 			}else {
 				if(IO.imu.isLevel(10, 0, 0) && time < 2.0) {
-					IO.robotDrive.arcadeDrive(AutoConstants.ROCK_WALL_CROSS_SPEED, 0.0);
+					IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 				}else {
 					this.setCrossing(false);
 				}
