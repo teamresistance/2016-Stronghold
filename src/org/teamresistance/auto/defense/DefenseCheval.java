@@ -26,21 +26,24 @@ public class DefenseCheval extends Defense {
 	public void whileCrossing() {
 		time += Time.getDelta();
 
-		if (Time.getDelta() > 0.5) {
+		/*if (Time.getDelta() > 0.5) {
 			while (IO.antlerSolenoid.get()) {
 				IO.antlerSolenoid.set(false);
 			}
-		} else {
+		} else {*/
 			while(!IO.antlerSolenoid.get()) {
 				IO.antlerSolenoid.set(true); // down = true, based on org/teamresistance/robostates/AntlersDown.java. This doesn't use the state machine structure, though, since there's no need for it
 			}
-		}
+		//}
 
 		if (IO.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time < 2.0) {
 			// don't know if I can do it like this - check to make sure it doesn't freeze up
 
 			IO.robotDrive.arcadeDrive(AutoConstants.CHEVAL_CROSS_SPEED, 0.0);
 		} else {
+			while(IO.antlerSolenoid.get()) {
+				IO.antlerSolenoid.set(false); //try leaving the antlers down for the full crossing - this worked really well when Robert tried it
+			}
 			this.setCrossing(false);
 		}
 
