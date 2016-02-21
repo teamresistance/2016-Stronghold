@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MoveLifter extends ReturnState {
 
 	private boolean up = false;
+	private boolean moveUp = false;
 	
 	public MoveLifter(String returnState) {
 		super(returnState);
@@ -18,7 +19,7 @@ public class MoveLifter extends ReturnState {
 	
 	@Override
 	public void init() {
-
+		
 	}
 
 	@Override
@@ -26,19 +27,22 @@ public class MoveLifter extends ReturnState {
 		if(IO.bottomLifterSwitch.get()) {
 			up = true;
 			IO.lifterMotor.set(Constants.LIFTER_UP_SPEED);
-		} else if(IO.topLifterSwitch.get()) {
+		} else if(IO.topLifterSwitch.get() && !moveUp) {
 			up = false;
 			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		} else {
-			up = false;
-			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
+			if(moveUp) {
+				up = true;
+				IO.lifterMotor.set(Constants.LIFTER_UP_SPEED);
+			} else {
+				up = false;
+				IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
+			}
 		}
 	}
 
 	@Override
 	public void update() {
-		SmartDashboard.putBoolean("Up", up);
-		SmartDashboard.putNumber("Lifter Motor Speed", IO.lifterMotor.get());
 		if(IO.topLifterSwitch.get() && up) {
 			stop();
 		} else if(IO.bottomLifterSwitch.get() && !up) {
@@ -60,6 +64,10 @@ public class MoveLifter extends ReturnState {
 	
 	@Override
 	public void onExit(StateTransition e) {
-
+		moveUp = false;
+	}
+	
+	public void moveUp() {
+		moveUp = true;
 	}
 }

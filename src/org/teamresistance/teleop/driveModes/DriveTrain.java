@@ -20,21 +20,27 @@ public class DriveTrain extends State {
 	
 	@Override
 	public void init() {
-
+		IO.lifterLight.set(reverse);
+		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-
+		IO.lifterLight.set(reverse);
+		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void update() {
 		if(JoystickIO.btnDriveReverse.onButtonPressed()) {
 			reverse = !reverse;
+			IO.lifterLight.set(reverse);
+			IO.snorflerLight.set(!reverse);
 		}
-		
-		if(JoystickIO.btnScore.onButtonPressed()) {
+		if(JoystickIO.btnAngleHold.isDown()) {
+			((AngleHold)stateMachine.getState("AngleHold")).setReturnState(getName());
+			gotoState("AngleHold");
+		} else if(JoystickIO.btnScore.onButtonPressed()) {
 			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
 			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
 				target.setTargetAngle(30+angleOffset);

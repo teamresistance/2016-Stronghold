@@ -5,39 +5,30 @@ import org.teamresistance.IO;
 import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
-import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-public class RaiseFlipper extends State {
+public class LeavePortcullis extends ReturnState {
 
 	private double startTime;
 	
 	@Override
 	public void init() {
-	
+
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		IO.flipperSolenoid.set(false);
 		startTime = Time.getTime();
+		IO.robotDrive.arcadeDrive(Constants.PORTCULLIS_LEAVE_SPEED, 0);
 	}
 
 	@Override
 	public void update() {
-		if(Time.getTime() - startTime >= Constants.PORTCULLIS_LIFT_DRIVE_DELAY) {
-			IO.robotDrive.arcadeDrive(Constants.PORTCULLIS_DRIVE_SPEED, 0);
-		}
-		if(IO.bottomFlipperSwitch.get()) {
+		IO.robotDrive.arcadeDrive(Constants.PORTCULLIS_LEAVE_SPEED, 0);
+		if(Time.getTime() - startTime >= Constants.PORTCULLIS_LEAVE_TIME) {
 			if(Robot.robotState.equals("teleop")) {
-				((ReturnState)stateMachine.getState("MoveLifter")).setReturnState("LeavePortcullis");
-			} else {
-				//Set auto return state
-				//((MoveLifterDown)stateMachine.getState("MoveLifterUp")).setReturnState("TeleopLifterIdle");
+				gotoState("TeleopLifterIdle");
 			}
-			gotoState("MoveLifter");
 		}
 	}
 

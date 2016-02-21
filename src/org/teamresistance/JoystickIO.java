@@ -17,6 +17,7 @@ public class JoystickIO {
 	
 	public static Button btnDriveMode;
 	public static Button btnDriveReverse;
+	public static Button btnAngleHold;
 	
 	public static Button btnScore;
 	public static Button btnAntler;
@@ -27,6 +28,7 @@ public class JoystickIO {
 	public static Button btnToggleLifter;
 	public static Button btnPortcullis;
 	public static Button btnDrawbridge;
+	public static Button btnToggleLifterPosition;
 	
 	public static void init() {
 		leftJoystick = new Joystick(0);
@@ -35,6 +37,7 @@ public class JoystickIO {
 		
 		btnDriveMode = newButton(leftJoystick, 3);
 		btnDriveReverse = newButton(leftJoystick, 1);
+		btnAngleHold = newButton(rightJoystick, 1);
 		
 		btnScore = newButton(codriverStick, 1);
 		btnAntler = newButton(codriverStick, 4);
@@ -45,6 +48,8 @@ public class JoystickIO {
 		btnToggleLifter = newButton(codriverStick, 6);
 		btnPortcullis = newButton(codriverStick, 7);
 		btnDrawbridge = newButton(codriverStick, 8);
+		
+		btnToggleLifterPosition = newButton(codriverStick, 9);
 	}
 	
 	public static void update() {
