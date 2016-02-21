@@ -71,7 +71,7 @@ public class Target extends ReturnState {
 	}
 	
 	public void onExit(StateTransition e) {
-		
+		gotoState("Shoot");
 	}
 
 }

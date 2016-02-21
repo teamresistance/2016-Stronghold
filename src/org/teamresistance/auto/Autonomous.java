@@ -6,9 +6,8 @@ import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 import org.teamresistance.auto.states.Target;
 import org.teamresistance.auto.states.Shoot;
-import org.teamresistance.auto.states.AntlersDown;
-import org.teamresistance.auto.states.AntlersUp;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
  /*
@@ -20,11 +19,12 @@ public class Autonomous extends State {
 	private StateMachine autoMachine;
 	private StateMachine antlerMachine;
 	
-	//public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
+	private NetworkTable gripTable;
+	
 	public Autonomous() {
 		
-		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
-		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
+		autoMachine.addState(new CrossDefense((int) defenseType), "CrossDefense");
+		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
 		
 	}
 
@@ -33,19 +33,11 @@ public class Autonomous extends State {
 		//autoMachine.setState("CrossDefense");
 		
 		autoMachine = new StateMachine();
-		antlerMachine = new StateMachine();
 
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
-
-		//AngleMatch target = new AngleMatch();
-		//driveModes.addState(target);
-	//	driveModes.addState(new Idle(), "Idle");
-		autoMachine.addState(new Shoot());
-		autoMachine.addState(new Target());
-	//	driveModes.addState(new AngleHold());
 		
-		antlerMachine.addState(new AntlersUp());
-		antlerMachine.addState(new AntlersDown());
+		autoMachine.addState(new Shoot(), "Shoot");
+		autoMachine.addState(new Target(), "Target");
 
 	}
 	

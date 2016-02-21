@@ -30,26 +30,21 @@ public class DefenseRockWall extends Defense {
 		delta = Time.getDelta();
 		time += delta;
 		
-		if(!swing.detected() && time<1.0) {
-			//don't know if I can do it like this - check to make sure it doesn't freeze up	
+		if(/*!swing.detected() && */time<1.0) {
 			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 		}
 		else {
 			
-			if(swing.detected()&&swingNaught<0.1) {
-				IO.robotDrive.arcadeDrive(0.0, 0.0);
-				swingNaught+=delta;
-			}else {
-				if(IO.imu.isLevel(10, 0, 0) && time < 2.0) {
+			//if(swing.detected()&&swingNaught<0.1) {
+			//	IO.robotDrive.arcadeDrive(0.0, 0.0);
+			//	swingNaught+=delta;
+				if(!IO.imu.isLevel(10, 0, 0) && time < 2.0) {
 					IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 				}else {
 					this.setCrossing(false);
-				}
 			}
-			
 		}
 		
 	}
-
-
+		
 }

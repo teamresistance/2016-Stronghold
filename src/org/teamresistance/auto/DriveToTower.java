@@ -109,7 +109,7 @@ public class DriveToTower extends State {
 	
 	@Override
 	public void onExit(StateTransition e) {
-		
+		gotoState("Target");
 	}
 
 }

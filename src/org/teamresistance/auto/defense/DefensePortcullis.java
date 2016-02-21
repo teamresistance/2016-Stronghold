@@ -12,19 +12,19 @@ public class DefensePortcullis extends Defense {
 	
 	private StateMachine lifterMachine;
 	
-	public DefensePortcullis(StateMachine lifterMachine) {
-		this.lifterMachine = lifterMachine;
+	public DefensePortcullis() {
+		//this.lifterMachine = lifterMachine;
 	}
 
 	@Override
 	public void beginCrossing() { //set the flipper to down, and lower the lifter all the way down
-		lowerFlipper();
-		lifterToBottom();
+	//	lowerFlipper();
+		//lifterToBottom();
 	}
 
 	@Override
 	public void whileCrossing() { //need to drive forward, raise flipper, lift motor to top, drive forward until level
-		elapsed += Time.getDelta();
+		/*elapsed += Time.getDelta();
 		if (elapsed<0.1) { //drive forward to the portcullis - will ideally implement collision detection here
 			IO.robotDrive.arcadeDrive(0.5, 0);
 		} 
@@ -67,5 +67,5 @@ public class DefensePortcullis extends Defense {
 		while(!IO.topFlipperSwitch.get()) {
 			IO.flipperSolenoid.set(true); // raise foot
 		}
-	}
+	}*/
 }
