@@ -1,14 +1,9 @@
 package org.teamresistance;
 
-import java.io.IOException;
-
 import org.teamresistance.auto.Autonomous;
 import org.teamresistance.teleop.Teleop;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
-import org.teamresistance.robostates.AntlerSnorflerUp;
-import org.teamresistance.robostates.AntlersDown;
-import org.teamresistance.robostates.SnorflerDown;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -20,6 +15,8 @@ public class Robot extends IterativeRobot {
 	public static String robotState;
 	
 	//private StateMachine antlerMachine;
+	private StateMachine robotMachine;
+//	private StateMachine lifterMachine;
 	
 	@Override
 	public void robotInit() {
@@ -33,11 +30,15 @@ public class Robot extends IterativeRobot {
 		}
 		robotModes.addState(teleop, "teleop");
 		if(auto == null) {
-			auto = new Autonomous();
+			auto = new Autonomous(null, null);
 		}
 		robotModes.addState(auto, "auto");
 	
 		//antlerMachine = new StateMachine();
+//		robotMachine = new StateMachine();
+//		
+//		robotMachine.addState(new Teleop(), "teleop");
+//		robotMachine.addState(new Autonomous(antlerMachine, lifterMachine), "auto");
 		
 		//antlerMachine.addState(new AntlerSnorflerUp());
 		//antlerMachine.addState(new AntlersDown());
@@ -50,16 +51,15 @@ public class Robot extends IterativeRobot {
 		robotState = "auto";
 		robotModes.setState("auto");
 		//antlerMachine.setState("AntlerSnorflerUp");
+		//lifterMachine.setState();
 	}
 
 	@Override
 	public void autonomousPeriodic() {
 		Time.update();
-		JoystickIO.update();
-		robotModes.update();
-		
-		//antlerMachine.update();
-		
+		robotMachine.update();
+//		antlerMachine.update();
+//		lifterMachine.update();
 	}
 
 	@Override
@@ -71,10 +71,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Time.update();
-		robotModes.update();
-				//JoystickIO.update();
-				//robotMachine.update();
-				//antlerMachine.update();
+		JoystickIO.update();
+		robotMachine.update();
+//		antlerMachine.update();
+//		lifterMachine.update();
 	}
 }
 

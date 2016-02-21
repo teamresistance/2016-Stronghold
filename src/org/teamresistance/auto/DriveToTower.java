@@ -3,34 +3,21 @@ package org.teamresistance.auto;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
-import org.teamresistance.auto.defense.DefenseCheval;
-import org.teamresistance.auto.defense.DefenseDrawbridge;
-import org.teamresistance.auto.defense.DefenseMoat;
-import org.teamresistance.auto.defense.DefensePortcullis;
-import org.teamresistance.auto.defense.DefenseRamparts;
-import org.teamresistance.auto.defense.DefenseRockWall;
-import org.teamresistance.auto.defense.DefenseRoughTerrain;
+import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
-import org.teamresistance.util.Time;
-import org.teamresistance.auto.AutoConstants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToTower extends State {
-	
-	//	Cheval, Drawbridge, Moat, Portcullis, Ramparts, RockWall, Rough terrain
-	final private static boolean[] ORIENTATION = 
-		{false, true, false, true, false, true, false};
-	
 	
 	private double distance;
 	private int startAngle = 90;
 	private int endAngle;
 	private double elapsed = 0;
 	private double speed;
-	private boolean turned = false;
-	private boolean orient;
+	
+	final private static boolean[] ORIENTATION = {false, true, false, true, false, true, false};
 	
 	public DriveToTower(int position, int goal, int defense) {
 		distance = AutoConstants.DISTANCES[position-2][goal];
@@ -40,9 +27,9 @@ public class DriveToTower extends State {
 		endAngle = AutoConstants.END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
 		SmartDashboard.putNumber("Speed: ", speed);
-		orient = ORIENTATION[defense];
+		boolean orient = ORIENTATION[defense];
 		
-		/*if(orient) {
+		if(orient) {
 			
 			//add 180 and wrap to -180
 			startAngle += 180;
@@ -50,17 +37,21 @@ public class DriveToTower extends State {
 			endAngle += 180;
 			wrap(endAngle);
 			
-		}*/
+		}
 		
 		//IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
 		SmartDashboard.putNumber("Angle", startAngle);
 	}
 	
-	public void wrap(double angle) {
+	private int wrap(int angle) {
 		speed*= -1;
 		if(angle>180) {
-			double difference = angle-180;
-			angle = -180+difference;
+			int difference = angle-180;
+			return difference-180;
+		} 
+		if(angle<-180) {
+			int difference = angle+180;
+			return 180-difference;
 		}
 	}
 

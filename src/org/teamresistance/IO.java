@@ -1,17 +1,14 @@
 package org.teamresistance;
 
+import org.teamresistance.util.io.InvertableDigitalInput;
 import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.InvertableVictorSP;
 import org.teamresistance.util.io.NavXIMU;
-import org.teamresistance.util.io.InvertableDigitalInput;
-
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 
 public class IO {
 		

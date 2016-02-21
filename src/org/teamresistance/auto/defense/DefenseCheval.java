@@ -2,10 +2,8 @@ package org.teamresistance.auto.defense;
 
 import org.teamresistance.IO;
 import org.teamresistance.auto.AutoConstants;
-import org.teamresistance.auto.Autonomous;
 import org.teamresistance.auto.Defense;
 import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateTransition;
 
 /*
  * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
@@ -13,6 +11,8 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DefenseCheval extends Defense {
 
+	private static final double CROSS_SPEED = .5;
+	
 	private double time = 0.0;
 
 	@Override
@@ -39,7 +39,7 @@ public class DefenseCheval extends Defense {
 		if (IO.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time < 2.0) {
 			// don't know if I can do it like this - check to make sure it doesn't freeze up
 
-			IO.robotDrive.arcadeDrive(AutoConstants.CHEVAL_CROSS_SPEED, 0.0);
+			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 		} else {
 			while(IO.antlerSolenoid.get()) {
 				IO.antlerSolenoid.set(false); //try leaving the antlers down for the full crossing - this worked really well when Robert tried it
