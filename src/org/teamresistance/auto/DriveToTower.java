@@ -68,6 +68,7 @@ public class DriveToTower extends State {
 	private boolean lastTurn = false;
 	private double time = -1;
 	boolean first = true;
+	double initTime = 0;
 	@Override
 	public void update() {
 		elapsed += Time.getDelta();
@@ -81,15 +82,21 @@ public class DriveToTower extends State {
 		}else {
 			if((elapsed-time)<=distance && driven == false) {
 				drive();
+				initTime = elapsed;
 			} else {
 				driven = true;
 				if(lastTurn == false && driven == true) {
 					lastTurn = turn(0);
 				}
+				//add the snorfledump here
+				if(initTime<AutoConstants.SNORFLE_TIME) {
+					IO.snorflerMotor.set(Constants.SNORFLE_SPEED*-1);
+				} else {
+					IO.snorflerMotor.set(0);
+				}
 			}
 		}
 	}
-				
 
 	public void drive() {
 		IO.robotDrive.arcadeDrive(speed,0.0);

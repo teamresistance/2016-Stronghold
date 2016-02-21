@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Target extends ReturnState {
 
-	private StateMachine driveModes;
 	private NetworkTable contoursTable;
 	
 	public static final int screenWidth = 320; // frame width?
@@ -28,9 +27,6 @@ public class Target extends ReturnState {
 
 	@Override
 	public void update() {
-		if(!JoystickIO.btnScore.isDown()) {
-			gotoReturnState();
-		}
 		
 		double error = targetAngle - IO.imu.getYaw();
 		if(Math.abs(error) < 1) {
@@ -71,7 +67,6 @@ public class Target extends ReturnState {
 	}
 	
 	public void onExit(StateTransition e) {
-		gotoState("Shoot");
 	}
 
 }

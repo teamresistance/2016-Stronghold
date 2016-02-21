@@ -32,6 +32,8 @@ public class Autonomous extends State {
 	public void onEntry(StateTransition e) {
 		//autoMachine.setState("CrossDefense");
 		
+		
+		
 		autoMachine = new StateMachine();
 
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
@@ -79,7 +81,10 @@ public class Autonomous extends State {
 		//double test = SmartDashboard.getNumber("Test");
 		//SmartDashboard.putNumber("Defense Type Choice", test);
 		
-		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		SmartDashboard.putBoolean("Compressor", IO.compressor.enabled());
+		
+		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		
 		
 		//if(!IO.imu.isStraight(10, 90)) {
 		//	IO.imu.turnTo(90, 10);
@@ -88,7 +93,7 @@ public class Autonomous extends State {
 		//double test = SmartDashboard.getData("test number");
 		//SmartDashboard.putNumber("TestPut", test);
 		
-		//autoMachine.update(); //comment this in/out to enable movement
+		autoMachine.update(); //comment this in/out to enable movement
 		
 		
 		
