@@ -16,6 +16,7 @@ public abstract class State {
 	void setStateMachine(StateMachine stateMachine) {
 		this.stateMachine = stateMachine;
 	}
+
 	void setName(String name) {
 		this.name = name;
 	}
@@ -37,20 +38,27 @@ public abstract class State {
 	public String toString() {
 		return name;
 	}
-	
+
 	/**
 	 * Called by the state machine whenever this state is entered.
 	 * Contains state reset code.
-	 * @param e State Transition event object
+	 * @param e State Transition event
 	 */
 	public abstract void onEntry(StateTransition e);
+
 	/**
-	 * called by the state machine whenever this state is updated.
+	 * Called by the state machine whenever this state is updated.
 	 */
-	public abstract void update();
+	public void update() {
+		//
+	}
+
 	/**
 	 * Called by the state machine whenever this state is exited.
-	 * @param e State Transition event object
+	 * @param e State Transition event
 	 */
-	public abstract void onExit(StateTransition e);
+	public void onExit(StateTransition e) {
+		//
+	}
+
 }

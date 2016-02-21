@@ -4,6 +4,10 @@ import org.teamresistance.IO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+import org.teamresistance.auto.states.Target;
+import org.teamresistance.auto.states.Shoot;
+import org.teamresistance.auto.states.AntlersDown;
+import org.teamresistance.auto.states.AntlersUp;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,10 +18,11 @@ public class Autonomous extends State {
 	//follows the same indexing as the array found in CrossDefense's constructor
 	
 	private StateMachine autoMachine;
+	private StateMachine antlerMachine;
+	private StateMachine lifterMachine;
 	
 	//public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
 	public Autonomous() {
-		autoMachine = new StateMachine();
 		
 		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
 		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
@@ -27,6 +32,45 @@ public class Autonomous extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		//autoMachine.setState("CrossDefense");
+		
+		autoMachine = new StateMachine();
+		antlerMachine = new StateMachine();
+		lifterMachine = new StateMachine();
+
+		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
+
+		//AngleMatch target = new AngleMatch();
+		//driveModes.addState(target);
+		driveModes.addState(new Idle(), "Idle");
+		autoMachine.addState(new Shoot());
+		autoMachine.addState(new Target());
+		driveModes.addState(new AngleHold());
+		
+		antlerMachine.addState(new AntlersUp());
+		antlerMachine.addState(new AntlersDown());
+		
+		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
+		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
+		lifterMachine.addState(new MoveLifterDown());
+		lifterMachine.addState(new MoveLifterUp());
+		lifterMachine.addState(new RaiseFlipper());
+		//lifterMachine.addState(new TeleopLifterIdle());
+		DelayState delayState = new DelayState();
+		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
+		lifterMachine.addState(delayState);
+		lifterMachine.addState(new TopOutLifter());
+		lifterMachine.addState(new LeavePortcullis());
+		lifterMachine.addState(new LowerFlipper());
+		lifterMachine.addState(new LowerDrawbridge());
+		lifterMachine.addState(new DriveThroughDrawbridge());
+		
+		
+		
+		
+		
+		
+		
+		
 	
 	}
 	
@@ -78,6 +122,9 @@ public class Autonomous extends State {
 		//SmartDashboard.putNumber("TestPut", test);
 		
 		//autoMachine.update(); //comment this in/out to enable movement
+		
+		
+		
 	}
 
 	@Override
