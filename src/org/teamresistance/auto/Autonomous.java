@@ -2,9 +2,6 @@ package org.teamresistance.auto;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.teamresistance.IO;
-import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
-import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +16,7 @@ public class Autonomous extends State {
 	public void update() {
 		//This is consistantly geting the time of operation
 		double currentTime += Time.getDelta();
+		(double) SmartDashboard.getNumber("currentTime")
 	}
 	
 	public Autonomous() {
@@ -33,7 +31,7 @@ public class Autonomous extends State {
 		//Keeping code under this for reference	
 		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
 		//autoMachine1.0.addState(new driveToTower(driveFoward, turnLeft, driveToTower), "driveToTower")
-		
+				
 		
 		// These are the finish time for the tasks to finish
 		// This is in seconds
@@ -41,20 +39,33 @@ public class Autonomous extends State {
 		public void double turnLeftTime = 15;
 		public void double forwardTime2 = 20;
 		
+		//These are motor power values
+		public void double fowardPower1 = 0.5;
+		public void double turnLeftPower = 0.25;
+		public void double fowardPower2 = 0.5;
+		public void double stopPower = 0;
+		
+		//Rotational Values
+		public void double rotateValueFoward = 0;
+		public void double rotateValueCounterClockwise = -90;
+		
 		//This sets the event of operation instead of a switch
 		//I used it because I am familiar with using this and time in conjunction
 		if (currentTime < fowardTime1){
 			//First task
-			
-		} else if ( forwardTime1 <= currentTime < turnLeftTime){
+			public void arcadeDrive(fowardPower1, rotateValue);
+		} 
+		else if ( forwardTime1 <= currentTime < turnLeftTime){
 			//Second Task
-			
-		} else if (turnLeftTime <= currentTime < forwardTime2){
+			public void arcadeDrive(turnLeftPower, rotateValueCounterClockwise);
+		} 
+		else if (turnLeftTime <= currentTime < forwardTime2){
 			//Third Task
-			
-		} else {
+			public void arcadeDrive(fowardPower2, rotateValue);			
+		} 
+		else {
 			//When done stop moving
-			
+			public void arcadeDrive(stopPower, rotateValue);	
 		}
 		
 		
