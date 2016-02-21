@@ -66,7 +66,7 @@ public class Teleop extends State {
 		antlerSnorflerMachine.addState(new AntlersDown());
 		antlerSnorflerMachine.addState(new SnorflerDown());
 		
-		lifterMachine.addState(new LiftPortcullis());
+		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
 		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
 		lifterMachine.addState(new MoveLifterDown());
 		lifterMachine.addState(new MoveLifterUp());

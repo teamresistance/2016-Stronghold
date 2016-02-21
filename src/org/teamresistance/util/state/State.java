@@ -42,21 +42,31 @@ public abstract class State {
 	 * Called by the state machine when this state is first created.
 	 * Contains state object initialization code.
 	 */
-	public abstract void init();
+	@Deprecated
+	public void init() {
+		//
+	}
 	
 	/**
 	 * Called by the state machine whenever this state is entered.
 	 * Contains state reset code.
-	 * @param e State Transition event object
+	 * @param e State Transition event
 	 */
 	public abstract void onEntry(StateTransition e);
+
 	/**
-	 * called by the state machine whenever this state is updated.
+	 * Called by the state machine whenever this state is updated.
 	 */
-	public abstract void update();
+	public void update() {
+		//
+	}
+
 	/**
 	 * Called by the state machine whenever this state is exited.
-	 * @param e State Transition event object
+	 * @param e State Transition event
 	 */
-	public abstract void onExit(StateTransition e);
+	public void onExit(StateTransition e) {
+		//
+	}
+
 }
