@@ -2,21 +2,9 @@ package org.teamresistance;
 
 import java.io.IOException;
 
-import org.teamresistance.auto.Autonomous;
-import org.teamresistance.robostates.AntlerSnorflerUp;
-import org.teamresistance.robostates.AntlersDown;
-import org.teamresistance.robostates.SnorflerDown;
-import org.teamresistance.teleop.Teleop;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateMachine;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 
-	private StateMachine robotMachine;
-	private StateMachine antlerMachine;
-	
 	@Override
 	public void robotInit() {
 		try {
@@ -27,29 +15,23 @@ public class Robot extends IterativeRobot {
 		
 		IO.init();
 		JoystickIO.init();
-
+		
 		robotMachine = new StateMachine();
-		antlerMachine = new StateMachine();
+		autoMachine1.0 = new StateMachine();
 		
 		robotMachine.addState(new Teleop(), "teleop");
 		robotMachine.addState(new Autonomous(), "auto");
 		
-		antlerMachine.addState(new AntlerSnorflerUp());
-		antlerMachine.addState(new AntlersDown());
-		antlerMachine.addState(new SnorflerDown());
 	}
 
 	@Override
 	public void autonomousInit() {
-		robotMachine.setState("auto");
-		antlerMachine.setState("AntlerSnorflerUp");
 	}
 
 	@Override
 	public void autonomousPeriodic() {
 		Time.update();
 		robotMachine.update();
-		antlerMachine.update();
 	}
 
 	@Override
@@ -62,6 +44,5 @@ public class Robot extends IterativeRobot {
 		Time.update();
 		JoystickIO.update();
 		robotMachine.update();
-		antlerMachine.update();
 	}
 }
