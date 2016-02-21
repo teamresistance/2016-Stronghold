@@ -9,11 +9,6 @@ import org.teamresistance.util.state.StateTransition;
 public class DriveThroughDrawbridge extends State {
 
 	private double startTime;
-	
-	@Override
-	public void init() {
-		
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -32,11 +27,6 @@ public class DriveThroughDrawbridge extends State {
 		} else {
 			IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_DRIVE_TRHOUGH_SPEED, 0);
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 
 }

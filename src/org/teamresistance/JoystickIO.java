@@ -1,8 +1,8 @@
 package org.teamresistance;
 
-import java.util.ArrayList;
-
 import org.teamresistance.util.joystick.Button;
+
+import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;

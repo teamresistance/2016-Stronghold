@@ -45,9 +45,4 @@ public class Autonomous extends State {
 		autoMachine.update();
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-		
-	}
-
 }

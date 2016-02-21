@@ -15,11 +15,6 @@ public class LowerDrawbridge extends State {
 	private double delayStart;
 	
 	@Override
-	public void init() {
-		
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		startTime = Time.getTime();
 		SmartDashboard.putBoolean("LowerDrawbridge", true);
@@ -29,7 +24,7 @@ public class LowerDrawbridge extends State {
 			SmartDashboard.putBoolean("Lower Lifter", true);
 			MoveLifter moveLifter = ((MoveLifter)stateMachine.getState("MoveLifter"));
 			moveLifter.setReturnState(getName());
-			moveLifter.moveUp();
+			moveLifter.moveUp(); // feels dirty, but works
 			gotoState("MoveLifter");
 			return;
 		}

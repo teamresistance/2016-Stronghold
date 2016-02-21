@@ -1,10 +1,8 @@
-/*package org.teamresistance.util.io;
+package org.teamresistance.util.io;
 
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+@Deprecated
 public class DualGyro {
-	
+/*
 	private Gyro gyro1;
 	private boolean gyro1Inverted = false;
 	private Gyro gyro2;
@@ -51,5 +49,5 @@ public class DualGyro {
 	public void smartdashboardPut() {
 		SmartDashboard.putNumber("Average Angle", getAngle());
 	}
-	
-}*/
+	*/
+}

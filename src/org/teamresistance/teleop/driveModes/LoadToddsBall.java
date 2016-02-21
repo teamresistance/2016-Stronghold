@@ -9,11 +9,6 @@ import org.teamresistance.util.state.StateTransition;
 public class LoadToddsBall extends State {
 
 	private double startTime;
-	
-	@Override
-	public void init() {
-
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {

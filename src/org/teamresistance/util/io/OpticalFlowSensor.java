@@ -1,7 +1,8 @@
 package org.teamresistance.util.io;
 
-/*public class OpticalFlowSensor {
-	
+@Deprecated
+public class OpticalFlowSensor {
+	/*
 	private DualGyro gyro;
 	private SPI spi;
 	private byte[] dataReceived;
@@ -62,6 +63,5 @@ package org.teamresistance.util.io;
 		spi.read(false, dataReceived, 1); // Reads the real register value
 		return dataReceived[0];
 	}
+	*/
 }
-
-*/

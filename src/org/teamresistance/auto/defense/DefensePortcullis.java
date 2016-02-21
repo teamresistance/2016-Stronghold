@@ -45,14 +45,14 @@ public class DefensePortcullis extends Defense {
 	}
 	
 	private void lifterToTop() {
-		while(!IO.lifterUpperLimit.get()) {
+		while(!IO.topLifterSwitch.get()) {
 			IO.lifterMotor.set(Constants.SCREW_THREAD_DOWN_SPEED);
 		}
 		IO.lifterMotor.set(0.0);
 	}
 
 	private void lifterToBottom() {
-		while (!IO.lifterLowerLimit.get()) { //drive the lifter down all the way
+		while (!IO.bottomLifterSwitch.get()) { //drive the lifter down all the way
 			IO.lifterMotor.set(Constants.SCREW_THREAD_UP_SPEED);
 		}
 		IO.lifterMotor.set(0.0);

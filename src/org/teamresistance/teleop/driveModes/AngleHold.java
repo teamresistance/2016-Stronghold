@@ -10,10 +10,9 @@ public class AngleHold extends ReturnState {
 
 	private double targetAngle;
 	private double kP = 4;
-	
-	@Override
-	public void init() {
-//		SmartDashboard.putNumber("Angle Hold kP", 0.5);
+
+	public AngleHold() {
+		//SmartDashboard.putNumber("Angle Hold kP", 0.5);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class AngleHold extends ReturnState {
 		if(!JoystickIO.btnAngleHold.isDown()){
 			gotoReturnState();
 		}
-//		kP = SmartDashboard.getNumber("Angle Hold kP", 0.5);
+		//kP = SmartDashboard.getNumber("Angle Hold kP", 0.5);
 		double error = targetAngle - Math.toRadians(IO.imu.getYaw());
 		if(Math.abs(error) < 0.017) {
 			error = 0;
@@ -34,11 +33,6 @@ public class AngleHold extends ReturnState {
 		double result = error * kP;
 		result = Util.clip(result, -1.0, 1.0);
 		IO.robotDrive.arcadeDrive(Util.scaleJoytick(JoystickIO.rightJoystick.getY()), result);
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-
 	}
 
 }

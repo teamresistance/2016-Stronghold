@@ -18,11 +18,6 @@ public class DelayState extends ReturnState {
 	public DelayState(String returnState) {
 		super(returnState);
 	}
-	
-	@Override
-	public void init() {
-		
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -36,11 +31,6 @@ public class DelayState extends ReturnState {
 		if(Time.getTime() - startTime >= delay) {
 			gotoReturnState();
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 	
 	public void setDelay(double time) {

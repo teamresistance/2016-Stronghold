@@ -42,9 +42,4 @@ public class CrossDefense extends State {
 		}
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-
-	}
-
 }

@@ -57,13 +57,13 @@ public class DriveToTower extends State {
 		speed*= -1;
 		if(angle>180) {
 			double difference = angle-180;
-			angle = -180+difference;
+			angle = -180+difference; // should that assignment be to a member?
 		}
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-
+		//
 	}
 
 	@Override
@@ -82,11 +82,6 @@ public class DriveToTower extends State {
 			}
 			
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 
 }

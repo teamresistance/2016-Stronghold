@@ -3,13 +3,11 @@ package org.teamresistance.teleop.driveModes;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Util;
-import org.teamresistance.util.state.StateTransition;
 
 public class ScaledDrive extends DriveTrain {
 
-	@Override
-	public void onEntry(StateTransition e) {
-		//Empty
+	public ScaledDrive(AngleMatch target) {
+		super(target);
 	}
 
 	@Override
@@ -19,11 +17,6 @@ public class ScaledDrive extends DriveTrain {
 		if(JoystickIO.btnDriveMode.isDown()) {
 			gotoState("DirectDrive");
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		//Empty
 	}
 
 }

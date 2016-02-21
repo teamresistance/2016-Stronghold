@@ -10,11 +10,6 @@ import org.teamresistance.util.state.StateTransition;
 public class LeavePortcullis extends ReturnState {
 
 	private double startTime;
-	
-	@Override
-	public void init() {
-
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {

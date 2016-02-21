@@ -3,15 +3,9 @@ package org.teamresistance.robostates.lifter;
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.util.state.ReturnState;
-import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
 public class MoveLifterDown extends ReturnState {
-
-	@Override
-	public void init() {
-		
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -31,8 +25,4 @@ public class MoveLifterDown extends ReturnState {
 		gotoReturnState();
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-
-	}
 }

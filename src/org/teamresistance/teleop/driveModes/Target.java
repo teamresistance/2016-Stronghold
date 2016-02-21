@@ -13,20 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Target extends ReturnState {
 
-
 	private StateMachine driveModes;
-	
 	private NetworkTable contoursTable;
 	
-	private int screenWidth = 320;
+	public static final int screenWidth = 320; // frame width?
 	
 	private double kP = 0.5;
 	private double targetAngle;
-	
-	@Override
-	public void init() {
-		
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -75,11 +68,6 @@ public class Target extends ReturnState {
 				IO.robotDrive.arcadeDrive(speed, result);
 			}
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 
 }

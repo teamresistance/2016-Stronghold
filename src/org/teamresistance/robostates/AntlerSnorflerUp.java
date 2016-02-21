@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AntlerSnorflerUp extends State {
 
-
 	@Override
 	public void onEntry(StateTransition e) {
 		IO.snorflerMotor.set(0.0);
@@ -41,11 +40,6 @@ public class AntlerSnorflerUp extends State {
 		} else {
 			IO.shooterSolenoid.set(false);
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-
 	}
 
 }

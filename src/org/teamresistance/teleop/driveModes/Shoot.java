@@ -2,7 +2,6 @@ package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
-import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
@@ -10,11 +9,6 @@ import org.teamresistance.util.state.StateTransition;
 public class Shoot extends ReturnState {
 	
 	private double startTime;
-	
-	@Override
-	public void init() {
-
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {

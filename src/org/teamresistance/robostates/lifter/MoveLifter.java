@@ -6,8 +6,6 @@ import org.teamresistance.robostates.DelayState;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class MoveLifter extends ReturnState {
 
 	private boolean up = false;
@@ -17,11 +15,6 @@ public class MoveLifter extends ReturnState {
 		super(returnState);
 	}
 	
-	@Override
-	public void init() {
-		
-	}
-
 	@Override
 	public void onEntry(StateTransition e) {
 		if(IO.bottomLifterSwitch.get()) {

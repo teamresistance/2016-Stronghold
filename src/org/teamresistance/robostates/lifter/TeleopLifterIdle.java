@@ -11,11 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleopLifterIdle extends State {
 
 	@Override
-	public void init() {
-		
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		if(e.getInitialState() != null)
 			Robot.teleop.exitIdleDrive();
@@ -45,11 +40,6 @@ public class TeleopLifterIdle extends State {
 		if(JoystickIO.btnToggleLifterPosition.onButtonPressed()) {
 			IO.lifterTiltSolenoid.set(!IO.lifterTiltSolenoid.get());
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 
 }

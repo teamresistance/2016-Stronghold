@@ -2,7 +2,6 @@ package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
-import org.teamresistance.Robot;
 import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -18,19 +17,12 @@ public class AngleMatch extends State {
 	private String previousStateName = null;
 	
 	public AngleMatch() {
-		
+		//SmartDashboard.putNumber("TargetAngle", targetAngle);
+		//SmartDashboard.putNumber("AngleDeadband", angleDeadband);
+		//SmartDashboard.putNumber("AngleGain", angleGain);
+		//SmartDashboard.putNumber("IntegralGain", angleIntegralGain);
 	}
 	
-	@Override
-	public void init() {
-		/*
-		SmartDashboard.putNumber("TargetAngle", targetAngle);
-		SmartDashboard.putNumber("AngleDeadband", angleDeadband);
-		SmartDashboard.putNumber("AngleGain", angleGain);
-		*/
-//		SmartDashboard.putNumber("IntegralGain", angleIntegralGain);
-	}
-
 	@Override
 	public void onEntry(StateTransition e) {
 		previousStateName = e.getInitialState().getName();
@@ -67,11 +59,6 @@ public class AngleMatch extends State {
 		IO.robotDrive.arcadeDrive(0.0, Util.clip((double)(error*angleGain), -1.0, 1.0));
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-		
-	}
-	
 	private float getCurrentAngle() {
 		return (float)Math.toRadians(IO.imu.getYaw());
 	}
@@ -81,7 +68,7 @@ public class AngleMatch extends State {
 	}
 	
 	public void setAngleDeadband(float angleDeadband) {
-		angleDeadband = (float)Math.toRadians(angleDeadband);
+		this.angleDeadband = (float)Math.toRadians(angleDeadband);
 	}
 
 	public void setAngleGain(float angleGain) {

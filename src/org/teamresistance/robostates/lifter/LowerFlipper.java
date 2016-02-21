@@ -9,11 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LowerFlipper extends ReturnState {
 
 	@Override
-	public void init() {
-		
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		SmartDashboard.putBoolean("LowerFlipper", true);
 		IO.flipperSolenoid.set(true);
@@ -24,11 +19,6 @@ public class LowerFlipper extends ReturnState {
 		if(IO.topFlipperSwitch.get()) {
 			gotoState("DriveThroughDrawbridge");
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
 	}
 
 }

@@ -1,11 +1,11 @@
 package org.teamresistance;
 
-import java.io.IOException;
-
 import org.teamresistance.auto.Autonomous;
 import org.teamresistance.teleop.Teleop;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
+
+import java.io.IOException;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -33,7 +33,8 @@ public class Robot extends IterativeRobot {
 		}
 		robotModes.addState(teleop, "teleop");
 		if(auto == null) {
-			auto = new Autonomous();
+			// TODO properly instantiate Autonomous?
+			auto = new Autonomous(null, null);
 		}
 		robotModes.addState(auto, "auto");
 	}

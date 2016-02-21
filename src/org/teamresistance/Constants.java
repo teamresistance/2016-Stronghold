@@ -4,7 +4,7 @@ public class Constants {
 
 	public static final double SNORFLE_SPEED = 0.75;
 	public static final double BOULDER_LOAD_SPEED = -1.0;
-	//public static final double SNORFLE_DUMP_SPEED = -.75;
+	public static final double SNORFLE_DUMP_SPEED = -.75;  // only used in Auto
 
 	public static final double LIFTER_UP_SPEED = 1.0;
 	public static final double LIFTER_DOWN_SPEED = -1.0;

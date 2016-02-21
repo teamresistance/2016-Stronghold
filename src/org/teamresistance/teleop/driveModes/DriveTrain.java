@@ -17,12 +17,6 @@ public class DriveTrain extends State {
 	public DriveTrain(AngleMatch target) {
 		this.target = target;
 	}
-	
-	@Override
-	public void init() {
-		IO.lifterLight.set(reverse);
-		IO.snorflerLight.set(!reverse);
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -53,11 +47,6 @@ public class DriveTrain extends State {
 				gotoState("LoadToddsBall");
 			}
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-
 	}
 	
 	protected float getLeftY() {

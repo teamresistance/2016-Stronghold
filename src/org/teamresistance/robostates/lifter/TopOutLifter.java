@@ -11,11 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TopOutLifter extends ReturnState {
 
 	private double startTime;
-	
-	@Override
-	public void init() {
-
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
@@ -31,11 +26,6 @@ public class TopOutLifter extends ReturnState {
 			SmartDashboard.putBoolean("Topping", false);
 			gotoReturnState();
 		}
-	}
-
-	@Override
-	public void onExit(StateTransition e) {
-
 	}
 	
 }

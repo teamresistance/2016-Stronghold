@@ -25,9 +25,4 @@ public class AntlersDown extends State {
 		}
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-
-	}
-
 }

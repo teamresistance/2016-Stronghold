@@ -38,9 +38,4 @@ public class SnorflerDown extends State {
 		}
 	}
 
-	@Override
-	public void onExit(StateTransition e) {
-
-	}
-
 }

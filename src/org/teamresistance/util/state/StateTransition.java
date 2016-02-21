@@ -18,8 +18,8 @@ public class StateTransition {
 		return initialState;
 	}
 	
-	
 	public State getNewState() {
 		return newState;
 	}
+
 }

@@ -8,16 +8,9 @@ import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class RaiseFlipper extends State {
 
 	private double startTime;
-	
-	@Override
-	public void init() {
-	
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {

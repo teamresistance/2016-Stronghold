@@ -38,10 +38,7 @@ public class StateMachine {
 	 * @return <code>true</code> if the new instance was successfully added
 	 */
 	public boolean addState(State state) {
-		if(state == null) {
-			return false;
-		}
-		return addState(state, state.getClass().getSimpleName());
+		return state != null && addState(state, state.getClass().getSimpleName());
 	}
 	
 	/**
@@ -76,10 +73,7 @@ public class StateMachine {
 	 * @return <code>true</code> if and only if the state of this machine was changed
 	 */
 	public boolean setState(String stateName) {
-		if (stateName == null) {
-			return false;
-		}
-		return transition(states.get(stateName));
+		return stateName != null && transition(states.get(stateName));
 	}
 	
 	public State getState(String stateName) {

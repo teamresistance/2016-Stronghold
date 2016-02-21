@@ -36,12 +36,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Teleop extends State {
 	
 	private StateMachine driveModes;
-	private String returnDriveMode; //Drive mode to goto after idle is exited
+	private String returnDriveMode; // Drive mode to goto after idle is exited
 	
 	private StateMachine antlerSnorflerMachine;
 	private StateMachine lifterMachine;
-	
-	private NetworkTable gripTable;
+
+	private NetworkTable gripTable; // unused
 
 	public Teleop() {
 		driveModes = new StateMachine();
@@ -49,10 +49,7 @@ public class Teleop extends State {
 		lifterMachine = new StateMachine();
 
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
-	}
-	
-	@Override
-	public void init() {
+
 		AngleMatch target = new AngleMatch();
 		driveModes.addState(new ScaledDrive(target), "ScaledDrive");
 		driveModes.addState(new DirectDrive(target), "DirectDrive");
@@ -115,11 +112,6 @@ public class Teleop extends State {
 		
 //		IO.shooterSolenoid.set(JoystickIO.btnScore.isDown() && !IO.ballSensor.get());
 	}
-
-	@Override
-	public void onExit(StateTransition e) {
-		
-	}
 	
 	public void setDriveIdle() {
 		returnDriveMode = driveModes.getCurrentState();
@@ -132,23 +124,5 @@ public class Teleop extends State {
 			returnDriveMode = null;
 		}
 	}
-	
-	/*
-	 * Put down foot
-	 * 
-	 * Drive till hit portcullis
-	 * lift foot
-	 * Once rear limit switch is hit
-	 */
-	
-	/*
-	 * if buttonPressed move lifter to opposite position
-	 * if buttonPressed move flipper to opposite position
-	 * if buttonPressed && flipper is down begin portcullis routine
-	 * 		if lifter not in lower position move to lower position
-	 * 		raise flipper
-	 * 		when bottom limit switch pressed start raising lifter
-	 * 		when top limit switch pressed return controls to driver
-	 */
 	
 }
