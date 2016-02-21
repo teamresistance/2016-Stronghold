@@ -1,4 +1,4 @@
-package org.teamresistance.util;
+/*package org.teamresistance.util;
 
 import org.teamresistance.util.io.DualGyro;
 
@@ -180,4 +180,4 @@ public class MecanumDrive {
 		STICK_FIELD
 	}
 	
-}
+}*/

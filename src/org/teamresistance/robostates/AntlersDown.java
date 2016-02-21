@@ -7,12 +7,6 @@ import org.teamresistance.util.state.StateTransition;
 
 public class AntlersDown extends State {
 
-
-	@Override
-	public void init() {
-
-	}
-
 	@Override
 	public void onEntry(StateTransition e) {
 		IO.snorflerMotor.set(0.0);

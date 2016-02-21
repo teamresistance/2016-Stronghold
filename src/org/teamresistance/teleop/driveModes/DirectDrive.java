@@ -11,11 +11,6 @@ public class DirectDrive extends DriveTrain {
 	}
 
 	@Override
-	public void init() {
-		//Empty
-	}
-
-	@Override
 	public void onEntry(StateTransition e) {
 		//Empty
 	}

@@ -1,18 +1,18 @@
-package org.teamresistance.util.io;
+/*package org.teamresistance.util.io;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DualGyro {
 	
-	private AnalogGyro gyro1;
+	private Gyro gyro1;
 	private boolean gyro1Inverted = false;
-	private AnalogGyro gyro2;
+	private Gyro gyro2;
 	private boolean gyro2Inverted = false;
 	
 	public DualGyro() {
-		gyro1 = new AnalogGyro(0);
-		gyro2 = new AnalogGyro(1);
+		gyro1 = new Gyro(0);
+		gyro2 = new Gyro(1);
 	}
 	
 	public void init() {
@@ -52,4 +52,4 @@ public class DualGyro {
 		SmartDashboard.putNumber("Average Angle", getAngle());
 	}
 	
-}
+}*/

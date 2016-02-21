@@ -16,6 +16,7 @@ public abstract class State {
 	void setStateMachine(StateMachine stateMachine) {
 		this.stateMachine = stateMachine;
 	}
+
 	void setName(String name) {
 		this.name = name;
 	}
@@ -37,16 +38,7 @@ public abstract class State {
 	public String toString() {
 		return name;
 	}
-	
-	/**
-	 * Called by the state machine when this state is first created.
-	 * Contains state object initialization code.
-	 */
-	@Deprecated
-	public void init() {
-		//
-	}
-	
+
 	/**
 	 * Called by the state machine whenever this state is entered.
 	 * Contains state reset code.

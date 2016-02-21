@@ -3,8 +3,6 @@ package org.teamresistance.util.state;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  * Represents a Finite State Machine (FSM). The FSM can be in one single state at a time. 
  * Users should instantiate the machine, provide it with states and (case-sensitive) names,
@@ -66,8 +64,7 @@ public class StateMachine {
 		
 		state.setStateMachine(this);
 		state.setName(stateName);
-		state.init();
-		
+
 		states.put(stateName, state);
 		return true;
 	}
@@ -94,7 +91,7 @@ public class StateMachine {
 		}
 		return states.get(stateName);
 	}
-	
+
 	public int getNumStates() {
 		return states.size();
 	}
@@ -108,10 +105,7 @@ public class StateMachine {
 	 * @return <code>true</code> if and only if the transition was successful.
 	 */
 	private boolean transition(State newState) {
-		if (newState == null) {
-			return false;
-		}
-		if(newState == currentState){
+		if (newState == null || newState == currentState) {
 			return false;
 		}
 		StateTransition transition = new StateTransition(currentState, newState);
@@ -128,5 +122,5 @@ public class StateMachine {
 	public String getCurrentState() {
 		return currentState.getName();
 	}
-	
+
 }

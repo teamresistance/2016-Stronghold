@@ -6,16 +6,9 @@ import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class SnorflerDown extends State {
 
 	private static boolean paused = false;
-
-	@Override
-	public void init() {
-
-	}
 
 	@Override
 	public void onEntry(StateTransition e) {
