@@ -23,36 +23,36 @@ public class DriveToTower extends State {
 		distance = AutoConstants.DISTANCES[position-2][goal];
 		SmartDashboard.putNumber("Travel time", distance);
 		startAngle = AutoConstants.START_ANGLES[position-2][goal];
-		//SmartDashboard.putNumber("angle", startAngle);
 		endAngle = AutoConstants.END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
 		SmartDashboard.putNumber("Speed: ", speed);
-		boolean orient = ORIENTATION[defense];
+		boolean orient = false;//ORIENTATION[defense];
 		
-		if(orient) {
-			
+		if(orient == true) {
+
 			//add 180 and wrap to -180
 			startAngle += 180;
-			wrap(startAngle);
+			startAngle = wrap(startAngle);
 			endAngle += 180;
-			wrap(endAngle);
+			endAngle = wrap(endAngle);
 			
 		}
 		
 		//IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-		SmartDashboard.putNumber("Angle", startAngle);
+		//SmartDashboard.putNumber("Angle", startAngle);
 	}
 	
-	private int wrap(int angle) {
+	public int wrap(int angle) {
 		speed*= -1;
 		if(angle>180) {
 			int difference = angle-180;
-			return difference-180;
-		} 
-		if(angle<-180) {
-			int difference = angle+180;
-			return 180-difference;
+			angle = -180+difference;
 		}
+		if(angle<-180) {
+			int difference = angle + 180;
+			angle = 180 + difference;
+		}
+		return angle;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class DriveToTower extends State {
 		SmartDashboard.putNumber("startAngle = ",startAngle);
 		SmartDashboard.putNumber("Time", time);
 		if(firstTurn == false) {
-			firstTurn = turn(40);
+			firstTurn = turn(startAngle);
 			time = elapsed;
 		
 		}else {
@@ -87,18 +87,6 @@ public class DriveToTower extends State {
 		}
 	}
 				
-		//else {
-			//IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			//need to figure out some way of making it go to a targeting state rather than looping
-			//while(IO.snorflerSolenoid.get()) {
-			//	IO.snorflerSolenoid.set(false);
-			//}
-			//while(IO.ballSensor.get()) {
-			//	IO.snorflerMotor.set(Constants.SNORFLE_DUMP_SPEED);
-			//}
-			
-		//}
-	//}
 
 	public void drive() {
 		IO.robotDrive.arcadeDrive(speed,0.0);

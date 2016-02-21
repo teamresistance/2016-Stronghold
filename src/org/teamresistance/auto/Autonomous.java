@@ -16,13 +16,14 @@ public class Autonomous extends State {
 	public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
 		autoMachine = new StateMachine();
 		
-		//This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
-		int defensePosition = 2;//(int) SmartDashboard.getNumber("defense position");
+		
+		int defensePosition = 2;//(String) defenseType.getSelected();
 		int defenseType = 5;//(int) SmartDashboard.getNumber("defense type");
 		int goalPosition = 1;//(int) SmartDashboard.getNumber("goal");
 		
-		//autoMachine.addState(new CrossDefense(defenseType, antlerMachine, lifterMachine), "CrossDefense");
+		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
 		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, defenseType), "DriveToTower");
+		
 	}
 
 	@Override
@@ -39,8 +40,11 @@ public class Autonomous extends State {
 		//if(!IO.imu.isStraight(10, 90)) {
 		//	IO.imu.turnTo(90, 10);
 		//}
+		//SmartDashboard.getData("test number");
+		//double test = SmartDashboard.getData("test number");
+		//SmartDashboard.putNumber("TestPut", test);
 		
-		autoMachine.update();
+		//autoMachine.update();
 	}
 
 	@Override
