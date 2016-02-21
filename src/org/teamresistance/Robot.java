@@ -1,45 +1,48 @@
-
 package org.teamresistance;
 
-import org.teamresistance.auto.Autonomous;
-import org.teamresistance.teleop.Teleop;
-import org.teamresistance.util.Time;
-import org.teamresistance.util.state.StateMachine;
+import java.io.IOException;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
-	
-	private StateMachine robotModes;
-	
+
 	@Override
 	public void robotInit() {
-		IO.init();
+		try {
+			new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-    	robotModes = new StateMachine();
-    	robotModes.addState(Teleop.class, "teleop");
-    	robotModes.addState(Autonomous.class, "auto");
-    }
-    
-    @Override
-	public void autonomousInit() {
-    	robotModes.setState("auto");
+		IO.init();
+		JoystickIO.init();
+		
+		robotMachine = new StateMachine();
+		autoMachine1.0 = new StateMachine();
+		
+		robotMachine.addState(new Teleop(), "teleop");
+		robotMachine.addState(new Autonomous(), "auto");
+		
 	}
 
-    @Override
-    public void autonomousPeriodic() {
-    	Time.update();
-    	robotModes.update();
-    }
+	@Override
+	public void autonomousInit() {
+	}
 
-    @Override
+	@Override
+	public void autonomousPeriodic() {
+		Time.update();
+		robotMachine.update();
+	}
+
+	@Override
 	public void teleopInit() {
-    	robotModes.setState("teleop");
-    }
-    
-    @Override
-    public void teleopPeriodic() {
-    	Time.update();
-        robotModes.update();
-    }
+		robotMachine.setState("teleop");
+	}
+
+	@Override
+	public void teleopPeriodic() {
+		Time.update();
+		JoystickIO.update();
+		robotMachine.update();
+	}
 }

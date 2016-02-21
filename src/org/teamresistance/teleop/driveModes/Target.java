@@ -1,9 +1,9 @@
 package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,13 +15,8 @@ public class Target extends State {
 	private static float angleGain = 0.5f;
 
 	private String previousStateName = null;
-	
-	protected Target(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
-	}
 
-	@Override
-	public void init() {
+	public Target() {
 		/*
 		SmartDashboard.putNumber("TargetAngle", targetAngle);
 		SmartDashboard.putNumber("AngleDeadband", angleDeadband);
@@ -60,7 +55,7 @@ public class Target extends State {
 		SmartDashboard.putNumber("Result", Util.clip((double)(error*angleGain), -1.0, 1.0));
 		IO.robotDrive.arcadeDrive(0.0, Util.clip((double)(error*angleGain), -1.0, 1.0));
 		
-		if(IO.leftJoystick.getRawButton(3)) {
+		if(JoystickIO.btnDriveMode.isDown()) {
 			gotoState(previousStateName);
 		}
 	}
