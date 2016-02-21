@@ -13,13 +13,13 @@ public class Util {
     }
     
 	public static double scaleJoytick(double input) {
-	        if (Math.abs(input) < 0.15) {
-	        	return 0;
-	        } else if(input > 0) {
-	        	return input <= 0.8 && input >= 0.05 ? ((input * 0.55) + 0.0725) :  ((input * 2.4375) - 1.4375);
-	        } else {
-	        	return input >= -0.8 && input <= -0.05 ? ((input * 0.55) - 0.0725) : ((input * 2.4375) + 1.4375);
-	        }  
+        if (Math.abs(input) < 0.15) {
+        	return 0;
+        } else if(input > 0) {
+        	return input <= 0.8 && input >= 0.05 ? ((input * 0.55) + 0.0725) :  ((input * 2.4375) - 1.4375);
+        } else {
+        	return input >= -0.8 && input <= -0.05 ? ((input * 0.55) - 0.0725) : ((input * 2.4375) + 1.4375);
+        }  
 	}
 	
 	public static double clip(double input, double min, double max) {
