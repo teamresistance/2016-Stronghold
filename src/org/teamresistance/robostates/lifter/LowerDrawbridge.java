@@ -41,10 +41,7 @@ public class LowerDrawbridge extends State {
 	public void update() {
 		
 		if(IO.middleLifterSwitch.get() && !delay) {
-			IO.lifterMotor.set(0);
 			IO.robotDrive.arcadeDrive(0, 0);
-			SmartDashboard.putBoolean("LowerFlipper", false);
-			gotoState("LowerFlipper");
 			delay = true;
 			delayStart = Time.getTime();
 		} else {
@@ -56,16 +53,13 @@ public class LowerDrawbridge extends State {
 				IO.robotDrive.arcadeDrive(0, 0);
 			}
 		}
+		
 		if(IO.bottomLifterSwitch.get()) {
 			IO.lifterMotor.set(0);
-			try {
-				throw new Exception();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		} else if(delay && Time.getTime() - delayStart <= Constants.DRAWBRIDGE_LOWER_DELAY) {
 			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		} else if(delay) {
+			gotoState("LowerFlipper");
 			IO.lifterMotor.set(0);
 		}
 	}
@@ -73,5 +67,6 @@ public class LowerDrawbridge extends State {
 	@Override
 	public void onExit(StateTransition e) {
 		IO.robotDrive.arcadeDrive(0, 0);
+		delay = false;
 	}
 }

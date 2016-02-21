@@ -28,7 +28,7 @@ public class Constants {
 	public static final double DRAWBRIDGE_MOVE_SPEED = -0.3;
 	
 	public static final double DRAWBRIDGE_DRIVE_TRHOUGH_SPEED = 0.6;
-	public static final double DRAWBRIDGE_DRIVE_THROUGH_TIME = 4.0;
+	public static final double DRAWBRIDGE_DRIVE_THROUGH_TIME = 3.0;
 	public static final double DRAWBRIDGE_FLIPPER_DELAY = 1.0;
 	
 	public static final double DRAWBRIDGE_FORWARD_TIME = 0.5;
@@ -36,5 +36,5 @@ public class Constants {
 	
 	public static final double DRAWBRIGDE_BACKUP_TIME = 2.0;
 	public static final double DRAWBRIDGE_DRIVE_OVER_START_DELAY = 0.5;
-	public static final double DRAWBRIDGE_LOWER_DELAY = 1.0/6.0;
+	public static final double DRAWBRIDGE_LOWER_DELAY = 2.0/6.0;
 }
