@@ -21,6 +21,8 @@ public class DriveToTower extends State {
 	
 	public DriveToTower(int position, int goal, int defense) {
 		SmartDashboard.putNumber("Defense Type enabled" , defense);
+		//SmartDashboard.putNumber("Position enabled" , position);
+		//SmartDashboard.putNumber("Goal enabled" , goal);
 		distance = AutoConstants.DISTANCES[defense-2][goal];
 		SmartDashboard.putNumber("Travel time", distance);
 		startAngle = AutoConstants.START_ANGLES[defense-2][goal];

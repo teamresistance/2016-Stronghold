@@ -68,12 +68,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		//AutoConstants.defenseType = (int) SmartDashboard.getNumber("Defense Type");
-		//SmartDashboard.putNumber("Defense Type Choice", AutoConstants.defenseType);
-		//AutoConstants.defensePosition = (int) SmartDashboard.getNumber("Defense Position");
-		//SmartDashboard.putNumber("Chosen position", AutoConstants.defensePosition);
-		//AutoConstants.goalPosition = (int) SmartDashboard.getNumber("Goal Choice");
-		//SmartDashboard.putNumber("Chosen goal", AutoConstants.goalPosition);
 		
 		Time.update();
 

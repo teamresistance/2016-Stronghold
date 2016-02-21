@@ -22,14 +22,6 @@ public class Autonomous extends State {
 		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
 		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
 		
-		int defenseType = 4;//(int) SmartDashboard.getNumber("Defense Type");
-		int defensePosition = 2;
-		int goalPosition = 2;
-		
-		autoMachine.addState(new DriveToTower(defenseType, goalPosition, defenseType), "DriveToTower");
-		
-		autoMachine.setState("DriveToTower");
-		
 	}
 
 	@Override
@@ -37,9 +29,42 @@ public class Autonomous extends State {
 		//autoMachine.setState("CrossDefense");
 	
 	}
+	
+	boolean first = true;
+	boolean second = false;
+	boolean third = false;
+	double defenseType = 1;
+	int defensePosition = 3;
+	int goalPosition = 0;
 
 	@Override
-	public void update() {
+	public void update() { //Still need to fix: having trouble taking in info at the beginning of the match
+		
+		if(first == true) {
+			first = false;
+			second = true;
+		}
+		
+		if(second==true) {
+			defenseType = 2;//SmartDashboard.getNumber("Defense Type");
+			//SmartDashboard.putNumber("Defense Type Choice", defenseType);
+			defensePosition = 3;//(int) SmartDashboard.getNumber("Defense Position");
+			//SmartDashboard.putNumber("Chosen position", defensePosition);
+			goalPosition = 2;//(int) SmartDashboard.getNumber("Goal Choice");
+			//SmartDashboard.putNumber("Chosen goal", goalPosition);
+		
+			second = false;
+			third = true;
+		}
+		
+		if(third== true) {
+			autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
+			
+			autoMachine.setState("DriveToTower");
+		}
+		
+		
+		
 		//double test = SmartDashboard.getNumber("Test");
 		//SmartDashboard.putNumber("Defense Type Choice", test);
 		

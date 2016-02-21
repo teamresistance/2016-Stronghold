@@ -25,7 +25,5 @@ public class AutoConstants {
 		{30, 30, 30}
 	};
 	
-	public static int defenseType = 0;
-	public static int defensePosition = 0;
-	public static int goalPosition = 0;
+	
 }
