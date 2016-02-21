@@ -42,30 +42,9 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-        defenseType = new SendableChooser();
-        defenseType.addDefault("Cheval De Frise", cheval);
-        defenseType.addObject("Drawbridge", drawbridge);
-        defenseType.addObject("Moat", moat);
-        defenseType.addObject("Portcullis", portcullis);
-        defenseType.addObject("Ramparts", ramparts);
-        defenseType.addObject("Rock Wall", rockwall);
-        defenseType.addObject("Rough Terrain", roughterrain);
-        SmartDashboard.putData("Defense Type", defenseType);
-		
-      //  int test = defenseType.getSelected();
-        
-        goal = new SendableChooser();
-        goal.addDefault("Left Goal", leftGoal);
-        goal.addObject("Middle Goal", middleGoal);
-        goal.addObject("Right Goal", rightGoal);
-        SmartDashboard.putData("Goal Choice", goal);
-        
-        position = new SendableChooser();
-        position.addDefault("Position 2", pos2);
-        position.addObject("Position 3", pos3);
-        position.addObject("Position 4", pos4);
-        position.addObject("Position 5", pos5);
-        SmartDashboard.putData("Defense Position", position);
+		SmartDashboard.putNumber("Test", 0.0);
+		//SmartDashboard.putNumber("Goal Choice", 0.0);
+		//SmartDashboard.putNumber("Defense Position", 0.0);
         
 		IO.init();
 		JoystickIO.init();
@@ -76,7 +55,8 @@ public class Robot extends IterativeRobot {
 		}
 		robotModes.addState(teleop, "teleop");
 		if(auto == null) {
-			auto = new Autonomous(null, null);
+			auto = new Autonomous();
+			//auto = new Autonomous(null, null);
 		}
 		robotModes.addState(auto, "auto");
 	
@@ -108,7 +88,7 @@ public class Robot extends IterativeRobot {
 		JoystickIO.update();
 		robotModes.update();
 		
-		int defenseTypeChoice = (int) SmartDashboard.getInt("Defense Type");
+		//int defenseTypeChoice = (int) SmartDashboard.getInt("Defense Type");
 		//SmartDashboard.putNumber("Choice", defenseTypeChoice);
 		
 		//antlerMachine.update();
