@@ -20,10 +20,11 @@ public class DriveToTower extends State {
 	final private static boolean[] ORIENTATION = {false, true, false, true, false, true, false};
 	
 	public DriveToTower(int position, int goal, int defense) {
-		distance = AutoConstants.DISTANCES[position-2][goal];
+		SmartDashboard.putNumber("Defense Type enabled" , defense);
+		distance = AutoConstants.DISTANCES[defense-2][goal];
 		SmartDashboard.putNumber("Travel time", distance);
-		startAngle = AutoConstants.START_ANGLES[position-2][goal];
-		endAngle = AutoConstants.END_ANGLES[position-2][goal];
+		startAngle = AutoConstants.START_ANGLES[defense-2][goal];
+		endAngle = AutoConstants.END_ANGLES[defense-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
 		SmartDashboard.putNumber("Speed: ", speed);
 		boolean orient = false;//ORIENTATION[defense];

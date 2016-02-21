@@ -18,33 +18,30 @@ public class Autonomous extends State {
 	//public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
 	public Autonomous() {
 		autoMachine = new StateMachine();
-		//double test = SmartDashboard.getNumber("Test");
-		//SmartDashboard.putNumber("Test", test);
-		//int defensePosition = (int) SmartDashboard.getNumber("Defense Position");
-		//SmartDashboard.putNumber("Chosen position", defensePosition);
-		//int goalPosition = (int) SmartDashboard.getNumber("Goal Choice");
-		//SmartDashboard.putNumber("Chosen goal", goalPosition);
 		
-		int defenseType = 4;
+		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
+		//autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
+		
+		int defenseType = 4;//(int) SmartDashboard.getNumber("Defense Type");
 		int defensePosition = 2;
 		int goalPosition = 2;
 		
-		//autoMachine.addState(new CrossDefense(defenseType), "CrossDefense");
-		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, (int) defenseType), "DriveToTower");
+		autoMachine.addState(new DriveToTower(defenseType, goalPosition, defenseType), "DriveToTower");
+		
+		autoMachine.setState("DriveToTower");
 		
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
 		//autoMachine.setState("CrossDefense");
-		autoMachine.setState("DriveToTower");
 	
 	}
 
 	@Override
 	public void update() {
-		double test = SmartDashboard.getNumber("Test");
-		SmartDashboard.putNumber("Test2", test);
+		//double test = SmartDashboard.getNumber("Test");
+		//SmartDashboard.putNumber("Defense Type Choice", test);
 		
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		
