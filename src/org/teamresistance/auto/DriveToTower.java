@@ -72,46 +72,30 @@ public class DriveToTower extends State {
 	private boolean firstTurn = false;
 	private boolean driven = false;
 	private boolean lastTurn = false;
-	private double time = 0;
-	
+	private double time = -1;
+	boolean first = true;
 	@Override
 	public void update() {
 		elapsed += Time.getDelta();
-		System.out.println("StartAngle = "+startAngle);
+		SmartDashboard.putNumber("Elapsed Time", elapsed);
 		SmartDashboard.putNumber("startAngle = ",startAngle);
-		//if(firstTurn==false) {
-			//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
-				//IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			//} else {
-				//firstTurn = true;
-				//time = elapsed;
-			//}
-		//} else {
-			//if(driven==false) {
-				if((elapsed-time)<distance) {
-					IO.robotDrive.arcadeDrive(speed,0.0);
-					//if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
-					//	IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-					//}
-					
-				} 
-					//else {
-				//	driven = true;
-				}
-			//}else {
-			//	if(!lastTurn){
-				//	if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, startAngle)) {
-					//	IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-					//} else {
-						//lastTurn = true; //change state here. 
-					//}
-				
-			//}
-			
-		//}
+		SmartDashboard.putNumber("Time", time);
+		if(firstTurn == false) {
+			firstTurn = turn(40);
+			time = elapsed;
 		
-			
-	//}
+		}else {
+			if((elapsed-time)<=distance && driven == false) {
+				drive();
+			} else {
+				driven = true;
+				if(lastTurn == false && driven == true) {
+					lastTurn = turn(0);
+				}
+			}
+		}
+	}
+				
 		//else {
 			//IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
 			//need to figure out some way of making it go to a targeting state rather than looping
@@ -122,9 +106,25 @@ public class DriveToTower extends State {
 			//	IO.snorflerMotor.set(Constants.SNORFLE_DUMP_SPEED);
 			//}
 			
-	//	}
-//	}
+		//}
+	//}
 
+	public void drive() {
+		IO.robotDrive.arcadeDrive(speed,0.0);
+	}
+	
+	public boolean turn(int angle) {
+		SmartDashboard.putNumber("Current Angle", IO.imu.getYaw());
+	
+		if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, angle)) {
+			
+				IO.imu.turnTo(angle, AutoConstants.ANGLE_ERROR_THRESHOLD);
+				return false;
+		}else {
+			return true;
+		}
+	}
+	
 	@Override
 	public void onExit(StateTransition e) {
 		

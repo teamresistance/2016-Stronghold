@@ -86,11 +86,11 @@ public class NavXIMU {
 	public void turnTo(int angle, int threshold) {
 		if(!isStraight(threshold, angle)) {
 			if(isLeft(angle)) {
-				IO.robotDrive.arcadeDrive(0, -0.75);
+				IO.robotDrive.arcadeDrive(0, -0.8);
 			}
 			else {
 				//turn left 
-				IO.robotDrive.arcadeDrive(0, 0.75);
+				IO.robotDrive.arcadeDrive(0, 0.8);
 			}
 		}
 	}
