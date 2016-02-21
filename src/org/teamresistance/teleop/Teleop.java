@@ -76,7 +76,7 @@ public class Teleop extends State {
 		lifterMachine.addState(new LeavePortcullis());
 		lifterMachine.addState(new LowerFlipper());
 		lifterMachine.addState(new LowerDrawbridge());
-		lifterMachine.addState(new DriveThroughDrawbridge());
+		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
 		
 		
 		SmartDashboard.putNumber("Speed", 0.0);

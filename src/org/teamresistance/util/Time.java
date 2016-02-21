@@ -3,9 +3,7 @@ package org.teamresistance.util;
 public class Time {
 
 	public static final long SECOND = 1000000000L;
-	
 	private static double delta;
-	
 	private static double previousTime = getTime();
 	
 	private Time() {

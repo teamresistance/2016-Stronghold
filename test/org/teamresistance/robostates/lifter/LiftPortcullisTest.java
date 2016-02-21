@@ -5,18 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.teamresistance.HardwareMocks;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StubReturnState;
 import org.teamresistance.util.state.StubState;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,13 +28,7 @@ public class LiftPortcullisTest {
 	@Before
 	public void setUp() {
 		// Set up the behavior of the mock Solenoid's "get" and "set"
-		AtomicBoolean solenoidEnabled = new AtomicBoolean(true);
-		doAnswer(i -> solenoidEnabled.get()).when(lifterSolenoid).get();
-		doAnswer(i -> {
-			boolean newState = i.getArgumentAt(0, boolean.class);
-			solenoidEnabled.set(newState);
-			return null;
-		}).when(lifterSolenoid).set(anyBoolean());
+		HardwareMocks.setUp(lifterSolenoid);
 
 		// Initialize with mocks. This isolates the class being tested; we now know the code
 		// in LiftPortcullis is solely responsible for any test cases failing.
