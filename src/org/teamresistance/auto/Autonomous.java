@@ -10,6 +10,9 @@ import org.teamresistance.auto.defense.DefenseRockwall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.command.Command;
+
 
 
  /*
@@ -147,15 +150,7 @@ public class Autonomous extends State {
 
 		if(currentTime<distance) {
 			IO.robotDrive.arcadeDrive(speed,0.0);
-		} else {
-			IO.imu.turnTo(endAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			//need to figure out some way of making it go to a targeting state rather than looping
-			while(IO.snorflerSolenoid.get()) {
-				IO.snorflerSolenoid.set(false);
-			}
-			while(IO.ballSensor.get()) {
-				IO.snorflerMotor.set(Constants.SNORFLE_DUMP_SPEED);
-			}
+		}
 			
 		}
 	}
