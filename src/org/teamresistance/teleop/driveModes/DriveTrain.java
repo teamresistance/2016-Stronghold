@@ -5,11 +5,13 @@ import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class DriveTrain extends State {
 
 	private AngleMatch target;
 	
-	private float angleOffset = 90;
+	private float angleOffset = -90;
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
@@ -42,15 +44,20 @@ public class DriveTrain extends State {
 			gotoState("AngleHold");
 		} else if(JoystickIO.btnScore.onButtonPressed()) {
 			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
-			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				target.setTargetAngle(30+angleOffset);
+			if(Math.abs(-30 - IO.imu.getYaw()) < angleDeadband) {
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -30);
+				target.setTargetAngle(-30);
 				gotoState("LoadToddsBall");
-			} else if(Math.abs((-30-angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				target.setTargetAngle(-30-angleOffset);
+			} else if(Math.abs(-90 - IO.imu.getYaw()) < angleDeadband) {
+				target.setTargetAngle(-90);
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -90);
 				gotoState("LoadToddsBall");
-			} else if(Math.abs((0+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				target.setTargetAngle(0+angleOffset);
+			} else if(Math.abs(-150 - IO.imu.getYaw()) < angleDeadband) {
+				target.setTargetAngle(-150);
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -150);
 				gotoState("LoadToddsBall");
+			} else {
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", Double.POSITIVE_INFINITY);
 			}
 		}
 	}

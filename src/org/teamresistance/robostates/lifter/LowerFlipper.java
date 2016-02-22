@@ -28,7 +28,7 @@ public class LowerFlipper extends ReturnState {
 
 	@Override
 	public void onExit(StateTransition e) {
-		
+		IO.lifterTiltSolenoid.set(false);
 	}
 
 }

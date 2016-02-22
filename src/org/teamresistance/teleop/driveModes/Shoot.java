@@ -3,6 +3,7 @@ package org.teamresistance.teleop.driveModes;
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
+import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
@@ -32,6 +33,7 @@ public class Shoot extends ReturnState {
 	@Override
 	public void onExit(StateTransition e) {
 		IO.shooterSolenoid.set(false);
+		Robot.teleop.exitIdleDrive();
 	}
 
 }

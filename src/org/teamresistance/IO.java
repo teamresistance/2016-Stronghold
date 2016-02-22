@@ -59,7 +59,7 @@ public class IO {
 	
 		lifterTiltSolenoid = new InvertableSolenoid(2);
 		lifterMotor = new VictorSP(2);
-		lifterMotor.setInverted(true);
+		lifterMotor.setInverted(false);
 		
 		bottomLifterSwitch = new InvertableDigitalInput(5, true);
 		middleLifterSwitch = new InvertableDigitalInput(4, true);

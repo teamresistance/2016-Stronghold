@@ -79,6 +79,7 @@ public class StateMachine {
 	 * @return <code>true</code> if and only if the state of this machine was changed
 	 */
 	public boolean setState(String stateName) {
+		SmartDashboard.putString("stateName", stateName);
 		if (stateName == null) {
 			return false;
 		}

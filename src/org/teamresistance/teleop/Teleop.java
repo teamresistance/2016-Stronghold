@@ -21,6 +21,7 @@ import org.teamresistance.robostates.lifter.TopOutLifter;
 import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.Idle;
+import org.teamresistance.teleop.driveModes.LoadToddsBall;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
 import org.teamresistance.teleop.driveModes.AngleMatch;
 import org.teamresistance.teleop.driveModes.Shoot;
@@ -61,6 +62,7 @@ public class Teleop extends State {
 		driveModes.addState(new Shoot());
 		driveModes.addState(new Target());
 		driveModes.addState(new AngleHold());
+		driveModes.addState(new LoadToddsBall());
 		
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
@@ -90,6 +92,8 @@ public class Teleop extends State {
 		driveModes.setState("ScaledDrive");
 		antlerSnorflerMachine.setState("AntlerSnorflerUp");
 		lifterMachine.setState("TeleopLifterIdle");
+		IO.lifterLight.set(false);
+		IO.snorflerLight.set(true);
 	}
 
 	@Override
@@ -98,6 +102,10 @@ public class Teleop extends State {
 		SmartDashboard.putBoolean("BottomFlipperSwitch", IO.bottomFlipperSwitch.get());
 		
 		SmartDashboard.putBoolean("Compressor", IO.compressor.enabled());
+		
+		SmartDashboard.putBoolean("Bottom Lifter Switch", IO.bottomLifterSwitch.get());
+		SmartDashboard.putBoolean("Middle Lifter Switch", IO.middleLifterSwitch.get());
+		SmartDashboard.putBoolean("Top Lifter Switch", IO.topLifterSwitch.get());
 		
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		
@@ -112,7 +120,6 @@ public class Teleop extends State {
 		SmartDashboard.putNumber("Roll", IO.imu.getRoll());
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
-		
 //		IO.shooterSolenoid.set(JoystickIO.btnScore.isDown() && !IO.ballSensor.get());
 	}
 

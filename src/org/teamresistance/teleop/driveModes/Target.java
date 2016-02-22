@@ -20,12 +20,12 @@ public class Target extends ReturnState {
 	
 	private int screenWidth = 320;
 	
-	private double kP = 0.5;
+	private double kP = 4;
 	private double targetAngle;
 	
 	@Override
 	public void init() {
-		
+		contoursTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 
 	@Override
@@ -64,11 +64,11 @@ public class Target extends ReturnState {
 			centerX /= screenWidth / 2;
 			centerX -= 1;
 			SmartDashboard.putNumber("CenterX", centerX);
-			if(Math.abs(centerX) < 0.08){
+			if(Math.abs(centerX) < 0.04){
 				IO.robotDrive.arcadeDrive(0, 0);
 				gotoState("Shoot");
 			} else {
-				double speed = centerX*-1;
+				double speed = centerX*kP;
 				speed = Util.clip(speed, Constants.TARGET_MIN_SPEED, Constants.TARGET_MAX_SPEED);
 				SmartDashboard.putNumber("Speed", speed);
 				

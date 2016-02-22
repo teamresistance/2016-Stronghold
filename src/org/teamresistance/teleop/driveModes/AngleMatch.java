@@ -13,7 +13,7 @@ public class AngleMatch extends State {
 
 	private float targetAngle = 0.0f;
 	private float angleDeadband = 5.0f;
-	private float angleGain = 0.5f;
+	private float angleGain = 4.0f;
 
 	private String previousStateName = null;
 	
@@ -34,6 +34,7 @@ public class AngleMatch extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		previousStateName = e.getInitialState().getName();
+		SmartDashboard.putNumber("$$$$$Angle Match", 100);
 	}
 
 	@Override
@@ -43,8 +44,8 @@ public class AngleMatch extends State {
 		}
 		
 		//targetAngle = (float) Math.toRadians(SmartDashboard.getNumber("TargetAngle"));
-		angleDeadband = (float) Math.toRadians(SmartDashboard.getNumber("AngleDeadband"));
-		angleGain = (float) SmartDashboard.getNumber("AngleGain");
+//		angleDeadband = (float) Math.toRadians(SmartDashboard.getNumber("AngleDeadband"));
+//		angleGain = (float) SmartDashboard.getNumber("AngleGain");
 		
 		float currentAngle = getCurrentAngle();
 		float error = targetAngle - currentAngle;
@@ -58,7 +59,7 @@ public class AngleMatch extends State {
 			}
 		}
 		
-		if(Math.abs(error) < angleDeadband) {
+		if(Math.abs(error) < Math.toRadians(angleDeadband)) {
 			error = 0.0f;
 			gotoState("Target");
 		}
