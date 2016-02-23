@@ -2,7 +2,6 @@ package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
-import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -15,7 +14,7 @@ public class LoadToddsBall extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-	startTime = Time.getTime();
+		startTime = Time.getTime();
     	IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
 	}
 

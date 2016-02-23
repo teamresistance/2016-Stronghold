@@ -16,7 +16,7 @@ public class Target extends ReturnState {
 	private StateMachine driveModes;
 	private NetworkTable contoursTable;
 	
-	private int screenWidth = 320;
+	public static final int SCREEN_WIDTH = 320;
 	
 	private double kP = 4;
 	private double targetAngle;
@@ -54,7 +54,7 @@ public class Target extends ReturnState {
 		if(maxIndex != -1) {
 			double centerX = centers[maxIndex];
 			SmartDashboard.putNumber("CenterX Raw", centerX);
-			centerX /= screenWidth / 2;
+			centerX /= SCREEN_WIDTH / 2;
 			centerX -= 1;
 			SmartDashboard.putNumber("CenterX", centerX);
 			if(Math.abs(centerX) < 0.04){

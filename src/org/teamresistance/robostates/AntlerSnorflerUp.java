@@ -1,6 +1,5 @@
 package org.teamresistance.robostates;
 
-import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;

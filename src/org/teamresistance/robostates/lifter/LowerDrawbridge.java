@@ -15,6 +15,7 @@ public class LowerDrawbridge extends State {
 	private boolean delay = false;
 	private double delayStart;
 	private boolean driveBack = false;
+
 	@Override
 	public void onEntry(StateTransition e) {
 		startTime = Time.getTime();
