@@ -34,11 +34,11 @@ public class AntlerSnorflerUp extends State {
 			gotoState("AntlersDown");
 		}
 		
-//		if(JoystickIO.btnCancel.isDown()) {
-//			IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
-//		} else {
-//			IO.snorflerMotor.set(0);
-//		}
+		if(JoystickIO.btnSnorflerReverse.onButtonPressed()) {
+			IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
+		} else if(JoystickIO.btnSnorflerReverse.onButtonReleased()) {
+			IO.snorflerMotor.set(0);
+		}
 		
 //		if(JoystickIO.btnScore.isDown()) {
 //			IO.shooterSolenoid.set(true);
