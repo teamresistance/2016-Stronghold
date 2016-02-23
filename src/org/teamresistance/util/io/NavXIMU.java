@@ -33,54 +33,24 @@ public class NavXIMU {
 	}
 	
 	public boolean isStraight(int thresholdAngle, int startAngle) {
-		boolean isStraight = false;
-		
-		double angle = ahrs.getYaw();
-		
-		if(Math.abs(angle-startAngle)<=thresholdAngle) isStraight = true;
-		
-		return isStraight;
+		return Math.abs(ahrs.getYaw() - startAngle) <= thresholdAngle;
 	}
 	
 	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
-		boolean pitchLevel = false;
-		
-		double angle = ahrs.getPitch();
-		
-		if(Math.abs(angle-startAngle)<=thresholdAngle) pitchLevel = true;
-		
-		return pitchLevel;
-		
+		return Math.abs(ahrs.getPitch() - startAngle) <= thresholdAngle;
 	}
 
 	public boolean isRollLevel(int thresholdAngle, int startAngle) {
-		boolean rollLevel = false;
-		
-		double angle = ahrs.getRoll();
-		
-		if(Math.abs(angle-startAngle)<=thresholdAngle) rollLevel = true;
-		
-		return rollLevel;
-		
+		return Math.abs(ahrs.getRoll() - startAngle) <= thresholdAngle;
 	}
 	
 	public boolean isLevel(int thresholdAngle, int startRoll, int startPitch) {
-		boolean isLevel = false;
-		boolean pitchLevel = isPitchLevel(thresholdAngle, startPitch);
-		boolean rollLevel = isRollLevel(thresholdAngle, startRoll);
-		
-		if(pitchLevel&&rollLevel) isLevel = true;
-		
-		return isLevel;
+		return isPitchLevel(thresholdAngle, startPitch)
+				&& isRollLevel(thresholdAngle, startRoll);
 	}
 	
 	public boolean isLeft(int targetAngle) {
-		boolean isLeft = false;
-		double angle = ahrs.getYaw();
-		
-		if(targetAngle<angle) isLeft = true; //need to check this to make sure it's going the right way
-		
-		return isLeft;
+		return targetAngle < ahrs.getYaw();
 	}
 	
 	public void turnTo(int angle, int threshold) {

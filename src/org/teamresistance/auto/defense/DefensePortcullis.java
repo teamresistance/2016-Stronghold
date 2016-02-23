@@ -18,30 +18,34 @@ public class DefensePortcullis extends Defense {
 
 	@Override
 	public void beginCrossing() { //set the flipper to down, and lower the lifter all the way down
-		lowerFlipper();
-		lifterToBottom();
+		lifterMachine.setState("LiftPortcullis");
+//		lowerFlipper();
+//		lifterToBottom();
 	}
 
 	@Override
 	public void whileCrossing() { //need to drive forward, raise flipper, lift motor to top, drive forward until level
-		elapsed += Time.getDelta();
-		if (elapsed<0.1) { //drive forward to the portcullis - will ideally implement collision detection here
-			IO.robotDrive.arcadeDrive(0.5, 0);
-		} 
-		else {
-			if(!lifted) {
-				while(!IO.topFlipperSwitch.get()) {
-					raiseFlipper();
-				}
-				lifterToTop();
-				lifted = true;
-			}
+		if (lifterMachine.getCurrentState().equals("TeleopLifterIdle")) {
+			setCrossing(false);
 		}
-		
-		if(!IO.imu.isLevel(10, 0, 0) && elapsed <= 2.0) {
-			// drive forward
-			IO.robotDrive.arcadeDrive(0.5, 0);
-		}
+//		elapsed += Time.getDelta();
+//		if (elapsed<0.1) { //drive forward to the portcullis - will ideally implement collision detection here
+//			IO.robotDrive.arcadeDrive(0.5, 0);
+//		} 
+//		else {
+//			if(!lifted) {
+//				while(!IO.topFlipperSwitch.get()) {
+//					raiseFlipper();
+//				}
+//				lifterToTop();
+//				lifted = true;
+//			}
+//		}
+//		
+//		if(!IO.imu.isLevel(10, 0, 0) && elapsed <= 2.0) {
+//			// drive forward
+//			IO.robotDrive.arcadeDrive(0.5, 0);
+//		}
 	}
 	
 	private void lifterToTop() {

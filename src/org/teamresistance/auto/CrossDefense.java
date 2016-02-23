@@ -18,7 +18,7 @@ public class CrossDefense extends State {
 	public CrossDefense(int type, StateMachine antlerMachine, StateMachine lifterMachine) {
 		defense = new Defense[]{
 			new DefenseCheval(),
-			new DefenseDrawbridge(),
+			new DefenseDrawbridge(lifterMachine),
 			new DefenseMoat(),
 			new DefensePortcullis(lifterMachine),
 			new DefenseRamparts(),
