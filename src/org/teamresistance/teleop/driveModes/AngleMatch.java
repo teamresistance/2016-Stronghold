@@ -2,7 +2,6 @@ package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
-import org.teamresistance.Robot;
 import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -13,7 +12,7 @@ public class AngleMatch extends State {
 
 	private float targetAngle = 0.0f;
 	private float angleDeadband = 5.0f;
-	private float angleGain = 4.0f;
+	private float angleGain = 0.05f; //0.5f
 
 	private String previousStateName = null;
 	
@@ -34,13 +33,12 @@ public class AngleMatch extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		previousStateName = e.getInitialState().getName();
-		SmartDashboard.putNumber("$$$$$Angle Match", 100);
 	}
 
 	@Override
 	public void update() {
 		if(!JoystickIO.btnScore.isDown()) {
-			gotoState(previousStateName);
+			gotoState("ScaledDrive");
 		}
 		
 		//targetAngle = (float) Math.toRadians(SmartDashboard.getNumber("TargetAngle"));
@@ -51,21 +49,29 @@ public class AngleMatch extends State {
 		float error = targetAngle - currentAngle;
 		SmartDashboard.putNumber("Error", error);
 		
-		if(Math.abs(error/(2 * Math.PI)) > 0.8) {
+		if(Math.abs(error) > 200.0f) {
 			if(error > 0) {
-				error -= (float)(2 * Math.PI);
+				error -= 360.0f;
 			} else {
-				error += (float)(2 * Math.PI);
+				error += 360.0f;
 			}
 		}
 		
-		if(Math.abs(error) < Math.toRadians(angleDeadband)) {
+		if(Math.abs(error) < angleDeadband) {
 			error = 0.0f;
 			gotoState("Target");
 		}
 		
-		SmartDashboard.putNumber("Result", Util.clip((double)(error*angleGain), -1.0, 1.0));
-		IO.robotDrive.arcadeDrive(0.0, Util.clip((double)(error*angleGain), -1.0, 1.0));
+//		SmartDashboard.putNumber("Result", Util.clip((double)(error*angleGain), -0.7, 0.7));
+//		SmartDashboard.putNumber("Result", angleGain*error/Math.abs(error));
+//		IO.robotDrive.arcadeDrive(0.0, Util.clip((double)(error*angleGain), -0.7, 0.7));
+//		IO.robotDrive.arcadeDrive(0.0, );
+//		double speed = angleGain*error/Math.abs(error);
+		double speed = Util.clip((double)(error*angleGain), -0.25, 0.25);
+		
+		
+		SmartDashboard.putNumber("Turn Speed", speed);
+		IO.robotDrive.tankDrive(-speed, 0);
 	}
 
 	@Override
@@ -74,15 +80,15 @@ public class AngleMatch extends State {
 	}
 	
 	private float getCurrentAngle() {
-		return (float)Math.toRadians(IO.imu.getYaw());
+		return (float)IO.imu.getYaw();
 	}
 
 	public void setTargetAngle(float angle) {
-		targetAngle = (float)Math.toRadians(angle);
+		targetAngle = (float)angle;
 	}
 	
 	public void setAngleDeadband(float angleDeadband) {
-		angleDeadband = (float)Math.toRadians(angleDeadband);
+		angleDeadband = (float)angleDeadband;
 	}
 
 	public void setAngleGain(float angleGain) {

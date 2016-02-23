@@ -29,7 +29,8 @@ public class LoadToddsBall extends State {
 		SmartDashboard.putNumber("%%%%%%AngleMatch Being", 10000);
 		if(Time.getTime() - startTime >= Constants.LOAD_TODDS_BALL_TIME) {
 			//SmartDashboard.putNumber("AngleMatch Being", 10000);
-			gotoState("AngleMatch");
+//			gotoState("AngleMatch");
+			gotoState("Target");
 		}
 	}
 
