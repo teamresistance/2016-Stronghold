@@ -9,23 +9,17 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DriveToTower extends State {
 
-	final private static int[][] START_ANGLES = {
-		{0, 30, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
+	final private static int[][] ROTATIONS = {
+		{0, 	-40, 	0},
+		{18, 	-16, 	0},
+		{0, 	16, 	-18},
+		{0, 	40,		0}
 	};
 	final private static double[][] DISTANCES = {
-		{1.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0},
-		{0.0, 0.0, 0.0, 0.0}
-	};
-	final private static int[][] END_ANGLES = {
-		{0, -60, 0, 0}, 
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
+		{11.5, 	10.4, 	0.0},
+		{12.1, 	8.3, 	0.0},
+		{0.0, 	8.3, 	12.1},
+		{0.0, 	10.4, 	11.5}
 	};
 	
 	private double distance;
@@ -34,33 +28,20 @@ public class DriveToTower extends State {
 	private double speed;
 	
 	public DriveToTower(int position, int goal, boolean orient) {
-		distance = DISTANCES[position-2][goal];
-		int startAngle = START_ANGLES[position-2][goal];
-		endAngle = END_ANGLES[position-2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
+		distance = DISTANCES[position - 2][goal];
 		
+		int startAngle = 0;
 		if(orient) {
-			
-			//add 180 and wrap to -180
-			startAngle += 180;
-			wrap(startAngle);
-			endAngle += 180;
-			wrap(endAngle);
-			
+			speed *= -1;
+			startAngle = 180;
 		}
+		endAngle = startAngle + ROTATIONS[position - 2][goal];
 		
 		IO.imu.turnTo(startAngle, AutoConstants.ANGLE_ERROR_THRESHOLD);
 		
 	}
 	
-	private void wrap(double angle) {
-		speed*= -1;
-		if(angle>180) {
-			double difference = angle-180;
-			angle = -180+difference; // should that assignment be to a member?
-		}
-	}
-
 	@Override
 	public void onEntry(StateTransition e) {
 		//

@@ -11,7 +11,9 @@ import org.teamresistance.util.state.StateTransition;
 public class Autonomous extends State {
 
 	 // Follows the same indexing as the array found in CrossDefense's constructor
-	private final static boolean[] ORIENTATION = {false, true, false, true, false, true, false};
+	private final static boolean[] ORIENTATION = 
+		{false, true, false, true, false, true, false};
+	
 	private final StateMachine autoMachine;
 
 	public Autonomous(StateMachine antlerMachine, StateMachine lifterMachine) {
@@ -24,8 +26,9 @@ public class Autonomous extends State {
 		//(int) SmartDashboard.getNumber("defense position");
 		//(int) SmartDashboard.getNumber("defense type");
 		//(int) SmartDashboard.getNumber("goal");
-
-		//autoMachine.addState(new CrossDefense(defenseType, antlerMachine, lifterMachine), "CrossDefense");
+		
+		autoMachine.addState(new DriveToDefense(defenseType));
+		autoMachine.addState(new CrossDefense(defenseType, antlerMachine, lifterMachine), "CrossDefense");
 		autoMachine.addState(new DriveToTower(defensePosition, goalPosition, ORIENTATION[defenseType]), "DriveToTower");
 	}
 
