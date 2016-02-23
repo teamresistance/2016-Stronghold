@@ -1,9 +1,9 @@
 package org.teamresistance.util.state;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Represents a Finite State Machine (FSM). The FSM can be in one single state at a time. 
@@ -35,41 +35,40 @@ public class StateMachine {
 	}
 
 	/**
-	 * Registers a new state of the specified type.
-	 * @param stateType the type
+	 * Registers the specified state.
+	 * @param state the state
 	 * @return <code>true</code> if the new instance was successfully added
 	 */
-	public boolean addState(Class<? extends State> stateType) {
-		if(stateType == null) {
+	public boolean addState(State state) {
+		if(state == null) {
 			return false;
 		}
-		return addState(stateType, stateType.getSimpleName());
+		return addState(state, state.getClass().getSimpleName());
 	}
 	
 	/**
-	 * Registers a new state of the specified type, and associates it with the specified name.
+	 * Registers the specified state instance, and associates it with the specified name.
 	 * If the name is a null pointer, then the state's runtime class name is used
-	 * @param stateType the type
+	 * @param state the state
 	 * @param stateName the name
 	 * @return <code>true</code> if the new instance was successfully added
 	 */
-	public boolean addState(Class<? extends State> stateType, String stateName) {
-		if (stateType == null) {
+	public boolean addState(State state, String stateName) {
+		if (state == null) {
 			return false;
 		}
 		if (stateName == null) {
-			stateName = stateType.getSimpleName();
+			stateName = state.getClass().getSimpleName();
 		} 
 		if (containsState(stateName)) {
 			return false;
 		}
-		State instance = newInstance(stateType, stateName);
 		
-		if (instance == null) {
-			return false;
-		}
-		instance.init();
-		states.put(stateName, instance);
+		state.setStateMachine(this);
+		state.setName(stateName);
+		state.init();
+		
+		states.put(stateName, state);
 		return true;
 	}
 	
@@ -80,10 +79,21 @@ public class StateMachine {
 	 * @return <code>true</code> if and only if the state of this machine was changed
 	 */
 	public boolean setState(String stateName) {
+		SmartDashboard.putString("stateName", stateName);
 		if (stateName == null) {
 			return false;
 		}
 		return transition(states.get(stateName));
+	}
+	
+	public State getState(String stateName) {
+		if(stateName == null) {
+			return null;
+		}
+		if(!containsState(stateName)) {
+			return null;
+		}
+		return states.get(stateName);
 	}
 	
 	public int getNumStates() {
@@ -99,7 +109,10 @@ public class StateMachine {
 	 * @return <code>true</code> if and only if the transition was successful.
 	 */
 	private boolean transition(State newState) {
-		if (newState == null || newState == currentState) {
+		if (newState == null) {
+			return false;
+		}
+		if(newState == currentState){
 			return false;
 		}
 		StateTransition transition = new StateTransition(currentState, newState);
@@ -113,22 +126,8 @@ public class StateMachine {
 		return true;
 	}
 	
-	/**
-	 * Returns a new, named instance of the specified State subclass,
-	 * or null if a new instance cannot be created.
-	 * @param stateType the type
-	 * @return the instance
-	 */
-	private State newInstance(Class<? extends State> stateType, String stateName) {
-		try {
-			Constructor<? extends State> ctor = stateType.getDeclaredConstructor(StateMachine.class, String.class);
-			ctor.setAccessible(true);
-			return ctor.newInstance(this, stateName);
-		} catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			return null;
-		}
+	public String getCurrentState() {
+		return currentState.getName();
 	}
+	
 }

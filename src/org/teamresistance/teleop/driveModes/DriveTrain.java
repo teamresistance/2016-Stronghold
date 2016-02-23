@@ -1,51 +1,63 @@
 package org.teamresistance.teleop.driveModes;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.State;
-import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends State {
 
-	private float angleOffset = 90;
+	private AngleMatch target;
+	
+	private float angleOffset = -90;
 	private float angleDeadband = 15;
 	
 	private boolean reverse = false;
-	private boolean reverseLatch = false;
 	
-	protected DriveTrain(StateMachine stateMachine, String name) {
-		super(stateMachine, name);
+	public DriveTrain(AngleMatch target) {
+		this.target = target;
 	}
-
+	
 	@Override
 	public void init() {
-
+		IO.lifterLight.set(reverse);
+		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-
+		IO.lifterLight.set(reverse);
+		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void update() {
-		if(IO.rightJoystick.getRawButton(1) && !reverseLatch) {
-			reverseLatch = true;
+		if(JoystickIO.btnDriveReverse.onButtonPressed()) {
 			reverse = !reverse;
-		} else if(!IO.rightJoystick.getRawButton(1) && reverseLatch) {
-			reverseLatch = false;
+			IO.lifterLight.set(reverse);
+			IO.snorflerLight.set(!reverse);
 		}
-		
-		if(IO.leftJoystick.getRawButton(4)) {
-			if(Math.abs((30+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(30+angleOffset);
-				gotoState("Target");
-			} else if(Math.abs((-30-angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(-30-angleOffset);
-				gotoState("Target");
-			} else if(Math.abs((0+angleOffset) - IO.imu.getYaw()) < angleDeadband) {
-				Target.setTargetAngle(0+angleOffset);
-				gotoState("Target");
+		if(JoystickIO.btnAngleHold.isDown()) {
+			((AngleHold)stateMachine.getState("AngleHold")).setReturnState(getName());
+			gotoState("AngleHold");
+		} else if(JoystickIO.btnScore.onButtonPressed()) {
+			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
+			if(Math.abs(-30 - IO.imu.getYaw()) < angleDeadband) {
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -30);
+				target.setTargetAngle(-30);
+				gotoState("LoadToddsBall");
+			} else if(Math.abs(-90 - IO.imu.getYaw()) < angleDeadband) {
+				target.setTargetAngle(-90);
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -90);
+				gotoState("LoadToddsBall");
+			} else if(Math.abs(-150 - IO.imu.getYaw()) < angleDeadband) {
+				target.setTargetAngle(-150);
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -150);
+				gotoState("LoadToddsBall");
+			} else {
+				SmartDashboard.putNumber("!!!!!&&&%%Nearest", Double.POSITIVE_INFINITY);
 			}
 		}
 	}
@@ -57,17 +69,17 @@ public class DriveTrain extends State {
 	
 	protected float getLeftY() {
 		if(reverse) {
-			return (float) -IO.rightJoystick.getY();
+			return (float) -JoystickIO.rightJoystick.getY();
 		} else {
-			return (float) IO.leftJoystick.getY();
+			return (float) JoystickIO.leftJoystick.getY();
 		}
 	}
 	
 	protected float getRightY() {
 		if(reverse) {
-			return (float) -IO.leftJoystick.getY();
+			return (float) -JoystickIO.leftJoystick.getY();
 		} else {
-			return (float) IO.rightJoystick.getY();
+			return (float) JoystickIO.rightJoystick.getY();
 		}
 	}
 

@@ -1,9 +1,10 @@
-package org.teamresistance.auto;
+package org.teamresistance.teleop.driveModes;
 
+import org.teamresistance.IO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-public class Autonomous extends State {
+public class Idle extends State {
 
 	@Override
 	public void init() {
@@ -12,7 +13,7 @@ public class Autonomous extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		
+		IO.robotDrive.tankDrive(0.0, 0.0);
 	}
 
 	@Override
@@ -24,5 +25,7 @@ public class Autonomous extends State {
 	public void onExit(StateTransition e) {
 		
 	}
+
+	
 
 }

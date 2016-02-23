@@ -1,11 +1,18 @@
 package org.teamresistance.util.io;
 
-public class InvertableDigitalInput extends edu.wpi.first.wpilibj.DigitalInput {
+import edu.wpi.first.wpilibj.DigitalInput;
 
-	private boolean inverted = true;
+public class InvertableDigitalInput extends DigitalInput {
+
+	private boolean inverted = false;
 	
 	public InvertableDigitalInput(int channel) {
+		this(channel, false);
+	}
+
+	public InvertableDigitalInput(int channel, boolean inverted) {
 		super(channel);
+		this.inverted = inverted;
 	}
 
 	@Override
