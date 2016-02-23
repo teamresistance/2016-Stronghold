@@ -20,22 +20,28 @@ public class SnorflerDown extends State {
 	@Override
 	public void update() {
 		if (JoystickIO.btnCancel.onButtonPressed() || IO.ballSensor.get()) {
+			IO.snorflerMotor.set(0);
 			gotoState("AntlerSnorflerUp");
 		}
 
 		if (JoystickIO.btnSnorfler.onButtonPressed()) {
-			if (paused) {
-				paused = false;
+			paused = !paused;
+			if(!paused) {
 				IO.snorflerMotor.set(Constants.SNORFLE_SPEED);
 			} else {
-				paused = true;
-				IO.snorflerMotor.set(0.0);
+				IO.snorflerMotor.set(0);
 			}
 		}
 
 		if (JoystickIO.btnAntler.onButtonPressed()) {
 			gotoState("AntlersDown");
 		}
+	}
+
+	@Override
+	public void onExit(StateTransition e) {
+		IO.snorflerMotor.set(0);
+		paused = false;
 	}
 
 }

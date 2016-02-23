@@ -28,18 +28,18 @@ public class AntlerSnorflerUp extends State {
 			SmartDashboard.putBoolean("Antler", true);
 			gotoState("AntlersDown");
 		}
+		
+//		if(JoystickIO.btnCancel.isDown()) {
+//			IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
+//		} else {
+//			IO.snorflerMotor.set(0);
+//		}
 
-		if(JoystickIO.btnCancel.isDown()) {
-			IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
-		} else {
-			IO.snorflerMotor.set(0);
-		}
-
-		if(JoystickIO.btnScore.isDown()) {
-			IO.shooterSolenoid.set(true);
-		} else {
-			IO.shooterSolenoid.set(false);
-		}
+//		if(JoystickIO.btnScore.isDown()) {
+//			IO.shooterSolenoid.set(true);
+//		} else {
+//			IO.shooterSolenoid.set(false);
+//		}
 	}
 
 }

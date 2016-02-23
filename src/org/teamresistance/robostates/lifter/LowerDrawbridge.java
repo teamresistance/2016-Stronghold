@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -13,7 +14,7 @@ public class LowerDrawbridge extends State {
 	private double startTime;
 	private boolean delay = false;
 	private double delayStart;
-	
+	private boolean driveBack = false;
 	@Override
 	public void onEntry(StateTransition e) {
 		startTime = Time.getTime();
@@ -34,23 +35,30 @@ public class LowerDrawbridge extends State {
 
 	@Override
 	public void update() {
-		
 		if(IO.middleLifterSwitch.get() && !delay) {
 			IO.robotDrive.arcadeDrive(0, 0);
 			delay = true;
 			delayStart = Time.getTime();
+		}
+		
+		if(Time.getTime() - startTime < Constants.DRAWBRIDGE_FORWARD_TIME) {
+			IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_FORWARD_SPEED, 0);
+//			startTime = Time.getTime();
+			driveBack = true;
+		} else if(Time.getTime() - startTime < Constants.DRAWBRIGDE_BACKUP_TIME + Constants.DRAWBRIDGE_FORWARD_TIME){
+			IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_MOVE_SPEED, 0);	
+		} else if(Time.getTime() - startTime < Constants.DRAWBRIDGE_FORWARD_START_TIME) {
+			IO.robotDrive.arcadeDrive(0,0);
+		} else if(Time.getTime() - startTime < Constants.DRAWBRIDGE_FORWARD_START_TIME + Constants.DRAWBRIDGE_FIRST_FORWARD_TIME) {
+			IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_FORWARD_SPEED, 0);	
 		} else {
-			if(Time.getTime() - startTime < Constants.DRAWBRIDGE_FORWARD_TIME) {
-				IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_FORWARD_SPEED, 0);
-			} else if(Time.getTime() - startTime < Constants.DRAWBRIGDE_BACKUP_TIME){
-				IO.robotDrive.arcadeDrive(Constants.DRAWBRIDGE_MOVE_SPEED, 0);	
-			} else {
-				IO.robotDrive.arcadeDrive(0, 0);
-			}
+			IO.robotDrive.arcadeDrive(0, 0);
 		}
 		
 		if(IO.bottomLifterSwitch.get()) {
 			IO.lifterMotor.set(0);
+			Robot.teleop.exitIdleDrive();
+			gotoState("TeleopLifterIdle");
 		} else if(delay && Time.getTime() - delayStart <= Constants.DRAWBRIDGE_LOWER_DELAY) {
 			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		} else if(delay) {
@@ -63,5 +71,6 @@ public class LowerDrawbridge extends State {
 	public void onExit(StateTransition e) {
 		IO.robotDrive.arcadeDrive(0, 0);
 		delay = false;
+		driveBack = false;
 	}
 }
