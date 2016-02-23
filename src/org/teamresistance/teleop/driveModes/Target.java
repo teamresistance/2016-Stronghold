@@ -20,7 +20,7 @@ public class Target extends ReturnState {
 	
 	private int screenWidth = 320;
 	
-	private double kP = 4;
+	private double kP = 3;
 	private double targetAngle;
 	
 	@Override
@@ -36,7 +36,7 @@ public class Target extends ReturnState {
 	@Override
 	public void update() {
 		if(!JoystickIO.btnScore.isDown()) {
-			gotoReturnState();
+			gotoState("ScaledDrive");
 		}
 		
 		double error = targetAngle - IO.imu.getYaw();
@@ -60,15 +60,19 @@ public class Target extends ReturnState {
 		SmartDashboard.putNumber("Max", maxArea);
 		if(maxIndex != -1) {
 			double centerX = centers[maxIndex];
+			double width = contoursTable.getNumberArray("width", new double[0])[maxIndex];
+			SmartDashboard.putNumber("Width", width);
 			SmartDashboard.putNumber("CenterX Raw", centerX);
-			centerX /= screenWidth / 2;
+			centerX /= (screenWidth / 2);
 			centerX -= 1;
 			SmartDashboard.putNumber("CenterX", centerX);
-			if(Math.abs(centerX) < 0.04){
+			if( centerX > -0.02 && centerX < 0.06){
 				IO.robotDrive.arcadeDrive(0, 0);
+				SmartDashboard.putBoolean("SHOOTABLE", true);
 				gotoState("Shoot");
 			} else {
-				double speed = centerX*kP;
+				SmartDashboard.putBoolean("SHOOTABLE", false);
+				double speed = 0.38*centerX/Math.abs(centerX);
 				speed = Util.clip(speed, Constants.TARGET_MIN_SPEED, Constants.TARGET_MAX_SPEED);
 				SmartDashboard.putNumber("Speed", speed);
 				

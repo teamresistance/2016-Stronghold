@@ -12,8 +12,8 @@ public class DriveTrain extends State {
 	private AngleMatch target;
 	
 	private float angleOffset = -90;
-	private float angleDeadband = 15;
-	
+	private float angleDeadband = 5;//15
+
 	private boolean reverse = false;
 	
 	public DriveTrain(AngleMatch target) {
@@ -42,7 +42,8 @@ public class DriveTrain extends State {
 		if(JoystickIO.btnAngleHold.isDown()) {
 			((AngleHold)stateMachine.getState("AngleHold")).setReturnState(getName());
 			gotoState("AngleHold");
-		} else if(JoystickIO.btnScore.onButtonPressed()) {
+		} 
+		/*else if(JoystickIO.btnScore.onButtonPressed()) {
 			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
 			if(Math.abs(-30 - IO.imu.getYaw()) < angleDeadband) {
 				SmartDashboard.putNumber("!!!!!&&&%%Nearest", -30);
@@ -59,9 +60,28 @@ public class DriveTrain extends State {
 			} else {
 				SmartDashboard.putNumber("!!!!!&&&%%Nearest", Double.POSITIVE_INFINITY);
 			}
+		}*/
+		
+		
+		if(Math.abs(-30 - IO.imu.getYaw()) < angleDeadband) {
+			shoot();
+		} else if(Math.abs(-90 - IO.imu.getYaw()) < angleDeadband) {
+			shoot();
+		} else if(Math.abs(-150 - IO.imu.getYaw()) < angleDeadband) {
+			shoot();
+		} else {
+			SmartDashboard.putBoolean("SHOOTABLE", false);
 		}
 	}
 
+	private void shoot() {
+		SmartDashboard.putBoolean("SHOOTABLE", true);
+		if(JoystickIO.btnScore.onButtonPressed()) {
+			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
+			gotoState("LoadToddsBall");
+		}
+	}
+	
 	@Override
 	public void onExit(StateTransition e) {
 

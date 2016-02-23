@@ -23,6 +23,7 @@ public class JoystickIO {
 	public static Button btnAntler;
 	public static Button btnSnorfler;
 	public static Button btnCancel;
+	public static Button btnSnorflerReverse;
 	
 	public static Button btnToggleFoot;
 	public static Button btnToggleLifter;
@@ -43,6 +44,7 @@ public class JoystickIO {
 		btnAntler = newButton(codriverStick, 4);
 		btnSnorfler = newButton(codriverStick, 3);
 		btnCancel = newButton(codriverStick, 2);
+		btnSnorflerReverse = newButton(codriverStick, 10);
 		
 		btnToggleFoot = newButton(codriverStick, 5);
 		btnToggleLifter = newButton(codriverStick, 6);
