@@ -16,19 +16,7 @@ public class AngleMatch extends State {
 
 	private String previousStateName = null;
 	
-	public AngleMatch() {
-		
-	}
-	
-	@Override
-	public void init() {
-		/*
-		SmartDashboard.putNumber("TargetAngle", targetAngle);
-		SmartDashboard.putNumber("AngleDeadband", angleDeadband);
-		SmartDashboard.putNumber("AngleGain", angleGain);
-		*/
-//		SmartDashboard.putNumber("IntegralGain", angleIntegralGain);
-	}
+	public AngleMatch() {}
 
 	@Override
 	public void onEntry(StateTransition e) {

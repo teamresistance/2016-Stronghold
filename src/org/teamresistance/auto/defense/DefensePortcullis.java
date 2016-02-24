@@ -3,7 +3,6 @@ package org.teamresistance.auto.defense;
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.auto.Defense;
-import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 
 public class DefensePortcullis extends Defense {
@@ -50,14 +49,14 @@ public class DefensePortcullis extends Defense {
 	
 	private void lifterToTop() {
 		while(!IO.topLifterSwitch.get()) {
-			IO.lifterMotor.set(Constants.SCREW_THREAD_DOWN_SPEED);
+			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
 		}
 		IO.lifterMotor.set(0.0);
 	}
 
 	private void lifterToBottom() {
 		while (!IO.bottomLifterSwitch.get()) { //drive the lifter down all the way
-			IO.lifterMotor.set(Constants.SCREW_THREAD_UP_SPEED);
+			IO.lifterMotor.set(Constants.LIFTER_UP_SPEED);
 		}
 		IO.lifterMotor.set(0.0);
 	}

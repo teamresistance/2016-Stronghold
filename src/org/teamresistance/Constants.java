@@ -3,6 +3,7 @@ package org.teamresistance;
 public class Constants {
 
 	public static final double SNORFLE_SPEED = 1.0;
+	public static final double SNORFLE_DUMP_SPEED = -1.0;
 	public static final double BOULDER_LOAD_SPEED = -1.0;
 
 	public static final double LIFTER_UP_SPEED = 1.0;

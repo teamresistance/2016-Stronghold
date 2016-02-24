@@ -20,9 +20,8 @@ public class Target extends ReturnState {
 	
 	private double kP = 3;
 	private double targetAngle;
-	
-	@Override
-	public void init() {
+
+	public Target() {
 		contoursTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 

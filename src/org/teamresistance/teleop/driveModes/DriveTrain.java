@@ -15,19 +15,23 @@ public class DriveTrain extends State {
 	private float angleDeadband = 5;//15
 
 	private boolean reverse = false;
-	
+
+	private boolean initialized;
+
 	public DriveTrain(AngleMatch target) {
 		this.target = target;
-	}
-	
-	@Override
-	public void init() {
-		IO.lifterLight.set(reverse);
-		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
+		// Temporary, since we chucked the init method() and putting
+		// this in the constructor may be not be a good idea.
+		if (!initialized) {
+			IO.lifterLight.set(reverse);
+			IO.snorflerLight.set(!reverse);
+			initialized = true;
+		}
+
 		IO.lifterLight.set(reverse);
 		IO.snorflerLight.set(!reverse);
 	}
