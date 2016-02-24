@@ -25,28 +25,19 @@ public class Autonomous extends State {
 	final public static double[][] DISTANCES = {
 			{0, 30, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0	},
-			{0, 0, 0, 0}
+			{0, 0, 0, 0	}
 	};
 
 	final public static int[][] START_ANGLES = {
 			{0, 30, 0, 0},
 			{0, 0, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0}
 	};
 
-	final public static double[][] ANGLES = {
-			{1.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0}
-	};
 	final public static int[][] END_ANGLES = {
 			{0, -60, 0, 0},
 			{0, 0, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0}
 	};
 
 	//private StateMachine autoMachine;
@@ -74,7 +65,7 @@ public class Autonomous extends State {
 
 		//This is were you choose the base that is in front of the robot
 		defenseChooser = new SendableChooser();
-		defenseChooser.addObject("TeeterTater", new  DefenseCheval());
+		defenseChooser.addObject("Teeter Tater", new  DefenseCheval());
 		defenseChooser.addObject("Moat", new DefenseMoat());
 		defenseChooser.addObject("Drawbridge", new  DefenseDrawbridge());
 		defenseChooser.addObject("Portcullis", new DefensePortcullis());
