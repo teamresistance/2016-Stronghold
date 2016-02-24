@@ -1,11 +1,15 @@
 package org.teamresistance;
 
+import org.teamresistance.auto.Autonomous;
+import org.teamresistance.teleop.Teleop;
+import org.teamresistance.util.Time;
+import org.teamresistance.util.state.StateMachine;
+
 import java.io.IOException;
 
 
-public class Robot extends IterativeRobot {
+public class Robot{
 
-	@Override
 	public void robotInit() {
 		try {
 			new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
@@ -15,34 +19,27 @@ public class Robot extends IterativeRobot {
 		
 		IO.init();
 		JoystickIO.init();
-		
-		robotMachine = new StateMachine();
-		autoMachine1.0 = new StateMachine();
+
+		StateMachine robotMachine = new StateMachine();
+		StateMachine autoMachine1 = new StateMachine();
 		
 		robotMachine.addState(new Teleop(), "teleop");
 		robotMachine.addState(new Autonomous(), "auto");
 		
 	}
 
-	@Override
 	public void autonomousInit() {
 	}
 
-	@Override
 	public void autonomousPeriodic() {
 		Time.update();
-		robotMachine.update();
 	}
 
-	@Override
 	public void teleopInit() {
-		robotMachine.setState("teleop");
 	}
 
-	@Override
 	public void teleopPeriodic() {
 		Time.update();
 		JoystickIO.update();
-		robotMachine.update();
 	}
 }

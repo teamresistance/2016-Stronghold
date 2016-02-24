@@ -4,31 +4,65 @@ import org.teamresistance.IO;
 import org.teamresistance.auto.defense.DefenseCheval;
 import org.teamresistance.auto.defense.DefenseDrawbridge;
 import org.teamresistance.auto.defense.DefenseMoat;
-import org.teamresistance.auto.defense.DefensePortculllis;
+import org.teamresistance.auto.defense.DefensePortcullis;
 import org.teamresistance.auto.defense.DefenseRamparts;
-import org.teamresistance.auto.defense.DefenseRockwall;
+import org.teamresistance.auto.defense.DefenseRockWall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
-import edu.wpi.first.wpilibj.Relay;
+import org.teamresistance.util.Time;
+import org.teamresistance.util.state.State;
+import org.teamresistance.util.state.StateTransition;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.command.Command;
 
 
-
- /*
- * Four states: initial positioning?, defense crossing, tower positioning, targeting/shooting
- */
+/*
+* Four states: initial positioning?, defense crossing, tower positioning, targeting/shooting
+*/
 public class Autonomous extends State {
+
+	final public static double[][] DISTANCES = {
+			{0, 30, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0	},
+			{0, 0, 0, 0}
+	};
+
+	final public static int[][] START_ANGLES = {
+			{0, 30, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0}
+	};
+
+	final public static double[][] ANGLES = {
+			{1.0, 0.0, 0.0, 0.0},
+			{0.0, 0.0, 0.0, 0.0},
+			{0.0, 0.0, 0.0, 0.0},
+			{0.0, 0.0, 0.0, 0.0}
+	};
+	final public static int[][] END_ANGLES = {
+			{0, -60, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0},
+			{0, 0, 0, 0}
+	};
+
 	//private StateMachine autoMachine;
 	
-	//This defines parts that gets smartdashboard input
+	//This defines parts that gets SmartDashboard input
 	Command autonomousCommand;
 	SendableChooser defenseChooser;
 
-	@Override
-	public void update() {
-	}
-	
+	enum State {getOriented, driveToDefense, crossDefense, moveForShot, shoot, done}
+
+	double distance;
+	double speed;
+	double currentTime = 0;
+	int goal;
+
+
 	public Autonomous() {
 		/*int defensePosition = 2;
 		*(int) SmartDashboard.getNumber("defense position");
@@ -37,95 +71,94 @@ public class Autonomous extends State {
 		i*nt goalPosition = 1;
 		*(int) SmartDashboard.getNumber("goal");
 		*/
-		
-		//This is were you choose the base that is infront of the robot		
-		defenseChooser = SendableChooser();
-		defenseChooser.addObject("TeeterTater", DefenseCheval());
-		defenseChooser.addObject("Moat", DefenseMoat());
-		defenseChooser.addObject("Drawbridge", DefenseDrawbridge());
-		defenseChooser.addObject("Portculllis", DefensePortculllis());
-		defenseChooser.addObject("Ramparts", DefenseRamparts());
-		defenseChooser.addObject("Rockwall", DefenseRockwall());
-		defenseChooser.addObject("Rough Terrain", DefenseRoughTerrain());
-		SmartDashboard.putData("Automous chooser", defenseChooser);
-		
+
+		//This is were you choose the base that is in front of the robot
+		defenseChooser = new SendableChooser();
+		defenseChooser.addObject("TeeterTater", new  DefenseCheval());
+		defenseChooser.addObject("Moat", new DefenseMoat());
+		defenseChooser.addObject("Drawbridge", new  DefenseDrawbridge());
+		defenseChooser.addObject("Portcullis", new DefensePortcullis());
+		defenseChooser.addObject("Ramparts", new DefenseRamparts());
+		defenseChooser.addObject("RockWall", new DefenseRockWall());
+		defenseChooser.addObject("Rough Terrain", new DefenseRoughTerrain());
+		SmartDashboard.putData("Autonomous chooser", defenseChooser);
+
 		//These are for angle matching
 		//They are not specifically ints, or doubles or anything
-		int position;
-		boolean orient;
-		double angle;
+		int position = 0;
 		int endAngle;
-		
+
 		//This is times for moving places
 		double orientTime = 10;
 		double driveToDefenseTime = 20;
 		double crossDefenseTime = 30;
 		double moveForShotTime = 40;
 		double shootTime = 5;
-				
-		enum State {getOriented, driveToDefense, crossDefense, moveForShot, shoot, done};
+
+		//This is power for moving
+		double driveToDefensePower = 0.5;
+		double moveForShotPower = 0.5;
+
+
 		State autoStates;
-		
-		autoStates = State.orient;
 
-		distance = DISTANCES[position-2][goal];
-		int startAngle = START_ANGLES[position-2][goal];
-		endAngle = END_ANGLES[position-2][goal];
+		autoStates = State.getOriented;
+
+		distance = DISTANCES[position - 2][goal];
+		int startAngle = START_ANGLES[position - 2][goal];
+		endAngle = END_ANGLES[position - 2][goal];
 		speed = AutoConstants.COURTYARD_SPEED;
-		
-		switch(autoStates) {
-		case getOriented:
-			
-			if(orient) {
-				
-				//add 180 and wrap to -180
-				startAngle += 180;
-				wrap(startAngle);
-				endAngle += 180;
-				wrap(endAngle);
-				
-			}
-			break;
-			
-			if (currentTime >= fowardTime1){
-				autoStates = State.driveToDefense;
-			}
-		
-		case driveToDefense:
-			if (currentTime >= driveToDefenseTime){
-				autoStates = State.crossDefense;
-			}
-			break;
-		
-		case crossDefense:
-			
-			//This is how to excute the defense chose
-			autonomousCommand = (Command) defenseChooser.getselected;
-			autonomousCommand.start();
-			 
-			if (currentTime >= crossDefenseTime){
-				autoStates = State.moveForShot;
-			}
-			break;
-		
-		case moveForShot:
-			if (currentTime >= moveForShotTime){
-				autoStates = State.shoot;
-			}
-		
-		case shoot:
-			if (currentTime >= shootTime){
-				autoStates = State.done;
-			}
-			break;
-			
-		case done:
-			
-			break;
-			
-		}
 
-	@Override
+		switch (autoStates) {
+			case getOriented:
+
+				if (currentTime >= orientTime) {
+					autoStates = State.driveToDefense;
+				}
+				break;
+
+			case driveToDefense:
+
+				IO.robotDrive.arcadeDrive(driveToDefensePower,0.0);
+
+				if (currentTime >= driveToDefenseTime) {
+					autoStates = State.crossDefense;
+				}
+				break;
+
+			case crossDefense:
+				//This is how to execute the defense chose
+				autonomousCommand = (Command) defenseChooser.getSelected();
+				autonomousCommand.start();
+
+				if (currentTime >= crossDefenseTime) {
+					autoStates = State.moveForShot;
+				}
+				break;
+
+			case moveForShot:
+
+				IO.robotDrive.arcadeDrive(moveForShotPower,0.0);
+
+				if (currentTime >= moveForShotTime) {
+					autoStates = State.shoot;
+				}
+				break;
+
+			case shoot:
+
+				if (currentTime >= shootTime) {
+					autoStates = State.done;
+				}
+				break;
+
+			case done:
+
+				break;
+
+		}
+	}
+
 	private void wrap(double angle) {
 		speed*= -1;
 		if(angle>180) {
@@ -134,18 +167,16 @@ public class Autonomous extends State {
 		}
 	}
 	
-	@Override
 	public void onEntry(StateTransition e) {
-		//autautoMachine1.0.setState("driveToTower");
+		//autoMachine1.0.setState("driveToTower");
 	}
 
-	@Override
 	public void update() {
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		//IO.imu.turnTo(90, 5);
 
-		//This is consistantly geting the time of operation
-		double currentTime += Time.getDelta();
+		//This is consistently getting the time of operation
+		currentTime += Time.getDelta();
 		SmartDashboard.putNumber("Time", currentTime);
 
 		if(currentTime<distance) {
@@ -153,9 +184,8 @@ public class Autonomous extends State {
 		}
 			
 		}
-	}
 
-	@Override
+
 	public void onExit(StateTransition e) {
 		
 	}
