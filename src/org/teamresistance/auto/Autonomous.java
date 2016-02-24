@@ -25,28 +25,19 @@ public class Autonomous extends State {
 	final public static double[][] DISTANCES = {
 			{0, 30, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0	},
-			{0, 0, 0, 0}
+			{0, 0, 0, 0	}
 	};
 
 	final public static int[][] START_ANGLES = {
 			{0, 30, 0, 0},
 			{0, 0, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0}
 	};
 
-	final public static double[][] ANGLES = {
-			{1.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0},
-			{0.0, 0.0, 0.0, 0.0}
-	};
 	final public static int[][] END_ANGLES = {
 			{0, -60, 0, 0},
 			{0, 0, 0, 0},
 			{0, 0, 0, 0},
-			{0, 0, 0, 0}
 	};
 
 	//private StateMachine autoMachine;
