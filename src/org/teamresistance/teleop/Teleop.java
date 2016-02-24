@@ -1,29 +1,16 @@
 package org.teamresistance.teleop;
 
-import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.robostates.AntlerSnorflerUp;
 import org.teamresistance.robostates.AntlersDown;
-import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.SnorflerDown;
-import org.teamresistance.robostates.lifter.DriveThroughDrawbridge;
-import org.teamresistance.robostates.lifter.LeavePortcullis;
-import org.teamresistance.robostates.lifter.LiftPortcullis;
-import org.teamresistance.robostates.lifter.LowerDrawbridge;
-import org.teamresistance.robostates.lifter.LowerFlipper;
-import org.teamresistance.robostates.lifter.MoveLifter;
-import org.teamresistance.robostates.lifter.MoveLifterDown;
-import org.teamresistance.robostates.lifter.MoveLifterUp;
-import org.teamresistance.robostates.lifter.RaiseFlipper;
-import org.teamresistance.robostates.lifter.TeleopLifterIdle;
-import org.teamresistance.robostates.lifter.TopOutLifter;
 import org.teamresistance.teleop.driveModes.AngleHold;
+import org.teamresistance.teleop.driveModes.AngleMatch;
 import org.teamresistance.teleop.driveModes.DirectDrive;
 import org.teamresistance.teleop.driveModes.Idle;
 import org.teamresistance.teleop.driveModes.LoadToddsBall;
 import org.teamresistance.teleop.driveModes.ScaledDrive;
-import org.teamresistance.teleop.driveModes.AngleMatch;
 import org.teamresistance.teleop.driveModes.Shoot;
 import org.teamresistance.teleop.driveModes.Target;
 import org.teamresistance.util.state.State;
@@ -41,14 +28,14 @@ public class Teleop extends State {
 	
 	private StateMachine antlerSnorflerMachine;
 	private StateMachine lifterMachine;
-
+	
 	private NetworkTable gripTable; // unused
 
-	public Teleop() {
+	public Teleop(StateMachine lifterMachine) {
 		driveModes = new StateMachine();
 		antlerSnorflerMachine = new StateMachine();
-		lifterMachine = new StateMachine();
-
+		this.lifterMachine = lifterMachine;
+		
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 
 		AngleMatch target = new AngleMatch();
@@ -64,21 +51,6 @@ public class Teleop extends State {
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
 		antlerSnorflerMachine.addState(new SnorflerDown());
-		
-		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
-		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
-		lifterMachine.addState(new MoveLifterDown());
-		lifterMachine.addState(new MoveLifterUp());
-		lifterMachine.addState(new RaiseFlipper());
-		lifterMachine.addState(new TeleopLifterIdle());
-		DelayState delayState = new DelayState();
-		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
-		lifterMachine.addState(delayState);
-		lifterMachine.addState(new TopOutLifter());
-		lifterMachine.addState(new LeavePortcullis());
-		lifterMachine.addState(new LowerFlipper());
-		lifterMachine.addState(new LowerDrawbridge());
-		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
 		
 		
 		SmartDashboard.putNumber("Speed", 0.0);

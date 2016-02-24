@@ -1,7 +1,6 @@
 package org.teamresistance.auto.defense;
 
 import org.teamresistance.IO;
-import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.auto.Defense;
 import org.teamresistance.auto.SwingDetection;
 import org.teamresistance.util.Time;
