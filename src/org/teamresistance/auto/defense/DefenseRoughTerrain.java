@@ -1,5 +1,6 @@
 package org.teamresistance.auto.defense;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.teamresistance.IO;
 import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.auto.Defense;
@@ -20,23 +21,9 @@ public class DefenseRoughTerrain extends Defense {
 	}
 	
 	@Override
-	public void whileCrossing() {	
-//		time += Time.getDelta();
-//
-//		if(!DefenseMaster.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time<2.0) {
-//			//don't know if I can do it like this - check to make sure it doesn't freeze up
-//
-//			IO.robotDrive.arcadeDrive(AutoConstants.ROUGH_TERRAIN_CROSS_SPEED, 0.0);
-//		}
-//		else {
-//
-//			//turn
-//			//drive
-//			//turn
-//			AutoMaster.driver.drive(false);
-//
-//		}
-		
+	public void whileCrossing() {
+		SmartDashboard.putBoolean("Rough Terrain Finished", true);
+		IO.robotDrive.arcadeDrive(0.5, 0.0);
 	}
 
 
