@@ -33,6 +33,16 @@ public class SnorflerDown extends State {
 			}
 		}
 
+		if(JoystickIO.btnSnorflerReverse.onButtonPressed()) {
+			IO.snorflerMotor.set(-1.0);
+		} else if(JoystickIO.btnSnorflerReverse.onButtonReleased()) {
+			if(!paused) {
+				IO.snorflerMotor.set(Constants.SNORFLE_SPEED);
+			} else {
+				IO.snorflerMotor.set(0);
+			}
+		}
+
 		if (JoystickIO.btnAntler.onButtonPressed()) {
 			gotoState("AntlersDown");
 		}
