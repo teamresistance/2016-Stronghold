@@ -24,14 +24,10 @@ public class DefenseRoughTerrain extends Defense {
 	public void whileCrossing() {	
 		time += Time.getDelta();
 		
-		if(time < 2.0) {
+		if(!IO.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD) && time < 2.0) {
 			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
 		} else {
-			if (IO.imu.isLevel(0, 0, AutoConstants.ANGLE_ERROR_THRESHOLD)) {
-				this.setCrossing(false);
-			} else {
-				IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD);
-			}
+			setCrossing(false);
 		}
 		
 	}
