@@ -2,7 +2,7 @@ package org.teamresistance;
 
 import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.InvertableVictorSP;
-import org.teamresistance.util.io.NavXIMU;
+//import org.teamresistance.util.io.NavXIMU;
 import org.teamresistance.util.io.InvertableDigitalInput;
 
 
@@ -36,7 +36,7 @@ public class IO {
 	public static InvertableDigitalInput bottomFlipperSwitch;
 	public static InvertableDigitalInput topFlipperSwitch;
 	
-	public static NavXIMU imu;
+	//public static NavXIMU imu;
 	
 	public static DigitalInput screwSwitch;
 	
@@ -74,7 +74,7 @@ public class IO {
 		
 		shooterSolenoid = new InvertableSolenoid(5);
 		
-		imu = new NavXIMU();
+		//imu = new NavXIMU();
 	}
 	
 }
