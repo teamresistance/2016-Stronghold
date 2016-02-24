@@ -95,61 +95,65 @@ public class Autonomous extends State {
 
 		autoStates = State.getOriented;
 
-		distance = DISTANCES[position - 2][goal];
-		int startAngle = START_ANGLES[position - 2][goal];
-		endAngle = END_ANGLES[position - 2][goal];
-		speed = AutoConstants.COURTYARD_SPEED;
+		//distance = DISTANCES[position - 2][goal];
+		//int startAngle = START_ANGLES[position - 2][goal];
+		//endAngle = END_ANGLES[position - 2][goal];
+		//speed = AutoConstants.COURTYARD_SPEED;
 
-		switch (autoStates) {
-			case getOriented:
+		autonomousCommand = (Command) defenseChooser.getSelected();
+		autonomousCommand.start();
 
-				if (currentTime >= orientTime) {
-					autoStates = State.driveToDefense;
-				}
-				break;
-
-			case driveToDefense:
-
-				IO.robotDrive.arcadeDrive(driveToDefensePower,0.0);
-
-				if (currentTime >= driveToDefenseTime) {
-					autoStates = State.crossDefense;
-				}
-				break;
-
-			case crossDefense:
-				//This is how to execute the defense chose
-				autonomousCommand = (Command) defenseChooser.getSelected();
-				autonomousCommand.start();
-
-				if (currentTime >= crossDefenseTime) {
-					autoStates = State.moveForShot;
-				}
-				break;
-
-			case moveForShot:
-
-				IO.robotDrive.arcadeDrive(moveForShotPower,0.5);
-
-				if (currentTime >= moveForShotTime) {
-					autoStates = State.shoot;
-				}
-				break;
-
-			case shoot:
-
-				IO.robotDrive.arcadeDrive(0,0.0);
-
-				if (currentTime >= shootTime) {
-					autoStates = State.done;
-				}
-				break;
-
-			case done:
-
-				break;
-
-		}
+//		switch (autoStates) {
+//			case getOriented:
+//
+//				if (currentTime >= orientTime) {
+//					autoStates = State.driveToDefense;
+//				}
+//				break;
+//
+//			case driveToDefense:
+//
+//				IO.robotDrive.arcadeDrive(driveToDefensePower,0.0);
+//
+//				if (currentTime >= driveToDefenseTime) {
+//					autoStates = State.crossDefense;
+//				}
+//				break;
+//
+//			case crossDefense:
+//				//This is how to execute the defense chose
+//				autonomousCommand = (Command) defenseChooser.getSelected();
+//				autonomousCommand.start();
+//
+//				if (currentTime >= crossDefenseTime) {
+//					autoStates = State.moveForShot;
+//				}
+//				break;
+//
+//			case moveForShot:
+//
+//				IO.robotDrive.arcadeDrive(moveForShotPower,0.5);
+//
+//				if (currentTime >= moveForShotTime) {
+//					autoStates = State.shoot;
+//				}
+//				break;
+//
+//			case shoot:
+//
+//				IO.robotDrive.arcadeDrive(0,0.0);
+//
+//				if (currentTime >= shootTime) {
+//					autoStates = State.done;
+//				}
+//				break;
+//
+//			case done:
+//				//This should stop the robot
+//				IO.robotDrive.arcadeDrive(0,0.0);
+//				break;
+//
+//		}
 	}
 
 	private void wrap(double angle) {
