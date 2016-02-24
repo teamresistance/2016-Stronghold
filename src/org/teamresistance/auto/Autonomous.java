@@ -80,11 +80,11 @@ public class Autonomous extends State {
 		int endAngle;
 
 		//This is times for moving places
-		double orientTime = 10;
-		double driveToDefenseTime = 20;
-		double crossDefenseTime = 30;
-		double moveForShotTime = 40;
-		double shootTime = 5;
+		double orientTime = 3;
+		double driveToDefenseTime = 6;
+		double crossDefenseTime = 9;
+		double moveForShotTime = 12;
+		double shootTime = 15;
 
 		//This is power for moving
 		double driveToDefensePower = 0.5;
@@ -129,7 +129,7 @@ public class Autonomous extends State {
 
 			case moveForShot:
 
-				IO.robotDrive.arcadeDrive(moveForShotPower,0.0);
+				IO.robotDrive.arcadeDrive(moveForShotPower,0.5);
 
 				if (currentTime >= moveForShotTime) {
 					autoStates = State.shoot;
@@ -137,6 +137,8 @@ public class Autonomous extends State {
 				break;
 
 			case shoot:
+
+				IO.robotDrive.arcadeDrive(0,0.0);
 
 				if (currentTime >= shootTime) {
 					autoStates = State.done;
