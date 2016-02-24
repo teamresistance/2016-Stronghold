@@ -15,10 +15,10 @@ public class DefenseRockWall extends Defense {
 	private static final double CROSS_SPEED = .5;
 	
 	private double time = 0.0;
-	private double swingNaught = 0;
+	//private double swingNaught = 0;
 	private double delta =0;
 	
-	private SwingDetection swing;
+	//private SwingDetection swing;
 	
 	@Override
 	public void beginCrossing() {
@@ -29,6 +29,10 @@ public class DefenseRockWall extends Defense {
 	public void whileCrossing() {
 		delta = Time.getDelta();
 		time += delta;
+		
+		if(!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, 0)) {
+			IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD);
+		}
 		
 		if(/*!swing.detected() && */time<1.0) {
 			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
