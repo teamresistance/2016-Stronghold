@@ -44,10 +44,10 @@ public class Teleop extends State {
 	
 	private NetworkTable gripTable;
 
-	public Teleop() {
+	public Teleop(StateMachine lifterMachine) {
 		driveModes = new StateMachine();
 		antlerSnorflerMachine = new StateMachine();
-		lifterMachine = new StateMachine();
+		this.lifterMachine = lifterMachine;
 
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
@@ -68,20 +68,20 @@ public class Teleop extends State {
 		antlerSnorflerMachine.addState(new AntlersDown());
 		antlerSnorflerMachine.addState(new SnorflerDown());
 		
-		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
-		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
-		lifterMachine.addState(new MoveLifterDown());
-		lifterMachine.addState(new MoveLifterUp());
-		lifterMachine.addState(new RaiseFlipper());
-		lifterMachine.addState(new TeleopLifterIdle());
-		DelayState delayState = new DelayState();
-		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
-		lifterMachine.addState(delayState);
-		lifterMachine.addState(new TopOutLifter());
-		lifterMachine.addState(new LeavePortcullis());
-		lifterMachine.addState(new LowerFlipper());
-		lifterMachine.addState(new LowerDrawbridge());
-		lifterMachine.addState(new DriveThroughDrawbridge());
+//		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
+//		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
+//		lifterMachine.addState(new MoveLifterDown());
+//		lifterMachine.addState(new MoveLifterUp());
+//		lifterMachine.addState(new RaiseFlipper());
+//		lifterMachine.addState(new TeleopLifterIdle());
+//		DelayState delayState = new DelayState();
+//		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
+//		lifterMachine.addState(delayState);
+//		lifterMachine.addState(new TopOutLifter());
+//		lifterMachine.addState(new LeavePortcullis());
+//		lifterMachine.addState(new LowerFlipper());
+//		lifterMachine.addState(new LowerDrawbridge());
+//		lifterMachine.addState(new DriveThroughDrawbridge());
 		
 		
 		SmartDashboard.putNumber("Speed", 0.0);
@@ -109,7 +109,6 @@ public class Teleop extends State {
 		
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		
-		JoystickIO.update();
 		driveModes.update();
 		antlerSnorflerMachine.update();
 		lifterMachine.update();
