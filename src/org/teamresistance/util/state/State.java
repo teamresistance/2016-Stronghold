@@ -24,10 +24,9 @@ public abstract class State {
 	/**
 	 * Sets the state of this State's state machine to an instance with the specified name.
 	 * @param stateName the name of the state
-	 * @return true if and only if the state of the state machine was changed.
 	 */
-	final protected boolean gotoState(String stateName) {
-		return stateMachine.setState(stateName);
+	final protected void gotoState(String stateName) {
+		stateMachine.setState(stateName);
 	}
 	
 	public String getName() {

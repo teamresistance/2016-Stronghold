@@ -9,31 +9,18 @@ import org.teamresistance.util.state.StateTransition;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToTower extends State {
-
-	final private static int[][] ROTATIONS = {
-		{0, 	50, 	0},
-		{-18, 	16, 	0},
-		{0, 	-16, 	18},
-		{0, 	-50,	0}
-	};
-	final private static double[][] DISTANCES = {
-		{11.5, 	10.4, 	0.0},
-		{12.1, 	8.3, 	0.0},
-		{0.0, 	8.3, 	12.1},
-		{0.0, 	10.4, 	11.5}
-	};
 	
-	private double driveTime = 2;
+	private double driveTime = 2; // only referenced in constructor
 	private int angle;
 	private double startTime;
-	private double speed;
+	private double speed; // only referenced in constructor
 
 	private boolean atAngle = false;
 
 	public DriveToTower(Defense fromDefense, int defensePosition, int goal) {
 		speed = AutoConstants.COURTYARD_SPEED;
 		//driveTime = DISTANCES[defense - 2][goal] / 4; //4 ft / s?
-		angle = ROTATIONS[fromDefense - 2][goal];
+		//angle = ROTATIONS[defensePosition - 2][goal];
 
 		if(fromDefense.isReversed()) {
 			speed *= -1;

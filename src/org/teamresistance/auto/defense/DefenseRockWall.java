@@ -11,7 +11,7 @@ public class DefenseRockWall extends Defense {
 	
 	private double time = 0.0;
 	private double swingNaught = 0;
-	private double delta =0;
+	private double delta = 0;
 	
 	private SwingDetection swing;
 
