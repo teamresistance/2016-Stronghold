@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 
 	private StateMachine robotModes;
 	private StateMachine lifterMachine;
-	
+
 	public static Teleop teleop;
 	public static Autonomous auto;
 	public static String robotState;
@@ -55,15 +55,15 @@ public class Robot extends IterativeRobot {
 		lifterMachine.addState(new LeavePortcullis());
 		lifterMachine.addState(new LowerFlipper());
 		lifterMachine.addState(new LowerDrawbridge());
-		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
-		
+		lifterMachine.addState(new DriveThroughDrawbridge());
+
 		robotModes = new StateMachine();
 		if(teleop == null) {
 			teleop = new Teleop(lifterMachine);
 		}
 		robotModes.addState(teleop, "teleop");
 		if(auto == null) {
-			auto = new Autonomous(lifterMachine);
+			auto = new Autonomous();
 		}
 		robotModes.addState(auto, "auto");
 	}
@@ -77,7 +77,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Time.update();
-		JoystickIO.update();
 		robotModes.update();
 	}
 
@@ -90,6 +89,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Time.update();
+		JoystickIO.update();
 		robotModes.update();
 	}
 }

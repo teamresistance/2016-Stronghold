@@ -6,7 +6,7 @@ import org.teamresistance.auto.Defense;
 import org.teamresistance.util.Time;
 
 public class DefenseRamparts extends Defense {
-	
+
 	private static final double CROSS_SPEED = .5f;
 	private double time = 0.0;
 

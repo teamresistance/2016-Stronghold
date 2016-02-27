@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Teleop extends State {
 	
 	private StateMachine driveModes;
-	private String returnDriveMode; // Drive mode to goto after idle is exited
+	private String returnDriveMode; //Drive mode to goto after idle is exited
 	
 	private StateMachine antlerSnorflerMachine;
 	private StateMachine lifterMachine;
@@ -35,7 +35,7 @@ public class Teleop extends State {
 		driveModes = new StateMachine();
 		antlerSnorflerMachine = new StateMachine();
 		this.lifterMachine = lifterMachine;
-		
+
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 
 		AngleMatch target = new AngleMatch();
@@ -51,6 +51,21 @@ public class Teleop extends State {
 		antlerSnorflerMachine.addState(new AntlerSnorflerUp());
 		antlerSnorflerMachine.addState(new AntlersDown());
 		antlerSnorflerMachine.addState(new SnorflerDown());
+		
+//		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
+//		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
+//		lifterMachine.addState(new MoveLifterDown());
+//		lifterMachine.addState(new MoveLifterUp());
+//		lifterMachine.addState(new RaiseFlipper());
+//		lifterMachine.addState(new TeleopLifterIdle());
+//		DelayState delayState = new DelayState();
+//		delayState.setDelay(Constants.LIFTER_PAUSE_TIME);
+//		lifterMachine.addState(delayState);
+//		lifterMachine.addState(new TopOutLifter());
+//		lifterMachine.addState(new LeavePortcullis());
+//		lifterMachine.addState(new LowerFlipper());
+//		lifterMachine.addState(new LowerDrawbridge());
+//		lifterMachine.addState(new DriveThroughDrawbridge());
 		
 		
 		SmartDashboard.putNumber("Speed", 0.0);
@@ -77,8 +92,7 @@ public class Teleop extends State {
 		SmartDashboard.putBoolean("Top Lifter Switch", IO.topLifterSwitch.get());
 		
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-		
-		JoystickIO.update();
+
 		driveModes.update();
 		antlerSnorflerMachine.update();
 		lifterMachine.update();
@@ -103,5 +117,23 @@ public class Teleop extends State {
 			returnDriveMode = null;
 		}
 	}
+	
+	/*
+	 * Put down foot
+	 * 
+	 * Drive till hit portcullis
+	 * lift foot
+	 * Once rear limit switch is hit
+	 */
+	
+	/*
+	 * if buttonPressed move lifter to opposite position
+	 * if buttonPressed move flipper to opposite position
+	 * if buttonPressed && flipper is down begin portcullis routine
+	 * 		if lifter not in lower position move to lower position
+	 * 		raise flipper
+	 * 		when bottom limit switch pressed start raising lifter
+	 * 		when top limit switch pressed return controls to driver
+	 */
 	
 }

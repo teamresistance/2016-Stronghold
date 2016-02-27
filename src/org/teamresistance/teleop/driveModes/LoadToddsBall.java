@@ -14,8 +14,12 @@ public class LoadToddsBall extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		startTime = Time.getTime();
-    	IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
+		if(!IO.ballSensor.get()) {
+			gotoState("Target");
+		} else {
+			startTime = Time.getTime();
+	    	IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
+		}
 	}
 
 	@Override

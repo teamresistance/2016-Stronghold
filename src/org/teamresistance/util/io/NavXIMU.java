@@ -51,16 +51,17 @@ public class NavXIMU {
 		return targetAngle < ahrs.getYaw();
 	}
 
-	public void turnTo(int angle, int threshold) {
+	public double turnTo(int angle, int threshold) {
 		while(!isStraight(threshold, angle)) {
 			if(isLeft(angle)) {
-				IO.robotDrive.arcadeDrive(0, 0.5);
+				return 0.5;
 			}
 			else {
 				//turn left 
-				IO.robotDrive.arcadeDrive(0, -0.5);
+				return -0.5;
 			}
 		}
+		return 0.0;
 	}
 	
 }

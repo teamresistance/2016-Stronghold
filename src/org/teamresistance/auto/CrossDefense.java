@@ -6,7 +6,7 @@ import org.teamresistance.util.state.StateTransition;
 public class CrossDefense extends State {
 
 	private final Defense defense;
-	
+
 	public CrossDefense(Defense defense) {
 		this.defense = defense;
 	}

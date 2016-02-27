@@ -1,5 +1,6 @@
 package org.teamresistance.auto;
 
+import org.teamresistance.IO;
 import org.teamresistance.auto.defense.DefenseCheval;
 import org.teamresistance.auto.defense.DefenseDrawbridge;
 import org.teamresistance.auto.defense.DefenseMoat;
@@ -10,17 +11,15 @@ import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+import edu.wpi.first.wpilibj.Relay;
 
- /*
- * Four states: initial positioning?, defense crossing, tower positioning, targeting/shooting
- */
 public class Autonomous extends State {
 
 	private final StateMachine autoMachine;
 
 	public Autonomous(StateMachine lifterMachine) {
 		autoMachine = new StateMachine();
-		
+
 		// This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
 		int fromGatePosition = 5; // position of the defense
 		int defenseType = 6;
@@ -40,7 +39,7 @@ public class Autonomous extends State {
 				new DefenseRockWall(),
 				new DefenseRoughTerrain()
 		}[defenseType];
-		
+
 		autoMachine.addState(new DriveToDefense(), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
 		autoMachine.addState(new DriveToTower(defense, fromGatePosition, goalPosition), "DriveToTower");
@@ -55,8 +54,9 @@ public class Autonomous extends State {
 	@Override
 	public void update() {
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-		//IO.imu.turnTo(90, 5);
 
+		//IO.imu.turnTo(90, 5);
+		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		autoMachine.update();
 	}
 
