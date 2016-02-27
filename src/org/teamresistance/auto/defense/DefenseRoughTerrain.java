@@ -5,19 +5,13 @@ import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.auto.Defense;
 import org.teamresistance.util.Time;
 
-	 /*
-	 * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
-	 */
-
 public class DefenseRoughTerrain extends Defense {
 	
 	private static final double CROSS_SPEED = .5;
-	
 	private double time = 0.0;
-	
-	@Override
-	public void beginCrossing() {
-		
+
+	@Override public boolean isReversed() {
+		return false;
 	}
 	
 	@Override

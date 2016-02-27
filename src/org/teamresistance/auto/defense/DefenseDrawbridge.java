@@ -10,7 +10,11 @@ public class DefenseDrawbridge extends Defense {
 	public DefenseDrawbridge(StateMachine lifterMachine) {
 		this.lifterMachine = lifterMachine;
 	}
-	
+
+	@Override public boolean isReversed() {
+		return true;
+	}
+
 	@Override
 	public void beginCrossing() {
 		lifterMachine.setState("LiftPortcullis");

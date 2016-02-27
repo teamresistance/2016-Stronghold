@@ -11,13 +11,19 @@ public class DefensePortcullis extends Defense {
 		this.lifterMachine = lifterMachine;
 	}
 
+	@Override public boolean isReversed() {
+		return true;
+	}
+
 	@Override
-	public void beginCrossing() { //set the flipper to down, and lower the lifter all the way down
+	public void beginCrossing() {
+		// Set the flipper to down, and lower the lifter all the way down
 		lifterMachine.setState("LiftPortcullis");
 	}
 
 	@Override
-	public void whileCrossing() { //need to drive forward, raise flipper, lift motor to top, drive forward until level
+	public void whileCrossing() {
+		// Need to drive forward, raise flipper, lift motor to top, drive forward until level
 		if (lifterMachine.getCurrentState().equals("TeleopLifterIdle")) {
 			setCrossing(false);
 		}

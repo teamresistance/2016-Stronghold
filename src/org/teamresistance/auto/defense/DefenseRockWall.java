@@ -5,10 +5,6 @@ import org.teamresistance.auto.Defense;
 import org.teamresistance.auto.SwingDetection;
 import org.teamresistance.util.Time;
 
-	 /*
-	 * Four states: initial positioning, defense crossing, tower positioning, targeting/shooting
-	 */
-
 public class DefenseRockWall extends Defense {
 	
 	private static final double CROSS_SPEED = .5;
@@ -18,10 +14,13 @@ public class DefenseRockWall extends Defense {
 	private double delta =0;
 	
 	private SwingDetection swing;
-	
-	@Override
-	public void beginCrossing() {
+
+	public DefenseRockWall() {
 		swing = new SwingDetection();
+	}
+
+	@Override public boolean isReversed() {
+		return true;
 	}
 	
 	@Override

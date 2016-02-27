@@ -1,6 +1,7 @@
 package org.teamresistance.auto;
 
 public abstract class Defense {
+
 	private boolean crossing;
 	
 	public Defense() {
@@ -14,8 +15,13 @@ public abstract class Defense {
 	public void setCrossing(boolean crossing) {
 		this.crossing = crossing;
 	}
-	
-	public abstract void beginCrossing();
+
+	public abstract boolean isReversed();
+
+	public void beginCrossing() {
+		//
+	};
+
 	public abstract void whileCrossing();
-	
+
 }

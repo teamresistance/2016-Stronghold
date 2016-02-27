@@ -2,12 +2,10 @@ package org.teamresistance.util.io;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.teamresistance.IO;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
-
-import java.lang.Math;
-
-import org.teamresistance.IO;
 
 public class NavXIMU {
 	AHRS ahrs;	
@@ -52,7 +50,7 @@ public class NavXIMU {
 	public boolean isLeft(int targetAngle) {
 		return targetAngle < ahrs.getYaw();
 	}
-	
+
 	public void turnTo(int angle, int threshold) {
 		while(!isStraight(threshold, angle)) {
 			if(isLeft(angle)) {

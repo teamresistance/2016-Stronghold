@@ -5,7 +5,8 @@ import org.teamresistance.IO;
 public class SwingDetection {
 	public static final double swingThreshold = 60;
 	private boolean swingDetected;
-	
+
+	// TODO replace with an isSwinging, inline with swingDetection
 	public boolean detected() { return swingDetected; }
 
 	public void swingDetection() {

@@ -12,8 +12,11 @@ import org.teamresistance.util.Time;
 public class DefenseCheval extends Defense {
 
 	private static final double CROSS_SPEED = .5;
-	
 	private double time = 0.0;
+
+	@Override public boolean isReversed() {
+		return false;
+	}
 
 	@Override
 	public void beginCrossing() {

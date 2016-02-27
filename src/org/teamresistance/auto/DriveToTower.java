@@ -8,13 +8,13 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DriveToTower extends State {
 
-	final private static int[][] ROTATIONS = {
+	private final static int[][] ROTATIONS = {
 		{0, 	-40, 	0},
 		{18, 	-16, 	0},
 		{0, 	16, 	-18},
 		{0, 	40,		0}
 	};
-	final private static double[][] DISTANCES = {
+	private final static double[][] DISTANCES = {
 		{11.5, 	10.4, 	0.0},
 		{12.1, 	8.3, 	0.0},
 		{0.0, 	8.3, 	12.1},
@@ -26,13 +26,13 @@ public class DriveToTower extends State {
 	private double elapsedTime;
 	private double speed;
 	
-	public DriveToTower(int defense, int goal, boolean isReversed) {
+	public DriveToTower(Defense fromDefense, int defensePosition, int goal) {
 		speed = AutoConstants.COURTYARD_SPEED;
-		driveTime = DISTANCES[defense - 2][goal] / 4; //4 ft / s?
-		angle = ROTATIONS[defense - 2][goal];
+		driveTime = DISTANCES[defensePosition - 2][goal] / 4; //4 ft / s?
+		angle = ROTATIONS[defensePosition - 2][goal];
 		elapsedTime = 0;
 		
-		if(isReversed) {
+		if (fromDefense.isReversed()) {
 			speed *= -1;
 		}
 	}
