@@ -8,6 +8,7 @@ import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@Deprecated
 public class DriveToTower extends State {
 	
 	private double driveTime = 2; // only referenced in constructor

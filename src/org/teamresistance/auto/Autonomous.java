@@ -21,12 +21,12 @@ public class Autonomous extends State {
 		autoMachine = new StateMachine();
 
 		// This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
-		int fromGatePosition = 5; // position of the defense
+		int gate = 5; // position of the defense
 		int defenseType = 6;
-		int goalPosition = 1;
+		int goal = 1;
 
 		// TODO pull numbers from SmartDashboard
-		//(int) SmartDashboard.getNumber("defense position");
+		//(int) SmartDashboard.getNumber("defense position") - 2;
 		//(int) SmartDashboard.getNumber("defense type");
 		//(int) SmartDashboard.getNumber("goal");
 
@@ -40,9 +40,13 @@ public class Autonomous extends State {
 				new DefenseRoughTerrain()
 		}[defenseType];
 
-		autoMachine.addState(new DriveToDefense(), "DriveToDefense");
+		autoMachine.addState(new DriveToDefense(defense.isReversed()), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
-		autoMachine.addState(new DriveToTower(defense, fromGatePosition, goalPosition), "DriveToTower");
+		autoMachine.addState(new DriveToLine(defense.isReversed(), gate, goal), "DriveToLine");
+		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
+		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
+
+		//autoMachine.addState(new DriveToTower(defense, gate, goal), "DriveToTower");
 	}
 
 	@Override
