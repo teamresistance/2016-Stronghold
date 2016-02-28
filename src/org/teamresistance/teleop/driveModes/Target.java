@@ -1,62 +1,79 @@
 package org.teamresistance.teleop.driveModes;
 
+import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Util;
-import org.teamresistance.util.state.State;
+import org.teamresistance.util.state.ReturnState;
+import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Target extends State {
+public class Target extends ReturnState {
 
-	private static float targetAngle = 0.0f;
-	private static float angleDeadband = 5.0f;
-	private static float angleGain = 0.5f;
 
-	private String previousStateName = null;
-
-	public Target() {
-		/*
-		SmartDashboard.putNumber("TargetAngle", targetAngle);
-		SmartDashboard.putNumber("AngleDeadband", angleDeadband);
-		SmartDashboard.putNumber("AngleGain", angleGain);
-		*/
-//		SmartDashboard.putNumber("IntegralGain", angleIntegralGain);
+	private StateMachine driveModes;
+	
+	private NetworkTable contoursTable;
+	
+	private int screenWidth = 320;
+	
+	private double kP = 0.5;
+	private double targetAngle;
+	
+	@Override
+	public void init() {
+		
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		previousStateName = e.getInitialState().getName();
+		targetAngle = IO.imu.getYaw();
 	}
 
 	@Override
 	public void update() {
-		//targetAngle = (float) Math.toRadians(SmartDashboard.getNumber("TargetAngle"));
-		angleDeadband = (float) Math.toRadians(SmartDashboard.getNumber("AngleDeadband"));
-		angleGain = (float) SmartDashboard.getNumber("AngleGain");
+		if(!JoystickIO.btnScore.isDown()) {
+			gotoReturnState();
+		}
 		
-		float currentAngle = getCurrentAngle();
-		float error = targetAngle - currentAngle;
-		SmartDashboard.putNumber("Error", error);
-		/*
-		if(Math.abs(error/(2 * Math.PI)) > 0.8) {
-			if(error > 0) {
-				error -= (float)(2 * Math.PI);
-			} else {
-				error += (float)(2 * Math.PI);
+		double error = targetAngle - IO.imu.getYaw();
+		if(Math.abs(error) < 1) {
+			error = 0.0;
+		}
+		double result = error * kP;
+		result = Util.clip(result, -1, 1);
+		
+		int maxIndex = -1;
+		double maxArea = -1;
+		double[] areas = contoursTable.getNumberArray("area", new double[0]);
+		double[] centers = contoursTable.getNumberArray("centerX", new double[0]);
+		if(centers.length != areas.length) return;
+		for(int i = 0; i < areas.length; i++) {
+			if(areas[i] > maxArea) {
+				maxIndex = i;
+				maxArea = areas[i];
 			}
 		}
-		*/
-		if(Math.abs(error) < angleDeadband) {
-			error = 0.0f;
-		}
-		
-		SmartDashboard.putNumber("Result", Util.clip((double)(error*angleGain), -1.0, 1.0));
-		IO.robotDrive.arcadeDrive(0.0, Util.clip((double)(error*angleGain), -1.0, 1.0));
-		
-		if(JoystickIO.btnDriveMode.isDown()) {
-			gotoState(previousStateName);
+		SmartDashboard.putNumber("Max", maxArea);
+		if(maxIndex != -1) {
+			double centerX = centers[maxIndex];
+			SmartDashboard.putNumber("CenterX Raw", centerX);
+			centerX /= screenWidth / 2;
+			centerX -= 1;
+			SmartDashboard.putNumber("CenterX", centerX);
+			if(Math.abs(centerX) < 0.08){
+				IO.robotDrive.arcadeDrive(0, 0);
+				gotoState("Shoot");
+			} else {
+				double speed = centerX*-1;
+				speed = Util.clip(speed, Constants.TARGET_MIN_SPEED, Constants.TARGET_MAX_SPEED);
+				SmartDashboard.putNumber("Speed", speed);
+				
+				IO.robotDrive.arcadeDrive(speed, result);
+			}
 		}
 	}
 
@@ -64,20 +81,5 @@ public class Target extends State {
 	public void onExit(StateTransition e) {
 		
 	}
-	
-	private float getCurrentAngle() {
-		return (float)Math.toRadians(IO.imu.getYaw());
-	}
 
-	public static void setTargetAngle(float angle) {
-		Target.targetAngle = (float)Math.toRadians(angle);
-	}
-	
-	public static void setAngleDeadband(float angleDeadband) {
-		Target.angleDeadband = (float)Math.toRadians(angleDeadband);
-	}
-
-	public static void setAngleGain(float angleGain) {
-		Target.angleGain = angleGain;
-	}	
 }

@@ -6,6 +6,15 @@ import org.teamresistance.util.state.StateTransition;
 
 public class DirectDrive extends DriveTrain {
 
+	public DirectDrive(AngleMatch target) {
+		super(target);
+	}
+
+	@Override
+	public void init() {
+		//Empty
+	}
+
 	@Override
 	public void onEntry(StateTransition e) {
 		//Empty
