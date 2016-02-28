@@ -1,44 +1,33 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
-import org.teamresistance.auto.defense.DefenseCheval;
-import org.teamresistance.auto.defense.DefenseDrawbridge;
-import org.teamresistance.auto.defense.DefenseMoat;
-import org.teamresistance.auto.defense.DefensePortcullis;
-import org.teamresistance.auto.defense.DefenseRamparts;
-import org.teamresistance.auto.defense.DefenseRockWall;
-import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Autonomous extends State {
 
 	private final StateMachine autoMachine;
+	private final SendableChooser defenseChooser;
+	private final SendableChooser positionChooser;
+	private final SendableChooser goalChooser;
 
-	public Autonomous(StateMachine lifterMachine) {
-		autoMachine = new StateMachine();
+	public Autonomous(SendableChooser defenseChooser, SendableChooser positionChooser,
+					  SendableChooser goalChooser) {
+		this.autoMachine = new StateMachine();
+		this.defenseChooser = defenseChooser;
+		this.positionChooser = positionChooser;
+		this.goalChooser = goalChooser;
+	}
 
-		// This may not be done properly, so if the program isn't properly finding the defense position/number/goal this is why
-		int gate = 5; // position of the defense
-		int defenseType = 6;
-		int goal = 1;
-
-		// TODO pull numbers from SmartDashboard
-		//(int) SmartDashboard.getNumber("defense position") - 2;
-		//(int) SmartDashboard.getNumber("defense type");
-		//(int) SmartDashboard.getNumber("goal");
-
-		Defense defense = defense = new Defense[]{
-				new DefenseCheval(),
-				new DefenseDrawbridge(lifterMachine),
-				new DefenseMoat(),
-				new DefensePortcullis(lifterMachine),
-				new DefenseRamparts(),
-				new DefenseRockWall(),
-				new DefenseRoughTerrain()
-		}[defenseType];
+	@Override
+	public void onEntry(StateTransition e) {
+		Defense defense = (Defense) defenseChooser.getSelected();   // defense to cross
+		int gate = (int) positionChooser.getSelected();             // gate we're driving through
+		int goal = (int) goalChooser.getSelected();                 // goal we're targeting
 
 		autoMachine.addState(new DriveToDefense(defense.isReversed()), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
@@ -46,20 +35,12 @@ public class Autonomous extends State {
 		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
 		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
 
-		//autoMachine.addState(new DriveToTower(defense, gate, goal), "DriveToTower");
-	}
-
-	@Override
-	public void onEntry(StateTransition e) {
 		// Drive to the defense
 		autoMachine.setState("DriveToDefense");
 	}
 
 	@Override
 	public void update() {
-		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-
-		//IO.imu.turnTo(90, 5);
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		autoMachine.update();
 	}
