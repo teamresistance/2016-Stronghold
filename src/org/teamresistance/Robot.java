@@ -49,6 +49,16 @@ public class Robot extends IterativeRobot {
 
 		// So the robot knows which crossing strategy to use.
 		SendableChooser defenseChooser = new SendableChooser();
+		// So the robot knows which path it should take to reach the goal.
+		SendableChooser positionChooser = new SendableChooser();
+		// So the robot knows which goal it needs to reach.
+		SendableChooser goalChooser = new SendableChooser();
+
+		IO.init();
+		JoystickIO.init();
+		lifterMachine = new StateMachine();
+		robotModes = new StateMachine();
+		
 		defenseChooser.addObject("Cheval de frise", new DefenseCheval());
 		defenseChooser.addObject("Drawbridge", new DefenseDrawbridge(lifterMachine));
 		defenseChooser.addObject("Moat", new DefenseMoat());
@@ -58,24 +68,16 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 
-		// So the robot knows which path it should take to reach the goal.
-		SendableChooser positionChooser = new SendableChooser();
 		positionChooser.addObject("Gate 2", 0); // indexes are already normalized
 		positionChooser.addObject("Gate 3", 1);
 		positionChooser.addObject("Gate 4", 2);
 		positionChooser.addObject("Gate 5", 3);
 		SmartDashboard.putData(">> Autonomous Robot Position <<", positionChooser);
 
-		// So the robot knows which goal it needs to reach.
-		SendableChooser goalChooser = new SendableChooser();
 		goalChooser.addObject("Left goal", 0);
 		goalChooser.addObject("Middle goal", 1);
 		goalChooser.addObject("Right goal", 2);
 		SmartDashboard.putData(">> Autonomous Target Goal <<", goalChooser);
-
-		IO.init();
-		JoystickIO.init();
-		lifterMachine = new StateMachine();
 
 		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
 		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
@@ -91,8 +93,7 @@ public class Robot extends IterativeRobot {
 		lifterMachine.addState(new LowerFlipper());
 		lifterMachine.addState(new LowerDrawbridge());
 		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
-
-		robotModes = new StateMachine();
+		
 		if(teleop == null) {
 			teleop = new Teleop(lifterMachine);
 		}
