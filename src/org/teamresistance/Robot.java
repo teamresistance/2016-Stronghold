@@ -1,6 +1,7 @@
 package org.teamresistance;
 
 import org.teamresistance.auto.Autonomous;
+import org.teamresistance.auto.Defense;
 import org.teamresistance.auto.defense.DefenseCheval;
 import org.teamresistance.auto.defense.DefenseDrawbridge;
 import org.teamresistance.auto.defense.DefenseMoat;
@@ -36,9 +37,13 @@ public class Robot extends IterativeRobot {
 	private StateMachine lifterMachine;
 
 	public static Teleop teleop;
-	public static Autonomous auto;
 	public static String robotState;
-	
+
+	// For on-the-fly Autonomous configurations
+	private SendableChooser defenseChooser;		// to know which crossing strategy to use
+	private SendableChooser positionChooser;	// to know which path to the goal should be taken
+	private SendableChooser goalChooser;		// to know which goal to reach
+
 	@Override
 	public void robotInit() {
 		try {
@@ -47,12 +52,9 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 		}
 
-		// So the robot knows which crossing strategy to use.
-		SendableChooser defenseChooser = new SendableChooser();
-		// So the robot knows which path it should take to reach the goal.
-		SendableChooser positionChooser = new SendableChooser();
-		// So the robot knows which goal it needs to reach.
-		SendableChooser goalChooser = new SendableChooser();
+		defenseChooser = new SendableChooser();
+		positionChooser = new SendableChooser();
+		goalChooser = new SendableChooser();
 
 		IO.init();
 		JoystickIO.init();
@@ -98,15 +100,20 @@ public class Robot extends IterativeRobot {
 			teleop = new Teleop(lifterMachine);
 		}
 		robotModes.addState(teleop, "teleop");
-		if(auto == null) {
-			auto = new Autonomous(defenseChooser, positionChooser, goalChooser);
-		}
-		robotModes.addState(auto, "auto");
 	}
 
 	@Override
 	public void autonomousInit() {
+		// "Lock in" the SendableChooser choices at the start of Autonomous
+		Defense defense = (Defense) defenseChooser.getSelected();
+		int gate = (int) positionChooser.getSelected();
+		int goal = (int) goalChooser.getSelected();
+
+		// Instantiate Autonomous with the chosen values
+		Autonomous autonomous = new Autonomous(defense, gate, goal);
+
 		robotState = "auto";
+		robotModes.addState(autonomous, "auto");
 		robotModes.setState("auto");
 	}
 

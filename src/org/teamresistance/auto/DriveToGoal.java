@@ -20,9 +20,9 @@ public class DriveToGoal extends State {
     private double startTime;
     private boolean isReversed;
 
-    public DriveToGoal (int gate, int goal) {
-        isReversed = isReversed(gate);
-        driveTime = DRIVE_TIMES[gate][goal];
+    public DriveToGoal (boolean isReversed, int gate, int goal) {
+        this.isReversed = isReversed;
+        this.driveTime = DRIVE_TIMES[gate][goal];
     }
 
     @Override
@@ -39,7 +39,4 @@ public class DriveToGoal extends State {
         }
     }
 
-    private static boolean isReversed(int gate) {
-        return gate == 0 || gate == 1;
-    }
 }
