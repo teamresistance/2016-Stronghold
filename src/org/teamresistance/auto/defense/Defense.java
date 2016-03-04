@@ -24,5 +24,9 @@ public abstract class Defense {
 	public abstract boolean isReversed();
 
 	public abstract void whileCrossing();
+	
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 }

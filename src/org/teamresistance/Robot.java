@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 
 	// For on-the-fly Autonomous configurations
 	private SendableChooser defenseChooser;		// to know which crossing strategy to use
-	private SendableChooser positionChooser;	// to know which path to the goal should be taken
+	private SendableChooser gateChooser;	// to know which path to the goal should be taken
 	private SendableChooser goalChooser;		// to know which goal to reach
 
 	@Override
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		defenseChooser = new SendableChooser();
-		positionChooser = new SendableChooser();
+		gateChooser = new SendableChooser();
 		goalChooser = new SendableChooser();
 
 		IO.init();
@@ -72,11 +72,11 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 
-		positionChooser.addDefault("Gate 2", 0); // indexes are already normalized
-		positionChooser.addObject("Gate 3", 1);
-		positionChooser.addObject("Gate 4", 2);
-		positionChooser.addObject("Gate 5", 3);
-		SmartDashboard.putData(">> Autonomous Robot Position <<", positionChooser);
+		gateChooser.addDefault("Gate 2", 0); // indexes are already normalized
+		gateChooser.addObject("Gate 3", 1);
+		gateChooser.addObject("Gate 4", 2);
+		gateChooser.addObject("Gate 5", 3);
+		SmartDashboard.putData(">> Autonomous Robot Position <<", gateChooser);
 
 		goalChooser.addDefault("Left goal", 0);
 		goalChooser.addObject("Middle goal", 1);
@@ -109,12 +109,14 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
+		SmartDashboard.putNumber("Gate chosen", (int) gateChooser.getSelected());
+		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
 		// "Lock in" the SendableChooser choices at the start of Autonomous
 		Defense defense = (Defense) defenseChooser.getSelected();
-		int gate = (int) positionChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
-
-		// Use an empty, instantly-crossed defense if we're testing
+		int gate = (int) gateChooser.getSelected();
+		 //Use an empty, instantly-crossed defense if we're testing
 		if (SmartDashboard.getBoolean(">> Autonomous No-Defense Override <<")) {
 			defense = new DummyDefense();
 		}
