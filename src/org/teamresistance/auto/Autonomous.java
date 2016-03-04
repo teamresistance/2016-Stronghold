@@ -1,11 +1,11 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
+import org.teamresistance.auto.defense.Defense;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous extends State {
@@ -55,8 +55,8 @@ public class Autonomous extends State {
 	@Override
 	public void update() {
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-	//	IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-		 SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
+		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
 		autoMachine.update();
 	}
 

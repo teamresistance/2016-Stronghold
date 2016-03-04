@@ -1,19 +1,16 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
-import org.teamresistance.JoystickIO;
-import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.util.Time;
-import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveToDefense extends State {
+class DriveToDefense extends State {
 
-	final private static double DRIVE_TIME = 1.25;
-	final private static double DRIVE_SPEED = 0.65;
+	private static final double DRIVE_TIME = 1.25;
+	private static final double DRIVE_SPEED = 0.65;
 
 	private double startTime;
 	private boolean isReversed;

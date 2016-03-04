@@ -6,9 +6,9 @@ import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RotateOnLine extends State {
+class RotateOnLine extends State {
 
-    private int heading;
+    private final int heading;
 
     public RotateOnLine (int goal) {
         heading = (210 + goal * 60) % 180 - 180;
@@ -16,16 +16,17 @@ public class RotateOnLine extends State {
 
     @Override
     public void onEntry(StateTransition e) {
-        //
     	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
     }
 
     @Override
     public void update() {
-        if (IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, heading)) {
-            gotoState("DriveToGoal");
-        } else {
+        // If the robot is not facing the heading, continue rotating
+        if (!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, heading)) {
             IO.robotDrive.arcadeDrive(0, IO.imu.turnTo(heading, AutoConstants.ANGLE_ERROR_THRESHOLD));
+        } else {
+            // Otherwise, drive along the line to the goal
+            gotoState("DriveToGoal");
         }
     }
 }

@@ -1,11 +1,12 @@
 package org.teamresistance.auto;
 
+import org.teamresistance.auto.defense.Defense;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CrossDefense extends State {
+class CrossDefense extends State {
 
 	private final Defense defense;
 
@@ -16,7 +17,6 @@ public class CrossDefense extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
-		defense.setCrossing(true);
 		defense.beginCrossing();
 	}
 

@@ -1,7 +1,7 @@
 package org.teamresistance;
 
 import org.teamresistance.auto.Autonomous;
-import org.teamresistance.auto.Defense;
+import org.teamresistance.auto.defense.Defense;
 import org.teamresistance.auto.defense.DefenseCheval;
 import org.teamresistance.auto.defense.DefenseDrawbridge;
 import org.teamresistance.auto.defense.DefenseMoat;
@@ -22,6 +22,7 @@ import org.teamresistance.robostates.lifter.RaiseFlipper;
 import org.teamresistance.robostates.lifter.TeleopLifterIdle;
 import org.teamresistance.robostates.lifter.TopOutLifter;
 import org.teamresistance.teleop.Teleop;
+import org.teamresistance.util.SwingDetection;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
 
@@ -66,7 +67,7 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Moat", new DefenseMoat());
 		defenseChooser.addObject("Portcullis", new DefensePortcullis(lifterMachine));
 		defenseChooser.addObject("Ramparts", new DefenseRamparts());
-		defenseChooser.addObject("Rock wall", new DefenseRockWall());
+		defenseChooser.addObject("Rock wall", new DefenseRockWall(new SwingDetection(IO.imu)));
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 

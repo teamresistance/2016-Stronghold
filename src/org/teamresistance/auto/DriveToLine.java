@@ -7,24 +7,24 @@ import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveToLine extends State {
+class DriveToLine extends State {
 
     //[gate][goal] goal = 1 is constant.
-    private static final double[][] DRIVE_TIMES = {
+    public static final double[][] DRIVE_TIMES = {
             {4, 3, -1},
             {2, 3, -1},
             {-1, 3, 2},
             {-1, 3, 4}
     };
-    private static final double DRIVE_SPEED = 0.5;
+    public static final double DRIVE_SPEED = 0.5;
 
-    private boolean isReversed;
     private double driveTime;
     private double startTime;
+    private boolean isReversed;
 
     public DriveToLine(boolean isReversed, int gate, int goal) {
         this.isReversed = isReversed;
-        driveTime = DRIVE_TIMES[gate][goal];
+        this.driveTime = DRIVE_TIMES[gate][goal];
     }
 
     @Override

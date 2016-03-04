@@ -7,16 +7,15 @@ import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveToGoal extends State {
+class DriveToGoal extends State {
 
-    private static final double[][] DRIVE_TIMES = {
+    public static final double[][] DRIVE_TIMES = {
             {0, 1.2, -1},
             {3, 2.25, -1},
             {-1, 2.25, 3},
             {-1, 1.2, 0}
     };
-
-    private static final double DRIVE_SPEED = 0.5;
+    public static final double DRIVE_SPEED = 0.5;
 
     private double driveTime;
     private double startTime;
