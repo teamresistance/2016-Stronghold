@@ -1,8 +1,7 @@
 package org.teamresistance.util.io;
 
-import com.kauailabs.navx.frc.AHRS;
 
-import org.teamresistance.IO;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
@@ -54,11 +53,11 @@ public class NavXIMU {
 	public double turnTo(int angle, int threshold) {
 		while(!isStraight(threshold, angle)) {
 			if(isLeft(angle)) {
-				return 0.5;
+				return 0.75;
 			}
 			else {
 				//turn left 
-				return -0.5;
+				return -0.75;
 			}
 		}
 		return 0.0;

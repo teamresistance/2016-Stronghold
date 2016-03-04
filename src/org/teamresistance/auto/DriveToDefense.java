@@ -1,9 +1,14 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
+import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.util.Time;
+import org.teamresistance.util.Util;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToDefense extends State {
 
@@ -12,7 +17,7 @@ public class DriveToDefense extends State {
 
 	private double startTime;
 	private boolean isReversed;
-
+	
 	public DriveToDefense(boolean isReversed) {
 		this.isReversed = isReversed;
 	}
@@ -20,6 +25,7 @@ public class DriveToDefense extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		startTime = Time.getTime();
+		SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
 	}
 
 	@Override

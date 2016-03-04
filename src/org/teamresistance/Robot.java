@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 		JoystickIO.init();
 		lifterMachine = new StateMachine();
 		robotModes = new StateMachine();
-		
+
 		defenseChooser.addObject("Cheval de frise", new DefenseCheval());
 		defenseChooser.addObject("Drawbridge", new DefenseDrawbridge(lifterMachine));
 		defenseChooser.addObject("Moat", new DefenseMoat());
@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 		lifterMachine.addState(new LowerFlipper());
 		lifterMachine.addState(new LowerDrawbridge());
 		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
-		
+
 		if(teleop == null) {
 			teleop = new Teleop(lifterMachine);
 		}

@@ -6,6 +6,7 @@ import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous extends State {
 
@@ -22,7 +23,9 @@ public class Autonomous extends State {
 	 * @param goal the goal being targeted
      */
 	public Autonomous(Defense defense, int gate, int goal) {
-		if (!(gate >= 1 && gate <= 3)) {
+	    // TODO bogus defense, gate, goal
+
+        if (!(gate >= 1 && gate <= 3)) {
 			throw new IllegalArgumentException("Gate must be between 0 and 4, not " + gate);
 		} else if (!(goal >= 0 && goal <= 2)) {
 			throw new IllegalArgumentException("Goal must be between 0 and 2, not " + goal);
@@ -51,7 +54,9 @@ public class Autonomous extends State {
 
 	@Override
 	public void update() {
-		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+	//	IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		 SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
 		autoMachine.update();
 	}
 
