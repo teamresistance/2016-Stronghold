@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 		lifterMachine = new StateMachine();
 		robotModes = new StateMachine();
 
-		defenseChooser.addObject("Cheval de frise", new DefenseCheval());
+		defenseChooser.addDefault("Cheval de frise", new DefenseCheval());
 		defenseChooser.addObject("Drawbridge", new DefenseDrawbridge(lifterMachine));
 		defenseChooser.addObject("Moat", new DefenseMoat());
 		defenseChooser.addObject("Portcullis", new DefensePortcullis(lifterMachine));
@@ -72,13 +72,13 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 
-		positionChooser.addObject("Gate 2", 0); // indexes are already normalized
+		positionChooser.addDefault("Gate 2", 0); // indexes are already normalized
 		positionChooser.addObject("Gate 3", 1);
 		positionChooser.addObject("Gate 4", 2);
 		positionChooser.addObject("Gate 5", 3);
 		SmartDashboard.putData(">> Autonomous Robot Position <<", positionChooser);
 
-		goalChooser.addObject("Left goal", 0);
+		goalChooser.addDefault("Left goal", 0);
 		goalChooser.addObject("Middle goal", 1);
 		goalChooser.addObject("Right goal", 2);
 		SmartDashboard.putData(">> Autonomous Target Goal <<", goalChooser);
