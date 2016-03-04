@@ -9,6 +9,7 @@ import org.teamresistance.auto.defense.DefensePortcullis;
 import org.teamresistance.auto.defense.DefenseRamparts;
 import org.teamresistance.auto.defense.DefenseRockWall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
+import org.teamresistance.auto.defense.DummyDefense;
 import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.lifter.DriveThroughDrawbridge;
 import org.teamresistance.robostates.lifter.LeavePortcullis;
@@ -82,6 +83,9 @@ public class Robot extends IterativeRobot {
 		goalChooser.addObject("Right goal", 2);
 		SmartDashboard.putData(">> Autonomous Target Goal <<", goalChooser);
 
+		// When true, Autonomous will use a Defense implementation with no time delay or driving
+		SmartDashboard.putBoolean(">> Autonomous No-Defense Override <<", false);
+
 		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
 		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
 		lifterMachine.addState(new MoveLifterDown());
@@ -109,6 +113,11 @@ public class Robot extends IterativeRobot {
 		Defense defense = (Defense) defenseChooser.getSelected();
 		int gate = (int) positionChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
+
+		// Use an empty, instantly-crossed defense if we're testing
+		if (SmartDashboard.getBoolean(">> Autonomous No-Defense Override <<")) {
+			defense = new DummyDefense();
+		}
 
 		// Instantiate Autonomous with the chosen values
 		Autonomous autonomous = new Autonomous(defense, gate, goal);

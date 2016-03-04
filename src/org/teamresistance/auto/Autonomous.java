@@ -23,8 +23,6 @@ public class Autonomous extends State {
 	 * @param goal the goal being targeted
      */
 	public Autonomous(Defense defense, int gate, int goal) {
-	    // TODO bogus defense, gate, goal
-
         if (!(gate >= 1 && gate <= 3)) {
 			throw new IllegalArgumentException("Gate must be between 0 and 4, not " + gate);
 		} else if (!(goal >= 0 && goal <= 2)) {
