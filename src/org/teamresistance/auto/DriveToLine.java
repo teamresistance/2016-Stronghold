@@ -5,6 +5,8 @@ import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class DriveToLine extends State {
 
     //[gate][goal] goal = 1 is constant.
@@ -27,6 +29,7 @@ public class DriveToLine extends State {
 
     @Override
     public void onEntry(StateTransition e) {
+    	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
         startTime = Time.getTime();
     }
 

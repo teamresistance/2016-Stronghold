@@ -58,10 +58,10 @@ public class Robot extends IterativeRobot {
 		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
 
 		robotModes = new StateMachine();
-		if(teleop == null) {
-			teleop = new Teleop(lifterMachine);
-		}
-		robotModes.addState(teleop, "teleop");
+		//if(teleop == null) {
+		//	teleop = new Teleop(lifterMachine);
+		//}
+		//robotModes.addState(teleop, "teleop");
 		if(auto == null) {
 			auto = new Autonomous(lifterMachine);
 		}
@@ -82,14 +82,14 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		robotState = "teleop";
-		robotModes.setState("teleop");
+		//robotState = "teleop";
+		//robotModes.setState("teleop");
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		Time.update();
-		JoystickIO.update();
-		robotModes.update();
+		//Time.update();
+		//JoystickIO.update();
+		//robotModes.update();
 	}
 }
