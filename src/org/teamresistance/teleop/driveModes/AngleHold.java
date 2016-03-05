@@ -20,7 +20,7 @@ public class AngleHold extends ReturnState {
 		if(!JoystickIO.btnAngleHold.isDown()){
 			gotoReturnState();
 		}
-		double currentAngle = Math.toRadians(IO.imu.getYaw());
+		double currentAngle = IO.imu.getYaw();
 		double rotateSpeed = calculateAngleCorrection(currentAngle, targetAngle);
 		double moveSpeed = Util.scaleJoytick(JoystickIO.rightJoystick.getY());
 		IO.robotDrive.arcadeDrive(moveSpeed, rotateSpeed);
@@ -28,15 +28,15 @@ public class AngleHold extends ReturnState {
 
 	/**
 	 * Calculates the speed the robot needs to turn in order to maintain the desired angle.
-	 * @param currentAngle the given angle, in radians
-	 * @param desiredAngle the angle to hold, in radians
+	 * @param currentAngle the given angle, in degrees
+	 * @param desiredAngle the angle to hold, in degrees
      * @return the optimal rotation speed for correcting the angle error
      */
 	public static double calculateAngleCorrection(double currentAngle, double desiredAngle) {
 		double error = desiredAngle - currentAngle;
 
-		// If our error is too large, calculate the rotation speed needed to correct it
-		return Math.abs(error) > 0.017 ? Util.clip(error * 4.0, -1.0, 1.0) : 0;
+		// If our error is more than 2 degrees, calculate the rotation speed needed to correct it
+		return Math.abs(error) > 2 ? Util.clip(error * 4.0, -1.0, 1.0) : 0;
 	}
 
 }

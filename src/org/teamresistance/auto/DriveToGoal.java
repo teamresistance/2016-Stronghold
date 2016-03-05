@@ -32,14 +32,14 @@ class DriveToGoal extends State {
     public void onEntry(StateTransition e) {
     	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
         startTime = Time.getTime();
-        entryAngle = Math.toRadians(IO.imu.getYaw());
+        entryAngle = IO.imu.getYaw();
     }
 
     @Override
     public void update() {
         if (Time.getTime() - startTime < driveTime) {
             // Hold our entry angle to ensure we drive straight
-            double currentAngle = Math.toRadians(IO.imu.getYaw());
+            double currentAngle = IO.imu.getYaw();
             double rotateSpeed = AngleHold.calculateAngleCorrection(currentAngle, entryAngle);
             double driveSpeed = isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED;
             IO.robotDrive.arcadeDrive(driveSpeed, rotateSpeed);
