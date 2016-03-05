@@ -1,6 +1,7 @@
 package org.teamresistance.util.io;
 
 
+import org.teamresistance.auto.AutoConstants;
 import org.teamresistance.util.Util;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -25,7 +26,7 @@ public class NavXIMU {
 		this.reversed = reversed;
 	}
 	
-	public float wrap(float number) {
+	/*public float wrap(float number) {
 		if(Math.abs(number)<=180) {
 			return number;
 		} else {
@@ -37,7 +38,7 @@ public class NavXIMU {
 				return 180-temp;
 			}
 		}
-	}
+	}*/
 	
 	public double getRoll() {
 		return ahrs.getRoll();
@@ -59,13 +60,13 @@ public class NavXIMU {
 			SmartDashboard.putNumber("Current Corrected Yaw" , (ahrs.getYaw()+add));
 			return (ahrs.getYaw() + add);
 		} else {
-			return ahrs.getYaw(); //broken and will need fixin
+			return ahrs.getYaw(); 
 		}
 	}
 	
 	public boolean isStraight(int thresholdAngle, int targetAngle) {
-		SmartDashboard.putNumber("targetAngle", targetAngle);
-		return Math.abs(getYaw() - targetAngle) <= thresholdAngle;
+		double error = Math.abs(getYaw() - targetAngle);
+		return  error <= thresholdAngle;
 	}
 	
 	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
@@ -86,28 +87,29 @@ public class NavXIMU {
 	}
 
 	public double turnTo(int setpoint, int threshold) {
-		double speed = 0.75; //speed of rotation for any of the results
-		if(isStraight(threshold, setpoint)) {
-			return 0;
-		}
-			
+		double speed = 0.65; //speed of rotation for any of the results
+
 		double feedback = getYaw();
 		double error = setpoint - feedback;
-			
+		if(Math.abs(error)<= threshold) {
+			return 0;
+		}	
+		
 		if(error < 0) {
 			if(Math.abs(error) > 180) {
-				return speed; //turn clockwise
+				return -speed; //turn clockwise
 			} else { //magnitude is less than 180
-				return -speed; //turn counter-clockwise
+				return speed; //turn counter-clockwise
 			}
 		} else {//deltaHeading >= 0
 			if(Math.abs(error) > 180) {
-				return -speed;
+				return speed;
 			}else{
 				//magnitude is less than 180
-				return speed;
+				return -speed;
 			}
-		} 
+		}
+	
 	}
 	
 	

@@ -14,10 +14,10 @@ class DriveToLine extends State {
     public static final double[][] DRIVE_TIMES = {
             {1, 1, -1},
             {2, 1, -1},
-            {-1, 2, 1.95},
+            {2, 1, 1},
             {-1, 1, 1.7}
     };
-    public static final double DRIVE_SPEED = 0.5;
+    public static final double DRIVE_SPEED = 0.3;
 
     private double driveTime;
     private double startTime;

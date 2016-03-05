@@ -44,10 +44,8 @@ public class Autonomous extends State {
 		autoMachine.addState(new DriveToDefense(isReversed), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
 		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
-		RotateOnLine rotateOnLine = new RotateOnLine(goal);
-		autoMachine.addState(rotateOnLine, "RotateOnLine");
-		int heading = rotateOnLine.heading();
-		autoMachine.addState(new DriveToGoal(gate, goal, heading), "DriveToGoal");
+		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
+		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
 		
 		// Drive to the defense
 		autoMachine.setState("DriveToDefense");
