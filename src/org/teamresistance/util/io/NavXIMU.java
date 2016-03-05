@@ -81,12 +81,22 @@ public class NavXIMU {
 
 	public double turnTo(int angle, int threshold) {
 		while(!isStraight(threshold, angle)) {
-			if(isLeft(angle)) {
-				return 0.75;
-			}
-			else {
-				//turn left 
-				return -0.75;
+			if(reversed) {
+				if(isLeft(angle)) {
+					return -0.75;
+				}
+				else {
+					//turn left 
+					return 0.75;
+				}
+			} else {
+				if(isLeft(angle)) {
+					return 0.75;
+				}
+				else {
+					//turn left 
+					return -0.75;
+				}
 			}
 		}
 		return 0.0;

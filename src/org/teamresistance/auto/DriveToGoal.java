@@ -28,6 +28,7 @@ class DriveToGoal extends State {
     private double driveTime;
     private double startTime;
     private boolean isReversed;
+    int heading;
     
     public DriveToGoal (int gate, int goal) {
     	isReversed = REVERSED[gate][goal];
@@ -37,12 +38,13 @@ class DriveToGoal extends State {
     @Override
     public void onEntry(StateTransition e) {
         startTime = Time.getTime();
+        heading = (int) IO.imu.getYaw(); // get the initial heading to maintain it while driving to the goal
     }
 
     @Override
     public void update() {
         if (Time.getTime() - startTime < driveTime) {
-            IO.robotDrive.arcadeDrive(isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED, 0);
+            IO.robotDrive.arcadeDrive(isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED, IO.imu.turnTo(heading, AutoConstants.ANGLE_ERROR_THRESHOLD));
         } else {
         	SmartDashboard.putBoolean("&&&&&&&&&&&&&&&&&&TARGETING", true);
             // target

@@ -27,7 +27,7 @@ class DriveToDefense extends State {
 	@Override
 	public void update() {
 		if (Time.getTime() - startTime < DRIVE_TIME) {
-			IO.robotDrive.arcadeDrive(isReversed? -1 * DRIVE_SPEED : DRIVE_SPEED, 0);
+			IO.robotDrive.arcadeDrive(isReversed? -1 * DRIVE_SPEED : DRIVE_SPEED, IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD));
 		} else {
 			gotoState("CrossDefense");
 		}
