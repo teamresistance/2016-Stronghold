@@ -12,9 +12,9 @@ class DriveToLine extends State {
 
     //[gate][goal] goal = 1 is constant.
     public static final double[][] DRIVE_TIMES = {
-            {4, 1, -1},
+            {1, 1, -1},
             {2, 1, -1},
-            {-1, 1, 1.95},
+            {-1, 2, 1.95},
             {-1, 1, 1.7}
     };
     public static final double DRIVE_SPEED = 0.5;

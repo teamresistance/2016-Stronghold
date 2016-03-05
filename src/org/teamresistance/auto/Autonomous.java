@@ -23,9 +23,10 @@ public class Autonomous extends State {
 	 * @param goal the goal being targeted
      */
 	public Autonomous(Defense defense, int gate, int goal) {
-        if (!(gate >= 1 && gate <= 3)) {
+        if (gate < 0 || 4 < gate) {
 			throw new IllegalArgumentException("Gate must be between 0 and 4, not " + gate);
-		} else if (!(goal >= 0 && goal <= 2)) {
+		}
+        if (goal < 0 || 3 < gate) {
 			throw new IllegalArgumentException("Goal must be between 0 and 2, not " + goal);
 		}
 
@@ -43,9 +44,11 @@ public class Autonomous extends State {
 		autoMachine.addState(new DriveToDefense(isReversed), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
 		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
-		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
-		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
-
+		RotateOnLine rotateOnLine = new RotateOnLine(goal);
+		autoMachine.addState(rotateOnLine, "RotateOnLine");
+		int heading = rotateOnLine.heading();
+		autoMachine.addState(new DriveToGoal(gate, goal, heading), "DriveToGoal");
+		
 		// Drive to the defense
 		autoMachine.setState("DriveToDefense");
 	}

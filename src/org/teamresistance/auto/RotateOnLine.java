@@ -17,6 +17,10 @@ class RotateOnLine extends State {
         SmartDashboard.putNumber("Goal Angle", heading);
     }
 
+    public int heading() {
+    	return heading;
+    }
+    
     @Override
     public void onEntry(StateTransition e) {
     	

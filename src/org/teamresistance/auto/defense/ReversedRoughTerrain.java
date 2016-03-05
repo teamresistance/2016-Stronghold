@@ -5,16 +5,16 @@ import org.teamresistance.util.Time;
 import org.teamresistance.util.annotation.Experimental;
 
 @Experimental
-public class DefenseRoughTerrain extends Defense {
+public class ReversedRoughTerrain extends Defense {
 
-	public static final double CROSS_SPEED = 0.645;
+	public static final double CROSS_SPEED = -0.645;
 	public static final double CROSS_TIME = 2.5;
 
 	private double startTime = 0.0;
 
 	@Override
 	public boolean isReversed() {
-		return false;
+		return true;
 	}
 
 	@Override

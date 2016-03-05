@@ -1,6 +1,8 @@
 package org.teamresistance.util.io;
 
 
+import org.teamresistance.util.Util;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -104,6 +106,15 @@ public class NavXIMU {
 			}
 		}
 		return 0.0;
+	}
+	
+	
+	public double calculateAngleCorrection(double desiredAngle) {
+		double currentAngle = getYaw();
+		double error = desiredAngle - currentAngle;
+
+		// If our error is more than 2 degrees, calculate the rotation speed needed to correct it
+		return Math.abs(error) > 2 ? Util.clip(error * 4.0, -1.0, 1.0) : 0;
 	}
 	
 }

@@ -10,6 +10,7 @@ import org.teamresistance.auto.defense.DefenseRamparts;
 import org.teamresistance.auto.defense.DefenseRockWall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
 import org.teamresistance.auto.defense.DummyDefense;
+import org.teamresistance.auto.defense.ReversedRoughTerrain;
 import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.lifter.DriveThroughDrawbridge;
 import org.teamresistance.robostates.lifter.LeavePortcullis;
@@ -70,6 +71,7 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Ramparts", new DefenseRamparts());
 		defenseChooser.addObject("Rock wall", new DefenseRockWall(new SwingDetection(IO.imu)));
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
+		defenseChooser.addObject("Reversed Rough Terrain", new ReversedRoughTerrain());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 
 		gateChooser.addDefault("Gate 2", 0); // indexes are already normalized
@@ -82,9 +84,6 @@ public class Robot extends IterativeRobot {
 		goalChooser.addObject("Middle goal", 1);
 		goalChooser.addObject("Right goal", 2);
 		SmartDashboard.putData(">> Autonomous Target Goal <<", goalChooser);
-
-		// When true, Autonomous will use a Defense implementation with no time delay or driving
-		SmartDashboard.putBoolean(">> Autonomous No-Defense Override <<", false);
 
 		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
 		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
@@ -114,19 +113,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
 		
 		// "Lock in" the SendableChooser choices at the start of Autonomous
-		//Defense defense = (Defense) defenseChooser.getSelected();
+		Defense defense = (Defense) defenseChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
 		int gate = (int) gateChooser.getSelected();
 		
-		Defense defense = new DefenseRoughTerrain();
-		
 		IO.imu.setReversed(defense.isReversed());
 		
-		//Use an empty, instantly-crossed defense if we're testing
-//		if (SmartDashboard.getBoolean(">> Autonomous No-Defense Override <<")) {
-//			defense = new DummyDefense();
-//		}
-
 		// Instantiate Autonomous with the chosen values
 		Autonomous autonomous = new Autonomous(defense, gate, goal);
 

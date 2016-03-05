@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 class DriveToGoal extends State {
 
     public static final double[][] DRIVE_TIMES = {
-            {0, 1.2, -1},
+            {2, 1.2, -1},
             {3, 2.25, -1},
             {-1, 1, 0},
             {-1, 2.0, 1.0}
@@ -21,11 +21,13 @@ class DriveToGoal extends State {
     private double driveTime;
     private double startTime;
     private boolean isReversed;
+    int heading; //holds heading for error correction
     
-    public DriveToGoal (int gate, int goal) {
+    public DriveToGoal (int gate, int goal, int heading) {
     	//isReversed = REVERSED[gate][goal];
     	isReversed = isReversed(gate, goal);
         driveTime = DRIVE_TIMES[gate][goal];
+        this.heading = heading;
     }
 
     @Override
