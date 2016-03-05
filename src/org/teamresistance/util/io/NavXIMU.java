@@ -8,12 +8,31 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class NavXIMU {
 	AHRS ahrs;	
+	private boolean reversed;
 
 	public NavXIMU() { //setup
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP); 
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		}
+	}
+	
+	public void setReversed(boolean reversed) {
+		this.reversed = reversed;
+	}
+	
+	public float wrap(float number) {
+		if(Math.abs(number)<=180) {
+			return number;
+		} else {
+			if(number > 180) {
+				float temp = number %180;
+				return -180 + temp;
+			} else {
+				float temp = number %180;
+				return 180-temp;
+			}
 		}
 	}
 	
@@ -26,11 +45,21 @@ public class NavXIMU {
 	}
 	
 	public double getYaw() {
-		return ahrs.getYaw();
+		if(reversed) {
+			int add;
+			if(ahrs.getYaw() <= 0) {
+				add = 180;
+			}else {
+				add = -180;
+			}
+			return ahrs.getYaw() + add;
+		} else {
+			return ahrs.getYaw(); //broken and will need fixin
+		}
 	}
 	
 	public boolean isStraight(int thresholdAngle, int startAngle) {
-		return Math.abs(ahrs.getYaw() - startAngle) <= thresholdAngle;
+			return Math.abs(ahrs.getYaw() - startAngle) <= thresholdAngle;
 	}
 	
 	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
@@ -47,7 +76,7 @@ public class NavXIMU {
 	}
 	
 	public boolean isLeft(int targetAngle) {
-		return targetAngle < ahrs.getYaw();
+			return targetAngle < ahrs.getYaw();
 	}
 
 	public double turnTo(int angle, int threshold) {

@@ -10,13 +10,16 @@ class RotateOnLine extends State {
 
     private final int heading;
 
+    private final static int[] HEADINGS = {150, -90, -150};
+    
     public RotateOnLine (int goal) {
-        heading = (210 + goal * 60) % 180 - 180;
+        heading = HEADINGS[goal];
+        SmartDashboard.putNumber("Goal Angle", heading);
     }
 
     @Override
     public void onEntry(StateTransition e) {
-    	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
+    	
     }
 
     @Override

@@ -110,16 +110,20 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
-		SmartDashboard.putNumber("Gate chosen", (int) gateChooser.getSelected());
+		SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
 		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
+		
 		// "Lock in" the SendableChooser choices at the start of Autonomous
 		Defense defense = (Defense) defenseChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
 		int gate = (int) gateChooser.getSelected();
-		 //Use an empty, instantly-crossed defense if we're testing
-		if (SmartDashboard.getBoolean(">> Autonomous No-Defense Override <<")) {
-			defense = new DummyDefense();
-		}
+		
+		IO.imu.setReversed(defense.isReversed());
+		
+		//Use an empty, instantly-crossed defense if we're testing
+//		if (SmartDashboard.getBoolean(">> Autonomous No-Defense Override <<")) {
+//			defense = new DummyDefense();
+//		}
 
 		// Instantiate Autonomous with the chosen values
 		Autonomous autonomous = new Autonomous(defense, gate, goal);

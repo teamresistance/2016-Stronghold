@@ -11,10 +11,10 @@ class DriveToLine extends State {
 
     //[gate][goal] goal = 1 is constant.
     public static final double[][] DRIVE_TIMES = {
-            {4, 3, -1},
-            {2, 3, -1},
-            {-1, 3, 2},
-            {-1, 3, 4}
+            {4, 1, -1},
+            {2, 1, -1},
+            {-1, 1, 1.95},
+            {-1, 1, 1.7}
     };
     public static final double DRIVE_SPEED = 0.5;
 
@@ -29,7 +29,6 @@ class DriveToLine extends State {
 
     @Override
     public void onEntry(StateTransition e) {
-    	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
         startTime = Time.getTime();
     }
 

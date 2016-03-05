@@ -16,7 +16,6 @@ class CrossDefense extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
 		defense.beginCrossing();
 	}
 

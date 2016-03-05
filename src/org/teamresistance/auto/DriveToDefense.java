@@ -22,7 +22,6 @@ class DriveToDefense extends State {
 	@Override
 	public void onEntry(StateTransition e) {
 		startTime = Time.getTime();
-		SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
 	}
 
 	@Override

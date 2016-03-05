@@ -44,7 +44,7 @@ public class Autonomous extends State {
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
 		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
 		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
-		autoMachine.addState(new DriveToGoal(isReversed, gate, goal), "DriveToGoal");
+		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
 
 		// Drive to the defense
 		autoMachine.setState("DriveToDefense");
@@ -55,6 +55,7 @@ public class Autonomous extends State {
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		//IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
+		SmartDashboard.putString("^^^^^^^^^CURRENT AUTO STATE:", autoMachine.getCurrentState());
 		autoMachine.update();
 	}
 

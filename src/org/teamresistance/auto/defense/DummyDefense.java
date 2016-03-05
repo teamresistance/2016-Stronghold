@@ -9,7 +9,7 @@ public class DummyDefense extends Defense {
 
     @Override
     public boolean isReversed() {
-        return false;
+        return true;
     }
 
     @Override
