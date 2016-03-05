@@ -85,27 +85,29 @@ public class NavXIMU {
 			return targetAngle < getYaw();
 	}
 
-	public double turnTo(int angle, int threshold) {
-		if(!isStraight(threshold, angle)) {
-			/*if(reversed) {
-				if(isLeft(angle)) {
-					return -0.75;
-				}
-				else {
-					//turn left 
-					return 0.75;
-				}
-			} else {*/
-				if(isLeft(angle)) {
-					return 0.75;
-				}
-				else {
-					//turn left 
-					return -0.75;
-				//}
-			}
+	public double turnTo(int setpoint, int threshold) {
+		double speed = 0.75; //speed of rotation for any of the results
+		if(isStraight(threshold, setpoint)) {
+			return 0;
 		}
-		return 0.0;
+			
+		double feedback = getYaw();
+		double error = setpoint - feedback;
+			
+		if(error < 0) {
+			if(Math.abs(error) > 180) {
+				return speed; //turn clockwise
+			} else { //magnitude is less than 180
+				return -speed; //turn counter-clockwise
+			}
+		} else {//deltaHeading >= 0
+			if(Math.abs(error) > 180) {
+				return -speed;
+			}else{
+				//magnitude is less than 180
+				return speed;
+			}
+		} 
 	}
 	
 	
