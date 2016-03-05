@@ -1,6 +1,7 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
+import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -32,11 +33,13 @@ class DriveToLine extends State {
         startTime = Time.getTime();
     }
 
-    @Override public void update() {
+    @Override 
+    public void update() {
         if (Time.getTime() - startTime < driveTime) {
-            IO.robotDrive.arcadeDrive(isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED, IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD));
-        } else {
-            gotoState("RotateOnLine");
-        }
+            double driveSpeed = isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED;
+            IO.robotDrive.arcadeDrive(driveSpeed, 0);
+		} else {
+			gotoState("RotateOnLine");
+		}
     }
 }

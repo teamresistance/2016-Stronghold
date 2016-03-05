@@ -13,25 +13,18 @@ class DriveToGoal extends State {
     public static final double[][] DRIVE_TIMES = {
             {0, 1.2, -1},
             {3, 2.25, -1},
-            {-1, .5, 0},
+            {-1, 1, 0},
             {-1, 2.0, 1.0}
     };
-    public double DRIVE_SPEED = 0.5;
-
-    private static final boolean[][] REVERSED = {
-    	{true, false, false},
-    	{true, false, false},
-    	{true, false, false},
-    	{true, false, false}
-    };
+    public static final double DRIVE_SPEED = 0.5;
 
     private double driveTime;
     private double startTime;
     private boolean isReversed;
-    int heading;
-
+    
     public DriveToGoal (int gate, int goal) {
-    	isReversed = REVERSED[gate][goal];
+    	//isReversed = REVERSED[gate][goal];
+    	isReversed = isReversed(gate, goal);
         driveTime = DRIVE_TIMES[gate][goal];
     }
 
@@ -39,21 +32,33 @@ class DriveToGoal extends State {
     public void onEntry(StateTransition e) {
     	SmartDashboard.putString("^^^^^^^^^CURRENT STATE:", getName());
         startTime = Time.getTime();
-        entryAngle = IO.imu.getYaw();
     }
 
     @Override
     public void update() {
+//        if (Time.getTime() - startTime < driveTime) {
+//            IO.robotDrive.arcadeDrive(isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED, IO.imu.turnTo(heading, AutoConstants.ANGLE_ERROR_THRESHOLD));
+//        } else {
+//        	SmartDashboard.putBoolean("&&&&&&&&&&&&&&&&&&TARGETING", true);
+//            // target
+//        }
+        
         if (Time.getTime() - startTime < driveTime) {
-            // Hold our entry angle to ensure we drive straight
-            double currentAngle = IO.imu.getYaw();
-            double rotateSpeed = AngleHold.calculateAngleCorrection(currentAngle, entryAngle);
             double driveSpeed = isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED;
-            IO.robotDrive.arcadeDrive(driveSpeed, rotateSpeed);
+            IO.robotDrive.arcadeDrive(driveSpeed, 0);
         } else {
         	SmartDashboard.putBoolean("&&&&&&&&&&&&&&&&&&TARGETING", true);
             // TODO target
         }
+    }
+    
+    private boolean isReversed(int gate, int goal) {
+    	if (goal == 0) return false;
+    	if (goal == 2) return true;
+    	
+    	if (gate == 0 || gate == 1) return true;
+    	if (gate == 2 || gate == 3) return false;
+    	throw new IllegalArgumentException("Illegal DriveToGoal permutation: Gate: " + gate + "; Goal: " + goal);
     }
 
 }

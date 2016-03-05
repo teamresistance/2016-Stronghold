@@ -114,9 +114,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
 		
 		// "Lock in" the SendableChooser choices at the start of Autonomous
-		Defense defense = (Defense) defenseChooser.getSelected();
+		//Defense defense = (Defense) defenseChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
 		int gate = (int) gateChooser.getSelected();
+		
+		Defense defense = new DefenseRoughTerrain();
 		
 		IO.imu.setReversed(defense.isReversed());
 		

@@ -5,9 +5,10 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NavXIMU {
-	AHRS ahrs;	
+	private AHRS ahrs;	
 	private boolean reversed;
 
 	public NavXIMU() { //setup
@@ -45,6 +46,7 @@ public class NavXIMU {
 	}
 	
 	public double getYaw() {
+		SmartDashboard.putNumber("Raw Yaw", ahrs.getYaw());
 		if(reversed) {
 			int add;
 			if(ahrs.getYaw() <= 0) {
@@ -52,14 +54,16 @@ public class NavXIMU {
 			}else {
 				add = -180;
 			}
-			return ahrs.getYaw() + add;
+			SmartDashboard.putNumber("Current Corrected Yaw" , (ahrs.getYaw()+add));
+			return (ahrs.getYaw() + add);
 		} else {
 			return ahrs.getYaw(); //broken and will need fixin
 		}
 	}
 	
-	public boolean isStraight(int thresholdAngle, int startAngle) {
-			return Math.abs(ahrs.getYaw() - startAngle) <= thresholdAngle;
+	public boolean isStraight(int thresholdAngle, int targetAngle) {
+		SmartDashboard.putNumber("targetAngle", targetAngle);
+		return Math.abs(getYaw() - targetAngle) <= thresholdAngle;
 	}
 	
 	public boolean isPitchLevel(int thresholdAngle, int startAngle) {
@@ -76,12 +80,12 @@ public class NavXIMU {
 	}
 	
 	public boolean isLeft(int targetAngle) {
-			return targetAngle < ahrs.getYaw();
+			return targetAngle < getYaw();
 	}
 
 	public double turnTo(int angle, int threshold) {
-		while(!isStraight(threshold, angle)) {
-			if(reversed) {
+		if(!isStraight(threshold, angle)) {
+			/*if(reversed) {
 				if(isLeft(angle)) {
 					return -0.75;
 				}
@@ -89,14 +93,14 @@ public class NavXIMU {
 					//turn left 
 					return 0.75;
 				}
-			} else {
+			} else {*/
 				if(isLeft(angle)) {
 					return 0.75;
 				}
 				else {
 					//turn left 
 					return -0.75;
-				}
+				//}
 			}
 		}
 		return 0.0;

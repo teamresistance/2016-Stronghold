@@ -1,6 +1,7 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
+import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -27,7 +28,8 @@ class DriveToDefense extends State {
 	@Override
 	public void update() {
 		if (Time.getTime() - startTime < DRIVE_TIME) {
-			IO.robotDrive.arcadeDrive(isReversed? -1 * DRIVE_SPEED : DRIVE_SPEED, IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD));
+            double driveSpeed = isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED;
+            IO.robotDrive.arcadeDrive(driveSpeed, 0);
 		} else {
 			gotoState("CrossDefense");
 		}

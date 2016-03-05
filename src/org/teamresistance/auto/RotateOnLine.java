@@ -10,7 +10,7 @@ class RotateOnLine extends State {
 
     private final int heading;
 
-    private final static int[] HEADINGS = {150, -90, -150};
+    private final static int[] HEADINGS = {-30, -90, -150};
     
     public RotateOnLine (int goal) {
         heading = HEADINGS[goal];
@@ -25,9 +25,11 @@ class RotateOnLine extends State {
     @Override
     public void update() {
         // If the robot is not facing the heading, continue rotating
+		SmartDashboard.putNumber("Desired Angle", heading);
         if (!IO.imu.isStraight(AutoConstants.ANGLE_ERROR_THRESHOLD, heading)) {
             IO.robotDrive.arcadeDrive(0, IO.imu.turnTo(heading, AutoConstants.ANGLE_ERROR_THRESHOLD));
         } else {
+        	IO.robotDrive.arcadeDrive(0, 0);
             // Otherwise, drive along the line to the goal
             gotoState("DriveToGoal");
         }
