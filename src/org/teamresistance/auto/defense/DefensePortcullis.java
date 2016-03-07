@@ -18,14 +18,14 @@ public class DefensePortcullis extends Defense {
 	}
 
 	@Override
-	public void beforeCrossing() {
-		// Set the flipper to down, and lower the lifter all the way down
+	protected void beforeCrossing() {
+		// Enter the LiftPortcullis state, which will handle all the heavy lifting and driving
 		lifterMachine.setState("LiftPortcullis");
 	}
 
 	@Override
 	public void whileCrossing() {
-		// Need to drive forward, raise flipper, lift motor to top, drive forward until level
+		// We're done crossing the defense once the lifter machine is done lifting
 		if (lifterMachine.getCurrentState().equals("TeleopLifterIdle")) {
 			setCrossed();
 		}

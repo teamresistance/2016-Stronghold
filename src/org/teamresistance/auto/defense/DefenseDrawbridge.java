@@ -18,15 +18,16 @@ public class DefenseDrawbridge extends Defense {
 	}
 
 	@Override
-	public void beforeCrossing() {
-		lifterMachine.setState("LiftPortcullis");
+	protected void beforeCrossing() {
+		// Enter the LowerDrawbridge state, which will handle all the heavy lifting and driving
+		lifterMachine.setState("LowerDrawbridge");
 	}
 
 	@Override
 	public void whileCrossing() {
+		// We're done crossing the defense once the lifter machine is done lifting
 		if (lifterMachine.getCurrentState().equals("TeleopLifterIdle")) {
 			setCrossed();
 		}
 	}
-	
 }

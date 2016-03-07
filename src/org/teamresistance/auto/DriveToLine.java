@@ -1,16 +1,13 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
-import org.teamresistance.teleop.driveModes.AngleHold;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 class DriveToLine extends State {
 
-    //[gate][goal] goal = 1 is constant.
+    // [gate][goal] (goal=1 is constant)
     public static final double[][] DRIVE_TIMES = {
             {1, 1, -1},
             {2, 1, -1},

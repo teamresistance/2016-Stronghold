@@ -9,7 +9,6 @@ import org.teamresistance.auto.defense.DefensePortcullis;
 import org.teamresistance.auto.defense.DefenseRamparts;
 import org.teamresistance.auto.defense.DefenseRockWall;
 import org.teamresistance.auto.defense.DefenseRoughTerrain;
-import org.teamresistance.auto.defense.DummyDefense;
 import org.teamresistance.auto.defense.ReversedRoughTerrain;
 import org.teamresistance.robostates.DelayState;
 import org.teamresistance.robostates.lifter.DriveThroughDrawbridge;
@@ -37,14 +36,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	private StateMachine robotModes;
-	private StateMachine lifterMachine;
 
 	public static Teleop teleop;
 	public static String robotState;
 
 	// For on-the-fly Autonomous configurations
 	private SendableChooser defenseChooser;		// to know which crossing strategy to use
-	private SendableChooser gateChooser;	// to know which path to the goal should be taken
+	private SendableChooser gateChooser;		// to know which path to the goal should be taken
 	private SendableChooser goalChooser;		// to know which goal to reach
 
 	@Override
@@ -61,7 +59,7 @@ public class Robot extends IterativeRobot {
 
 		IO.init();
 		JoystickIO.init();
-		lifterMachine = new StateMachine();
+		StateMachine lifterMachine = new StateMachine();
 		robotModes = new StateMachine();
 
 		defenseChooser.addDefault("Cheval de frise", new DefenseCheval());
@@ -100,7 +98,7 @@ public class Robot extends IterativeRobot {
 		lifterMachine.addState(new LowerDrawbridge());
 		lifterMachine.addState(new DriveThroughDrawbridge(IO.robotDrive, IO.flipperSolenoid));
 
-		if(teleop == null) {
+		if (teleop == null) {
 			teleop = new Teleop(lifterMachine);
 		}
 		robotModes.addState(teleop, "teleop");
@@ -108,17 +106,18 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
-		SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
-		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
-		
 		// "Lock in" the SendableChooser choices at the start of Autonomous
 		Defense defense = (Defense) defenseChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
 		int gate = (int) gateChooser.getSelected();
-		
+
+		SmartDashboard.putNumber("Goal chosen", goal);
+		SmartDashboard.putNumber("Gate chosen", gate + 2);
+		SmartDashboard.putString("Defense type", defense.toString());
+
+		// For properly calculating angles when the robot is reversed
 		IO.imu.setReversed(defense.isReversed());
-		
+
 		// Instantiate Autonomous with the chosen values
 		Autonomous autonomous = new Autonomous(defense, gate, goal);
 
