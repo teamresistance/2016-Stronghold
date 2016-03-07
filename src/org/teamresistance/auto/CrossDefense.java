@@ -4,8 +4,6 @@ import org.teamresistance.auto.defense.Defense;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 class CrossDefense extends State {
 
 	private final Defense defense;
@@ -27,5 +25,4 @@ class CrossDefense extends State {
 			gotoState("DriveToLine");
 		}
 	}
-
 }

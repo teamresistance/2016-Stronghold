@@ -17,7 +17,7 @@ public abstract class Defense {
 		beforeCrossing();
 	}
 
-    public void beforeCrossing() {
+    protected void beforeCrossing() {
         //
     }
 
@@ -28,5 +28,4 @@ public abstract class Defense {
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
-
 }

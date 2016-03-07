@@ -7,11 +7,13 @@ import org.teamresistance.util.annotation.Experimental;
 
 @Experimental
 public class DefenseRockWall extends Defense {
-	
-	public static final double CROSS_SPEED = .5;
+
+	public static final double CROSS_SPEED = 0.5;
+    public static final double CROSS_TIME = 2.0;
+
 	private final SwingDetection swingDetection;
 
-	private double time = 0.0;
+	private double startTime;
 	private double swingNaught = 0.0;
 
 	public DefenseRockWall(SwingDetection swingDetection) {
@@ -22,24 +24,24 @@ public class DefenseRockWall extends Defense {
 	public boolean isReversed() {
 		return true;
 	}
-	
-	@Override
-	public void whileCrossing() {
-		double delta = Time.getDelta();
-		time += delta;
 
-		boolean isSwinging = swingDetection.isSwinging();
-		if (!isSwinging && time < 1.0) {
-			//don't know if I can do it like this - check to make sure it doesn't freeze up	
-			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
-		} else if (isSwinging && swingNaught < 0.1) {
-			IO.robotDrive.arcadeDrive(0.0, 0.0);
-			swingNaught += delta;
-		} else if (IO.imu.isLevel(10, 0, 0) && time < 2.0) {
-			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
-		} else {
-			this.setCrossed();
-		}
+	@Override
+	protected void beforeCrossing() {
+		startTime = Time.getTime();
 	}
 
+	@Override
+	public void whileCrossing() {
+		boolean isSwinging = swingDetection.isSwinging();
+		if (!isSwinging && Time.getTime() - startTime < 1.0) {
+			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0);
+		} else if (isSwinging && swingNaught < 0.1) {
+			IO.robotDrive.arcadeDrive(0, 0);
+			swingNaught += Time.getDelta();
+		} else if (IO.imu.isLevel(10, 0, 0) && Time.getTime() - startTime < CROSS_TIME) {
+			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
+		} else {
+			setCrossed();
+		}
+	}
 }

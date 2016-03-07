@@ -4,13 +4,17 @@ import org.teamresistance.IO;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.annotation.Experimental;
 
+/**
+ * A dummy {@link Defense} implementation that drives straight with a constant crossing speed and
+ * time; essentially a reversed {@link DefenseRoughTerrain}. Used only in testing.
+ */
 @Experimental
 public class ReversedRoughTerrain extends Defense {
 
-	public static final double CROSS_SPEED = -0.645;
-	public static final double CROSS_TIME = 2.5;
+	public static final double CROSS_SPEED = -1 * DefenseRoughTerrain.CROSS_SPEED;
+	public static final double CROSS_TIME = DefenseRoughTerrain.CROSS_TIME;
 
-	private double startTime = 0.0;
+	private double startTime;
 
 	@Override
 	public boolean isReversed() {
@@ -18,25 +22,16 @@ public class ReversedRoughTerrain extends Defense {
 	}
 
 	@Override
-	public void beforeCrossing() {
+	protected void beforeCrossing() {
 		startTime = Time.getTime();
 	}
-	
+
 	@Override
-	public void whileCrossing() {	
+	public void whileCrossing() {
 		if (Time.getTime() - startTime < CROSS_TIME) {
 			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0);
 		} else {
-//			if (IO.imu.isLevel( AutoConstants.ANGLE_ERROR_THRESHOLD,0, 0)) {
-//				SmartDashboard.putBoolean("$$$$$$$$$$$$$$$$$$$$$$$CROSSD", true);
-				this.setCrossed();
-			//}
-//			else {
-//				IO.imu.turnTo(0, AutoConstants.ANGLE_ERROR_THRESHOLD);
-//			}
+			setCrossed();
 		}
-		
 	}
-
-
 }
