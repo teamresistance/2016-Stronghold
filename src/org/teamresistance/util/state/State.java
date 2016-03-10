@@ -1,4 +1,5 @@
 package org.teamresistance.util.state;
+
 /**
  * Represents an abstract state to be used by a StateMachine. 
  * An instance of State represents the state of the machine on a continuous interval of time, 
@@ -11,16 +12,16 @@ package org.teamresistance.util.state;
 public abstract class State {
 	
 	protected StateMachine stateMachine;
-	private String name;
-	
+	protected String name;
+
+	protected State() {
+		this.name = this.getClass().getSimpleName();
+	}
+
 	void setStateMachine(StateMachine stateMachine) {
 		this.stateMachine = stateMachine;
 	}
 
-	void setName(String name) {
-		this.name = name;
-	}
-	
 	/**
 	 * Sets the state of this State's state machine to an instance with the specified name.
 	 * @param stateName the name of the state
@@ -35,7 +36,7 @@ public abstract class State {
 	
 	@Override
 	public String toString() {
-		return name;
+		return getName();
 	}
 
 	/**

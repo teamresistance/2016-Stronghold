@@ -1,9 +1,17 @@
 package org.teamresistance.auto;
 
+import org.teamresistance.JoystickIO;
 import org.teamresistance.auto.defense.Defense;
+import org.teamresistance.auto.manual.ManualAutonomous;
+import org.teamresistance.auto.manual.TimingReporter;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Autonomous extends State {
 
@@ -12,14 +20,16 @@ public class Autonomous extends State {
 	private final Defense defense;
 	private final int gate;
 	private final int goal;
+	private final boolean manual;
 
 	/**
 	 * The Autonomous state.
 	 * @param defense the {@link Defense} that will be crossed
 	 * @param gate the gate of the defense (also thus the starting position of the robot)
 	 * @param goal the goal being targeted
-     */
-	public Autonomous(Defense defense, int gate, int goal) {
+	 * @param manual true if running in {@link ManualAutonomous}
+	 */
+	public Autonomous(Defense defense, int gate, int goal, boolean manual) {
         if (gate < 0 || 4 < gate) {
 			throw new IllegalArgumentException("Gate must be between 0 and 4, not " + gate);
 		}
@@ -31,6 +41,7 @@ public class Autonomous extends State {
 		this.defense = defense;
 		this.gate = gate;
 		this.goal = goal;
+		this.manual = manual;
 	}
 
 	@Override
@@ -38,14 +49,28 @@ public class Autonomous extends State {
 		// We'll invert the drive speeds if the robot is reversed
 		boolean isReversed = defense.isReversed();
 
-		autoMachine.addState(new DriveToDefense(isReversed), "DriveToDefense");
-		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
-		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
-		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
-		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
-		
-		// Drive to the defense
-		autoMachine.setState("DriveToDefense");
+		// Use an ordered HashMap to represent a sequence
+		Map<State, String> states = new LinkedHashMap<>();
+		states.put(new DriveToDefense(isReversed), "DriveToDefense");
+		states.put(new CrossDefense(defense), "CrossDefense");
+		states.put(new DriveToLine(isReversed, gate, goal), "DriveToLine");
+		states.put(new RotateOnLine(goal), "RotateOnLine");
+		states.put(new DriveToGoal(gate, goal), "DriveToGoal");
+
+		// If we're in manual calibration mode
+		if (manual) {
+			List<State> stateSequence = new ArrayList<>(states.keySet());
+			ManualAutonomous manualAutonomous = new ManualAutonomous(stateSequence, new TimingReporter());
+			JoystickIO.btnAngleHold.addPressListener(manualAutonomous); // trigger = the angle hold button
+			autoMachine.addState(manualAutonomous, "ManualAutonomous");
+			autoMachine.setState("ManualAutonomous");
+		} else {
+			// Otherwise, register each state like normal
+			states.entrySet().forEach(entry -> autoMachine.addState(entry.getKey(), entry.getValue()));
+
+			// Drive to the defense
+			autoMachine.setState("DriveToDefense");
+		}
 	}
 
 	@Override
