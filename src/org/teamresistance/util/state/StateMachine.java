@@ -43,7 +43,7 @@ public class StateMachine {
 		if (state == null) {
 			throw new NullPointerException("Cannot add null state.");
 		}
-		addState(state, state.getClass().getSimpleName());
+		addState(state, state.getName());
 	}
 	
 	/**
@@ -59,14 +59,13 @@ public class StateMachine {
 			throw new NullPointerException("Cannot add null state.");
 		}
 		if (stateName == null) {
-			stateName = state.getClass().getSimpleName();
+			stateName = state.getName();
 		} 
 		if (containsState(stateName)) {
 			throw new RuntimeException("Machine already contains state of name " + stateName);
 		}
 		
 		state.setStateMachine(this);
-		state.setName(stateName);
 
 		states.put(stateName, state);
 	}

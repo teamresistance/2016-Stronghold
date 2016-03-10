@@ -45,6 +45,8 @@ public class Robot extends IterativeRobot {
 	private SendableChooser gateChooser;		// to know which path to the goal should be taken
 	private SendableChooser goalChooser;		// to know which goal to reach
 
+	private SendableChooser autonomousChooser;	// manual vs auto
+
 	@Override
 	public void robotInit() {
 		try {
@@ -56,6 +58,7 @@ public class Robot extends IterativeRobot {
 		defenseChooser = new SendableChooser();
 		gateChooser = new SendableChooser();
 		goalChooser = new SendableChooser();
+		autonomousChooser = new SendableChooser();
 
 		IO.init();
 		JoystickIO.init();
@@ -82,6 +85,10 @@ public class Robot extends IterativeRobot {
 		goalChooser.addObject("Middle goal", 1);
 		goalChooser.addObject("Right goal", 2);
 		SmartDashboard.putData(">> Autonomous Target Goal <<", goalChooser);
+
+		autonomousChooser.addDefault("Auto", true);
+		autonomousChooser.addObject("Debug (calibration)", false);
+		SmartDashboard.putData(">> Autonomous Mode <<", autonomousChooser);
 
 		lifterMachine.addState(new LiftPortcullis(IO.lifterTiltSolenoid, IO.bottomLifterSwitch));
 		lifterMachine.addState(new MoveLifter("TeleopLifterIdle"));
@@ -110,6 +117,7 @@ public class Robot extends IterativeRobot {
 		Defense defense = (Defense) defenseChooser.getSelected();
 		int goal = (int) goalChooser.getSelected();
 		int gate = (int) gateChooser.getSelected();
+		boolean manual = (boolean) autonomousChooser.getSelected();
 
 		SmartDashboard.putNumber("Goal chosen", goal);
 		SmartDashboard.putNumber("Gate chosen", gate + 2);
@@ -119,7 +127,7 @@ public class Robot extends IterativeRobot {
 		IO.imu.setReversed(defense.isReversed());
 
 		// Instantiate Autonomous with the chosen values
-		Autonomous autonomous = new Autonomous(defense, gate, goal);
+		Autonomous autonomous = new Autonomous(defense, gate, goal, manual);
 
 		robotState = "auto";
 		robotModes.addState(autonomous, "auto");
