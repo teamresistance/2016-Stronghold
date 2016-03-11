@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
 
@@ -17,6 +18,8 @@ public class MoveLifterDown extends ReturnState {
 	public void update() {
 		if(IO.bottomLifterSwitch.get()) {
 			stop();
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 	

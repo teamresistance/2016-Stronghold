@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
@@ -25,6 +26,8 @@ public class TopOutLifter extends ReturnState {
 			IO.lifterMotor.set(0);
 			SmartDashboard.putBoolean("Topping", false);
 			gotoReturnState();
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 	

@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
@@ -65,6 +66,8 @@ public class LowerDrawbridge extends State {
 		} else if(delay) {
 			gotoState("LowerFlipper");
 			IO.lifterMotor.set(0);
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 

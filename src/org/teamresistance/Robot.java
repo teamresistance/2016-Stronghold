@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		/*
 		SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
 		SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
 		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
@@ -125,12 +126,15 @@ public class Robot extends IterativeRobot {
 		robotState = "auto";
 		robotModes.addState(autonomous, "auto");
 		robotModes.setState("auto");
+		*/
 	}
 
 	@Override
 	public void autonomousPeriodic() {
+		/*
 		Time.update();
 		robotModes.update();
+		*/
 	}
 
 	@Override

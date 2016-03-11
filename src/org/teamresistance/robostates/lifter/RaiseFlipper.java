@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
@@ -31,6 +32,8 @@ public class RaiseFlipper extends State {
 				//((MoveLifterDown)stateMachine.getState("MoveLifterUp")).setReturnState("TeleopLifterIdle");
 			}
 			gotoState("MoveLifter");
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 

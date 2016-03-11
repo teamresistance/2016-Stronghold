@@ -9,17 +9,17 @@ import org.teamresistance.util.state.StateTransition;
 
 public class Shoot extends ReturnState {
 	
-	private double time=0;
+	private double startTime;
 
 	@Override
 	public void onEntry(StateTransition e) {
 		IO.shooterSolenoid.set(true);
+		startTime = Time.getTime();
 	}
 
 	@Override
 	public void update() {
-		time+=Time.getDelta();
-		if(time >= Constants.SHOOTER_DELAY) {
+		if(Time.getTime() - startTime >= Constants.SHOOTER_DELAY) {
 			gotoReturnState();
 		}
 	}
@@ -27,7 +27,9 @@ public class Shoot extends ReturnState {
 	@Override
 	public void onExit(StateTransition e) {
 		IO.shooterSolenoid.set(false);
-		Robot.teleop.exitIdleDrive();
+		if(Robot.robotState.equals("teleop")) {
+			Robot.teleop.exitIdleDrive();
+		}
 	}
 
 }

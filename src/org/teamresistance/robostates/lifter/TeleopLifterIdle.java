@@ -12,8 +12,10 @@ public class TeleopLifterIdle extends State {
 
 	@Override
 	public void onEntry(StateTransition e) {
-		if(e.getInitialState() != null)
+		if(e.getInitialState() != null) {
 			Robot.teleop.exitIdleDrive();
+			IO.lifterMotor.set(0.0);
+		}
 	}
 
 	@Override

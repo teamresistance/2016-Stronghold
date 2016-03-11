@@ -1,4 +1,4 @@
-package org.teamresistance.teleop.driveModes;
+package org.teamresistance.auto;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
@@ -11,9 +11,8 @@ import org.teamresistance.util.state.StateTransition;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Target extends ReturnState {
+public class AutoTarget extends ReturnState {
 
-	private StateMachine driveModes;
 	private NetworkTable contoursTable;
 	
 	public static final int SCREEN_WIDTH = 320;
@@ -21,23 +20,18 @@ public class Target extends ReturnState {
 	private double kP = 3;
 	private double targetAngle;
 
-	public Target() {
+	public AutoTarget() {
 		contoursTable = NetworkTable.getTable("GRIP/myContoursReport");
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
 		targetAngle = IO.imu.getYaw();
+		((ReturnState)stateMachine.getState("Shoot")).setReturnState("Idle");
 	}
 
 	@Override
 	public void update() {
-		if(!JoystickIO.btnScore.isDown()) {
-			gotoState("ScaledDrive");
-		} else if(JoystickIO.btnShootOverride.onButtonPressed()) {
-			gotoState("Shoot");
-		}
-		
 		double error = targetAngle - IO.imu.getYaw();
 		if(Math.abs(error) < 1) {
 			error = 0.0;
@@ -65,7 +59,7 @@ public class Target extends ReturnState {
 			centerX /= SCREEN_WIDTH / 2;
 			centerX -= 1;
 			SmartDashboard.putNumber("CenterX", centerX);
-			if( centerX >= -0.05 && centerX <= 0.06){ // -0.02, 0.06
+			if(centerX > -0.02 && centerX < 0.06){
 				IO.robotDrive.arcadeDrive(0, 0);
 				SmartDashboard.putBoolean("SHOOTABLE", true);
 				gotoState("Shoot");
@@ -79,5 +73,4 @@ public class Target extends ReturnState {
 			}
 		}
 	}
-
 }

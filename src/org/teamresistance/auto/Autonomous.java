@@ -2,6 +2,7 @@ package org.teamresistance.auto;
 
 import org.teamresistance.IO;
 import org.teamresistance.auto.defense.Defense;
+import org.teamresistance.teleop.driveModes.Shoot;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
@@ -46,6 +47,9 @@ public class Autonomous extends State {
 		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
 		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
 		autoMachine.addState(new DriveToGoal(gate, goal), "DriveToGoal");
+		autoMachine.addState(new AutoTarget(), "Target");
+		autoMachine.addState(new Shoot(), "Shoot");
+		autoMachine.addState(new AutoIdle(), "Idle");
 		
 		// Drive to the defense
 		autoMachine.setState("DriveToDefense");

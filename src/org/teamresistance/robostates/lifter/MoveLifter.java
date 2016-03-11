@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.robostates.DelayState;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
@@ -23,6 +24,8 @@ public class MoveLifter extends ReturnState {
 		} else if(IO.topLifterSwitch.get() && !moveUp) {
 			up = false;
 			IO.lifterMotor.set(Constants.LIFTER_DOWN_SPEED);
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		} else {
 			if(moveUp) {
 				up = true;

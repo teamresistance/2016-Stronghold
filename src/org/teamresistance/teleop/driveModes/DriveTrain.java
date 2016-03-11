@@ -73,7 +73,10 @@ public class DriveTrain extends State {
 			shoot();
 		} else if(Math.abs(-150 - IO.imu.getYaw()) < angleDeadband) {
 			shoot();
-		} else {
+		} else if(JoystickIO.btnScore.isDown() && JoystickIO.btnCancel.onButtonPressed()) {
+			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
+			gotoState("LoadToddsBall");
+		} else  {
 			SmartDashboard.putBoolean("SHOOTABLE", false);
 		}
 	}

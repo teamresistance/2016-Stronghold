@@ -1,5 +1,6 @@
 package org.teamresistance.robostates.lifter;
 
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
@@ -44,10 +45,15 @@ public class DriveThroughDrawbridge extends State {
 			// Kill the motor and idle the lifter.
 			robotDrive.arcadeDrive(0.0, 0.0);
 			gotoState("TeleopLifterIdle");
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		} else {
 			// Otherwise, keep on chuggin'.
 			robotDrive.arcadeDrive(DRIVE_TRHOUGH_SPEED, 0);
 		}
+		
+		
+		
 	}
 
 }

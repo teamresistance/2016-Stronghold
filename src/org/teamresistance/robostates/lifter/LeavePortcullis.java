@@ -2,6 +2,7 @@ package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.Constants;
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.Robot;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.ReturnState;
@@ -24,6 +25,8 @@ public class LeavePortcullis extends ReturnState {
 			if(Robot.robotState.equals("teleop")) {
 				gotoState("TeleopLifterIdle");
 			}
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 

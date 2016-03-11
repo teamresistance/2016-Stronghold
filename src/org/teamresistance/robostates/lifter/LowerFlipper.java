@@ -1,6 +1,7 @@
 package org.teamresistance.robostates.lifter;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.StateTransition;
 
@@ -18,6 +19,8 @@ public class LowerFlipper extends ReturnState {
 	public void update() {
 		if(IO.topFlipperSwitch.get()) {
 			gotoState("DriveThroughDrawbridge");
+		} else if(JoystickIO.btnCancel.isDown()) {
+			gotoState("TeleopLifterIdle");
 		}
 	}
 

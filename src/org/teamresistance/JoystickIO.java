@@ -14,7 +14,7 @@ public class JoystickIO {
 	public static Joystick codriverStick;
 	
 	private static ArrayList<Button> buttons = new ArrayList<>();
-	
+	                                                                                                                                                                                                                                                                             
 	public static Button btnDriveMode;
 	public static Button btnDriveReverse;
 	public static Button btnAngleHold;
@@ -24,6 +24,7 @@ public class JoystickIO {
 	public static Button btnSnorfler;
 	public static Button btnCancel;
 	public static Button btnSnorflerReverse;
+	public static Button btnShootOverride;
 	
 	public static Button btnToggleFoot;
 	public static Button btnToggleLifter;
@@ -50,6 +51,7 @@ public class JoystickIO {
 		btnSnorfler = newButton(codriverStick, 3);
 		btnCancel = newButton(codriverStick, 2);
 		btnSnorflerReverse = newButton(codriverStick, 10);
+		btnShootOverride = newButton(codriverStick, 11);
 		
 		btnToggleFoot = newButton(codriverStick, 5);
 		btnToggleLifter = newButton(codriverStick, 6);

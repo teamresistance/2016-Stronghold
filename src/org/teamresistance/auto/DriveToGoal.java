@@ -37,7 +37,7 @@ class DriveToGoal extends State {
         if (Time.getTime() - startTime < driveTime) {
             IO.robotDrive.arcadeDrive(isReversed ? -1 * DRIVE_SPEED : DRIVE_SPEED, 0);
         } else {
-        	SmartDashboard.putBoolean("&&&&&&&&&&&&&&&&&&TARGETING", true);
+        	gotoState("Target");
         }
     }
     

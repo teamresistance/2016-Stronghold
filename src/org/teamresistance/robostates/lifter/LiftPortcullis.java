@@ -1,5 +1,6 @@
 package org.teamresistance.robostates.lifter;
 
+import org.teamresistance.JoystickIO;
 import org.teamresistance.util.state.ReturnState;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
