@@ -12,7 +12,7 @@ public class DriveTrain extends State {
 	private AngleMatch target;
 	
 	private float angleOffset = -90;
-	private float angleDeadband = 5;//15
+	private float angleDeadband = 15;//15
 
 	private boolean reverse = false;
 
@@ -27,20 +27,26 @@ public class DriveTrain extends State {
 		// Temporary, since we chucked the init method() and putting
 		// this in the constructor may be not be a good idea.
 		if (!initialized) {
-			IO.lifterLight.set(reverse);
+			IO.lifterLight1.set(reverse);
+			IO.lifterLight2.set(reverse);
 			IO.snorflerLight.set(!reverse);
 			initialized = true;
 		}
 
-		IO.lifterLight.set(reverse);
+		IO.lifterLight1.set(reverse);
+		IO.lifterLight2.set(reverse);
 		IO.snorflerLight.set(!reverse);
 	}
 
 	@Override
 	public void update() {
+		SmartDashboard.putNumber("Left Stick", getLeftY());
+		SmartDashboard.putNumber("Right Stick", getRightY());
+		
 		if(JoystickIO.btnDriveReverse.onButtonPressed()) {
 			reverse = !reverse;
-			IO.lifterLight.set(reverse);
+			IO.lifterLight1.set(reverse);
+			IO.lifterLight2.set(reverse);
 			IO.snorflerLight.set(!reverse);
 		}
 		if(JoystickIO.btnAngleHold.isDown()) {
@@ -73,7 +79,7 @@ public class DriveTrain extends State {
 			shoot();
 		} else if(Math.abs(-150 - IO.imu.getYaw()) < angleDeadband) {
 			shoot();
-		} else if(JoystickIO.btnScore.isDown() && JoystickIO.btnCancel.onButtonPressed()) {
+		} else if(JoystickIO.btnScore.isDown() && JoystickIO.btnShootOverride.onButtonPressed()) {
 			((Shoot)stateMachine.getState("Shoot")).setReturnState(getName());
 			gotoState("LoadToddsBall");
 		} else  {

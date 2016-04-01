@@ -8,12 +8,12 @@ import org.teamresistance.util.annotation.Experimental;
 @Experimental
 public class DefenseMoat extends Defense {
 
-	public static final double CROSS_SPEED = 0.5;
+	public static final double CROSS_SPEED = -0.5;
 	private double time = 0.0;
 
 	@Override
 	public boolean isReversed() {
-		return false;
+		return true;
 	}
 
 	@Override

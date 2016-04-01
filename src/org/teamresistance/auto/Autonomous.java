@@ -1,12 +1,15 @@
 package org.teamresistance.auto;
 
 import org.teamresistance.IO;
+import org.teamresistance.JoystickIO;
 import org.teamresistance.auto.defense.Defense;
+import org.teamresistance.auto.defense.DefenseCheval;
 import org.teamresistance.teleop.driveModes.Shoot;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous extends State {
@@ -35,14 +38,15 @@ public class Autonomous extends State {
 		this.defense = defense;
 		this.gate = gate;
 		this.goal = goal;
+		SmartDashboard.putString("Defense type", this.defense.toString());
 	}
 
 	@Override
 	public void onEntry(StateTransition e) {
-		// We'll invert the drive speeds if the robot is reversed
+		// We'll invert the drive speeds if the robot is reverseds
 		boolean isReversed = defense.isReversed();
 
-		autoMachine.addState(new DriveToDefense(isReversed), "DriveToDefense");
+		autoMachine.addState(new DriveToDefense(isReversed, defense instanceof DefenseCheval), "DriveToDefense");
 		autoMachine.addState(new CrossDefense(defense), "CrossDefense");
 		autoMachine.addState(new DriveToLine(isReversed, gate, goal), "DriveToLine");
 		autoMachine.addState(new RotateOnLine(goal), "RotateOnLine");
@@ -51,8 +55,13 @@ public class Autonomous extends State {
 		autoMachine.addState(new Shoot(), "Shoot");
 		autoMachine.addState(new AutoIdle(), "Idle");
 		
+		autoMachine.addState(new SpyBot(), "Spybot");
+		
+		if(SmartDashboard.getBoolean("Spybot")) autoMachine.setState("Spybot");
+		
 		// Drive to the defense
-		autoMachine.setState("DriveToDefense");
+		else autoMachine.setState("DriveToDefense");
+//		IO.brightLights.setRaw(JoystickIO.codriverStick.getZ() > 0 ? 255 : 0);
 	}
 
 	@Override

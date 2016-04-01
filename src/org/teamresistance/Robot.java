@@ -31,6 +31,7 @@ import org.teamresistance.util.state.StateMachine;
 import java.io.IOException;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -63,7 +64,13 @@ public class Robot extends IterativeRobot {
 		JoystickIO.init();
 		lifterMachine = new StateMachine();
 		robotModes = new StateMachine();
-
+		
+		SmartDashboard.putBoolean("Autonomous Enabled", true);
+		SmartDashboard.putBoolean("Turn and Shoot", true);
+		SmartDashboard.putBoolean("Spybot", false);
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		
+		
 		defenseChooser.addDefault("Cheval de frise", new DefenseCheval());
 		defenseChooser.addObject("Drawbridge", new DefenseDrawbridge(lifterMachine));
 		defenseChooser.addObject("Moat", new DefenseMoat());
@@ -72,6 +79,7 @@ public class Robot extends IterativeRobot {
 		defenseChooser.addObject("Rock wall", new DefenseRockWall(new SwingDetection(IO.imu)));
 		defenseChooser.addObject("Rough terrain", new DefenseRoughTerrain());
 		defenseChooser.addObject("Reversed Rough Terrain", new ReversedRoughTerrain());
+		//defenseChooser.addObject("SpyBot", new SpyBot());
 		SmartDashboard.putData(">> Autonomous Defense <<", defenseChooser);
 
 		gateChooser.addDefault("Gate 2", 0); // indexes are already normalized
@@ -104,37 +112,39 @@ public class Robot extends IterativeRobot {
 			teleop = new Teleop(lifterMachine);
 		}
 		robotModes.addState(teleop, "teleop");
+		
 	}
 
 	@Override
 	public void autonomousInit() {
-		/*
-		SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
-		SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
-		SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
+		if(SmartDashboard.getBoolean("Autonomous Enabled")) {
+			SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
+			SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
+			SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
 		
-		// "Lock in" the SendableChooser choices at the start of Autonomous
-		Defense defense = (Defense) defenseChooser.getSelected();
-		int goal = (int) goalChooser.getSelected();
-		int gate = (int) gateChooser.getSelected();
+			// "Lock in" the SendableChooser choices at the start of Autonomous
+			Defense defense = (Defense) defenseChooser.getSelected();
+			int goal = (int) goalChooser.getSelected();
+			int gate = (int) gateChooser.getSelected();
 		
-		IO.imu.setReversed(defense.isReversed());
+			IO.imu.setReversed(defense.isReversed());
 		
-		// Instantiate Autonomous with the chosen values
-		Autonomous autonomous = new Autonomous(defense, gate, goal);
+			// Instantiate Autonomous with the chosen values
+			Autonomous autonomous = new Autonomous(defense, gate, goal);
 
-		robotState = "auto";
-		robotModes.addState(autonomous, "auto");
-		robotModes.setState("auto");
-		*/
+			robotState = "auto";
+			robotModes.addState(autonomous, "auto");
+			robotModes.setState("auto");
+		}
 	}
 
 	@Override
 	public void autonomousPeriodic() {
-		/*
-		Time.update();
-		robotModes.update();
-		*/
+		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
+		if(SmartDashboard.getBoolean("Autonomous Enabled")) {
+			Time.update();
+			robotModes.update();
+		}
 	}
 
 	@Override

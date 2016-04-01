@@ -87,7 +87,7 @@ public class NavXIMU {
 	}
 
 	public double turnTo(int setpoint, int threshold) {
-		double speed = 0.65; //speed of rotation for any of the results
+		double speed = -0.8; //speed of rotation for any of the results
 
 		double feedback = getYaw();
 		double error = setpoint - feedback;

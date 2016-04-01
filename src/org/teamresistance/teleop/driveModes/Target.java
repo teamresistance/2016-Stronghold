@@ -65,7 +65,7 @@ public class Target extends ReturnState {
 			centerX /= SCREEN_WIDTH / 2;
 			centerX -= 1;
 			SmartDashboard.putNumber("CenterX", centerX);
-			if( centerX >= -0.05 && centerX <= 0.06){ // -0.02, 0.06
+			if( centerX >= -0.08 && centerX <= 0.08){ // -0.02, 0.06
 				IO.robotDrive.arcadeDrive(0, 0);
 				SmartDashboard.putBoolean("SHOOTABLE", true);
 				gotoState("Shoot");
@@ -75,7 +75,7 @@ public class Target extends ReturnState {
 				speed = Util.clip(speed, Constants.TARGET_MIN_SPEED, Constants.TARGET_MAX_SPEED);
 				SmartDashboard.putNumber("Speed", speed);
 				
-				IO.robotDrive.arcadeDrive(speed, result);
+				IO.robotDrive.arcadeDrive(speed, 0);
 			}
 		}
 	}

@@ -8,15 +8,15 @@ import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-class DriveToGoal extends State {
+public class DriveToGoal extends State {
 
     public static final double[][] DRIVE_TIMES = {
-            {2, 1.2, -1},
-            {3, 2.25, -1},
-            {2, 2, 1},
-            {2, 2.0, 1.0}
+            {0.0, 1.03, 0},
+            {0.50, 0.47, 0},
+            {0, 0.09, 0.93},
+            {0, 0.25, 0.28}
     };
-    public static final double DRIVE_SPEED = 0.5;
+    public static final double DRIVE_SPEED = -0.65;
 
     private double driveTime;
     private double startTime;
@@ -25,8 +25,9 @@ class DriveToGoal extends State {
     public DriveToGoal (int gate, int goal) {
     	isReversed = isReversed(gate, goal);
         driveTime = DRIVE_TIMES[gate][goal];
+        SmartDashboard.putNumber("DriveToGoal time", driveTime);
     }
-
+    
     @Override
     public void onEntry(StateTransition e) {
         startTime = Time.getTime();

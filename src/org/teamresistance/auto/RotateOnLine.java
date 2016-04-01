@@ -1,10 +1,13 @@
 package org.teamresistance.auto;
 
+import org.teamresistance.Constants;
 import org.teamresistance.IO;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateTransition;
 
-class RotateOnLine extends State {
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+public class RotateOnLine extends State {
 
     private final int heading;
 
@@ -12,11 +15,12 @@ class RotateOnLine extends State {
     
     public RotateOnLine (int goal) {
         heading = HEADINGS[goal];
+        SmartDashboard.putNumber("RotateOnLine heading", heading);
     }
 
     @Override
     public void onEntry(StateTransition e) {
-    	
+    	IO.snorflerMotor.set(Constants.BOULDER_LOAD_SPEED);
     }
 
     boolean shouldRun = false;

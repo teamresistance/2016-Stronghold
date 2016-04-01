@@ -8,7 +8,7 @@ import org.teamresistance.util.annotation.Experimental;
 @Experimental
 public class DefenseRockWall extends Defense {
 	
-	public static final double CROSS_SPEED = .5;
+	public static final double CROSS_SPEED = -0.8;
 	private final SwingDetection swingDetection;
 
 	private double time = 0.0;
@@ -20,7 +20,7 @@ public class DefenseRockWall extends Defense {
 
 	@Override
 	public boolean isReversed() {
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -35,8 +35,10 @@ public class DefenseRockWall extends Defense {
 		} else if (isSwinging && swingNaught < 0.1) {
 			IO.robotDrive.arcadeDrive(0.0, 0.0);
 			swingNaught += delta;
-		} else if (IO.imu.isLevel(10, 0, 0) && time < 2.0) {
+		} else if (time < 2.25) {
 			IO.robotDrive.arcadeDrive(CROSS_SPEED, 0.0);
+		} else if(time < 3.25) {
+			IO.robotDrive.arcadeDrive(-0.65, 0.0);
 		} else {
 			this.setCrossed();
 		}

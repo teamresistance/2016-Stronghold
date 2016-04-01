@@ -18,6 +18,7 @@ import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -76,8 +77,10 @@ public class Teleop extends State {
 		driveModes.setState("ScaledDrive");
 		antlerSnorflerMachine.setState("AntlerSnorflerUp");
 		lifterMachine.setState("TeleopLifterIdle");
-		IO.lifterLight.set(false);
+		IO.lifterLight1.set(false);
+		IO.lifterLight2.set(false);
 		IO.snorflerLight.set(true);
+		IO.shooterSolenoid.set(false);
 	}
 
 	@Override
@@ -104,6 +107,9 @@ public class Teleop extends State {
 		SmartDashboard.putNumber("Pitch", IO.imu.getPitch());
 		SmartDashboard.putNumber("Yaw", IO.imu.getYaw());
 //		IO.shooterSolenoid.set(JoystickIO.btnScore.isDown() && !IO.ballSensor.get());
+		
+//		IO.brightLights.setRaw(JoystickIO.codriverStick.getZ() > 0 ? 255 : 0);
+//		IO.brightLights.setRaw(255);
 	}
 	
 	public void setDriveIdle() {

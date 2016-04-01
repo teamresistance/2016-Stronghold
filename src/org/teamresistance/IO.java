@@ -5,6 +5,8 @@ import org.teamresistance.util.io.InvertableSolenoid;
 import org.teamresistance.util.io.NavXIMU;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -38,8 +40,11 @@ public class IO {
 	
 	public static NavXIMU imu;
 	
-	public static InvertableSolenoid lifterLight;
+	public static InvertableSolenoid lifterLight1;
+	public static InvertableSolenoid lifterLight2;
 	public static InvertableSolenoid snorflerLight;
+	
+	public static PWM brightLights;
 	
 	public static void init() {
 		leftDrive = new VictorSP(0);
@@ -74,8 +79,11 @@ public class IO {
 		
 		imu = new NavXIMU();
 	
-		lifterLight = new InvertableSolenoid(6);
+		lifterLight1 = new InvertableSolenoid(6);
+		lifterLight2 = new InvertableSolenoid(0);
 		snorflerLight = new InvertableSolenoid(7);
+		
+		brightLights = new PWM(9);
 	}
 	
 }
