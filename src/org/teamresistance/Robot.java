@@ -24,6 +24,7 @@ import org.teamresistance.robostates.lifter.RaiseFlipper;
 import org.teamresistance.robostates.lifter.TeleopLifterIdle;
 import org.teamresistance.robostates.lifter.TopOutLifter;
 import org.teamresistance.teleop.Teleop;
+import org.teamresistance.teleop.OpticalFlow;
 import org.teamresistance.util.SwingDetection;
 import org.teamresistance.util.Time;
 import org.teamresistance.util.state.StateMachine;
@@ -50,6 +51,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
+		IO.opticalFlow.init();
+
 		try {
 			new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
 		} catch (IOException e) {

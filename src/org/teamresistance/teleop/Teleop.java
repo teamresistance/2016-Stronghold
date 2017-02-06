@@ -16,6 +16,7 @@ import org.teamresistance.teleop.driveModes.Target;
 import org.teamresistance.util.state.State;
 import org.teamresistance.util.state.StateMachine;
 import org.teamresistance.util.state.StateTransition;
+import org.teamresistance.teleop.OpticalFlow;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
