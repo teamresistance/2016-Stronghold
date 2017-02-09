@@ -85,8 +85,9 @@ public class OpticalFlow {
 			raw_dx = readRegister((byte)3);   //use registry to update the change in position
 			raw_dy = -readRegister((byte)4);
 		}
-		//Math for angle issues
-		//Franks math, IDK if it works, IDK what it means
+		/*Math for angle issues
+		*Franks math, IDK if it works, IDK what it means
+		*/
 //    double rad = Math.toRadians(IO.gyro.getAngle());
 //    double cos = Math.cos(rad);
 //    double sin = Math.sin(rad);
