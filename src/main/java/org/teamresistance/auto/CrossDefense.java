@@ -24,7 +24,7 @@ class CrossDefense extends State {
 		if (defense.isCrossing()) {
 			defense.whileCrossing();
 		} else {
-			//if(SmartDashboard.getBoolean("Turn and Shoot")) {
+			if(SmartDashboard.getBoolean("Turn and Shoot", false)) {
 				gotoState("DriveToLine");
 			}
 		}

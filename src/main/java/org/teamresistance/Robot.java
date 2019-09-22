@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-		if(SmartDashboard.getBoolean("Autonomous Enabled", true)) {
+		if(SmartDashboard.getBoolean("Autonomous Enabled", false)) {
 			Time.update();
 			robotModes.update();
 		}
