@@ -28,6 +28,7 @@ class CrossDefense extends State {
 				gotoState("DriveToLine");
 			}
 		}
+	}
 }
 
 
