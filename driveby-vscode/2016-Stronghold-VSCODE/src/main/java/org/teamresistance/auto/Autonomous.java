@@ -57,7 +57,7 @@ public class Autonomous extends State {
 		
 		autoMachine.addState(new SpyBot(), "Spybot");
 		
-		if(SmartDashboard.getBoolean("Spybot")) autoMachine.setState("Spybot");
+		if(SmartDashboard.getBoolean("Spybot", false)) autoMachine.setState("Spybot");
 		
 		// Drive to the defense
 		else autoMachine.setState("DriveToDefense");
