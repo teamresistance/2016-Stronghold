@@ -1,4 +1,4 @@
-package org.teamresistance.frc;
+package org.teamresistance.teleop;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
@@ -47,7 +47,7 @@ public class OpticalFlow {
 //  double yFacFt = 800;
 
 
-	public OpticalFlowSensor() {
+	public OpticalFlow() {
 		spi = new SPI(Port.kOnboardCS0);    //Finds the OF on the SPI ports
 		spi.setChipSelectActiveLow();
 		spi.setClockActiveHigh();

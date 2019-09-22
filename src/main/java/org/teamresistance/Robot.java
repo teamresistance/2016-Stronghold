@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		IO.opticalFlow.init();
+		//IO.opticalFlow.init();
 
 		try {
 			new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		if(SmartDashboard.getBoolean("Autonomous Enabled")) {
+		if(SmartDashboard.getBoolean("Autonomous Enabled", true)) {
 			SmartDashboard.putNumber("Goal chosen", (int) goalChooser.getSelected()); 
 			SmartDashboard.putNumber("Gate chosen", 2+(int) gateChooser.getSelected());
 			SmartDashboard.putString("Defense type", defenseChooser.getSelected().toString());
@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kOn : Relay.Value.kOff);
-		if(SmartDashboard.getBoolean("Autonomous Enabled")) {
+		if(SmartDashboard.getBoolean("Autonomous Enabled", true)) {
 			Time.update();
 			robotModes.update();
 		}
@@ -158,6 +158,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kForward : Relay.Value.kOff);
 		Time.update();
 		JoystickIO.update();
 		robotModes.update();
